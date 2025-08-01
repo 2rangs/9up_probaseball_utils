@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "history": [
+      { "key": "haitai", "name": "해태 타이거즈", "logo": "/assets/logos/symbol/emblem_s_01_haitai.png" },
+      { "key": "kia", "name": "기아 타이거즈", "logo": "/assets/logos/symbol/emblem_s_01_kia.png" }
+    ]
+  },
+  {
+    "id": 2,
+    "history": [
+      { "key": "samsung", "name": "삼성 라이온즈", "logo": "/assets/logos/symbol/emblem_s_02_samsung.png" }
+    ]
+  },
+  {
+    "id": 3,
+    "history": [
+      { "key": "lotte", "name": "롯데 자이언츠", "logo": "/assets/logos/symbol/emblem_s_03_lotte.png" }
+    ]
+  },
+  {
+    "id": 4,
+    "history": [
+      { "key": "nexen", "name": "넥센 히어로즈", "logo": "/assets/logos/symbol/emblem_s_04_nexen.png" },
+      { "key": "kiwoom", "name": "키움 히어로즈", "logo": "/assets/logos/symbol/emblem_s_04_kiwoom.png" }
+    ]
+  },
+  {
+    "id": 5,
+    "history": [
+      { "key": "binggrae", "name": "빙그레 이글스", "logo": "/assets/logos/symbol/emblem_s_05_bingrae.png" },
+      { "key": "hanwha", "name": "한화 이글스", "logo": "/assets/logos/symbol/emblem_s_05_hanwha.png" }
+    ]
+  },
+  {
+    "id": 6,
+    "history": [
+      { "key": "mbc", "name": "MBC 청룡", "logo": "/assets/logos/symbol/emblem_s_06_mbc.png" },
+      { "key": "lg", "name": "LG 트윈스", "logo": "/assets/logos/symbol/emblem_s_06_lg.png" }
+    ]
+  },
+  {
+    "id": 7,
+    "history": [
+      { "key": "ob", "name": "OB 베어스", "logo": "/assets/logos/symbol/emblem_s_07_ob.png" },
+      { "key": "doosan", "name": "두산 베어스", "logo": "/assets/logos/symbol/emblem_s_07_doosan.png" }
+    ]
+  },
+  {
+    "id": 8,
+    "history": [
+      { "key": "sk", "name": "SK 와이번스", "logo": "/assets/logos/symbol/emblem_s_08_sk.png" },
+      { "key": "ssg", "name": "SSG 랜더스", "logo": "/assets/logos/symbol/emblem_s_08_ssg.png" }
+    ]
+  },
+  {
+    "id": 9,
+    "history": [
+      { "key": "nc", "name": "NC 다이노스", "logo": "/assets/logos/symbol/emblem_s_09_nc.png" }
+    ]
+  },
+  {
+    "id": 10,
+    "history": [
+      { "key": "kt", "name": "KT 위즈", "logo": "/assets/logos/symbol/emblem_s_10_kt.png" }
+    ]
+  },
+  {
+    "id": 11,
+    "history": [
+      { "key": "sbw", "name": "쌍방울 레이더스", "logo": "/assets/logos/symbol/emblem_s_11_sbw.png" }
+    ]
+  },
+  {
+    "id": 12,
+    "history": [
+      { "key": "hyundai", "name": "현대 유니콘스", "logo": "/assets/logos/symbol/emblem_s_12_hyundai.png" }
+    ]
+  },
+  {
+    "id": 13,
+    "history": [
+      { "key": "pacific", "name": "태평양 돌핀스", "logo": "/assets/logos/symbol/emblem_s_13_pacific.png" }
+    ]
+  },
+  {
+    "id": 14,
+    "history": [
+      { "key": "sammi", "name": "삼미 슈퍼스타즈", "logo": "/assets/logos/symbol/emblem_s_14_sammi.png" }
+    ]
+  },
+  {
+    "id": 15,
+    "history": [
+      { "key": "chungbo", "name": "청보 핀토스", "logo": "/assets/logos/symbol/emblem_s_15_chungbo.png" }
+    ]
+  }
+]
