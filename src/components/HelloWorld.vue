@@ -17,7 +17,7 @@ const currentPage = ref(1)
 const pageSize = 20
 
 const inputFields = ['name', 'team', 'year', 'skill', 'synergy']
-const selectFields = ['grade', 'position', 'battingHand', 'throwHand', 'pitchingType', 'enhancedSkill']
+const selectFields = ['grade', 'position', 'battingHand', 'throwHand', 'pitchingType', 'skill','enhancedSkill']
 const rarityField = 'rarity'
 const allFields = [...inputFields, ...selectFields, rarityField]
 
@@ -29,7 +29,7 @@ const filterOptions = computed(() => {
   const options = {}
 
   // 포함할 필드
-  const fieldsToScan = [...selectFields, 'team', 'grade']
+  const fieldsToScan = [...selectFields, 'team', 'grade', 'skill']
 
   fieldsToScan.forEach(field => {
     options[field] = new Set()
@@ -66,7 +66,6 @@ const filteredPlayers = computed(() => {
     return allFields.every(field => {
       const selected = filters.value[field]
 
-      // 공통 빈 값 패스
       if (!selected || (Array.isArray(selected) && selected.length === 0)) return true
 
       // ⭐ rarity (숫자 비교)
@@ -74,17 +73,13 @@ const filteredPlayers = computed(() => {
         return Number(p[field]) === Number(selected)
       }
 
-      // 🧢 팀: 다중 OR 조건 (먼저 처리!)
+      // 🧢 팀: 다중 OR 조건
       if (field === 'team') {
-        // 문자열 검색인 경우 (inputFields 방식)
         if (typeof selected === 'string') {
           return String(p[field] ?? '').toLowerCase().includes(String(selected).toLowerCase())
         }
-
-        // 다중 선택인 경우 (selectFields 방식)
         if (!Array.isArray(selected)) return false
 
-        // 플레이어의 팀 데이터 파싱
         let playerTeams = []
         if (typeof p.team === 'string') {
           playerTeams = p.team.split(',').map(t => t.trim()).filter(t => t !== '')
@@ -94,14 +89,46 @@ const filteredPlayers = computed(() => {
           playerTeams = [String(p.team || '').trim()].filter(t => t !== '')
         }
 
-        // 선택된 팀 중 하나라도 플레이어 팀과 일치하면 통과 (OR 조건)
         return selected.some(sel => playerTeams.includes(String(sel).trim()))
       }
+
+      // 🗓 year: 다중 OR 조건 (ex: [2011, 2012])
+      if (field === 'year') {
+        if (!Array.isArray(selected)) return false
+
+        let playerYears = []
+        try {
+          if (typeof p.year === 'string') {
+            playerYears = JSON.parse(p.year)
+          } else if (Array.isArray(p.year)) {
+            playerYears = p.year
+          } else {
+            playerYears = [Number(p.year)]
+          }
+        } catch {
+          return false
+        }
+
+        return selected.some(sel => playerYears.includes(Number(sel)))
+      }
+if (field === 'skill') {
+  if (!Array.isArray(selected)) return false
+
+  const playerSkill = typeof p.skill === 'string'
+    ? p.skill.split(',').map(s => s.trim())
+    : Array.isArray(p.skill)
+      ? p.skill
+      : [String(p.skill)]
+
+  return selected.every(sel => playerSkill.includes(String(sel)))
+}
+
+
 
       // ⚾ 포지션: 다중 AND 조건
       if (field === 'position') {
         try {
-          const playerPos = JSON.parse(p.position || '[]') // ex. ["B1", "B2"]
+          const playerPos = JSON.parse(p.position || '[]')
           if (!Array.isArray(playerPos)) return false
           return Array.isArray(selected) && selected.every(sel => playerPos.includes(sel))
         } catch {
@@ -109,7 +136,7 @@ const filteredPlayers = computed(() => {
         }
       }
 
-      // 🔍 문자열 포함 검색 (team 제외)
+      // 🔍 문자열 포함 검색
       if (inputFields.includes(field) && field !== 'team') {
         return String(p[field] ?? '').toLowerCase().includes(String(selected).toLowerCase())
       }
@@ -119,11 +146,11 @@ const filteredPlayers = computed(() => {
         return selected.includes(p[field])
       }
 
-      // 📋 나머지: 정확 일치
       return p[field] === selected
     })
   })
 })
+
 const paginatedPlayers = computed(() => {
   const start = (currentPage.value - 1) * pageSize
   return filteredPlayers.value.slice(start, start + pageSize)

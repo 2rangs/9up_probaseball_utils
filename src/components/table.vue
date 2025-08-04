@@ -33,6 +33,7 @@ const head = {
   position : '포지션',
   handType : '투타',
   pitchingType : '피칭타입',
+  skill : '스킬',
   synergy : '시너지',
   open : '상세정보',
 }
@@ -102,7 +103,7 @@ function toggleExpanded(index: number) {
 </script>
 
 <template>
-  <div class="overflow-x-auto rounded-lg shadow ring-1 ring-gray-200">
+  <div class="overflow-x-auto max-w-[1280px] m-auto">
     <table class="min-w-full text-sm table-auto">
       <thead class="bg-gray-100 text-gray-700 font-semibold text-xs uppercase tracking-wide">
       <tr>
@@ -177,7 +178,7 @@ function toggleExpanded(index: number) {
 
           <template v-else-if="col === 'synergy'">
             <div
-                class="w-[700px] text-left flex items-start justify-between gap-3 rounded-md bg-gray-50 px-3 py-2 border border-gray-200 hover:bg-gray-100 transition-all duration-300"
+                class="w-[300px] text-left flex items-start justify-between gap-3 rounded-md bg-gray-50 px-3 py-2 border border-gray-200 hover:bg-gray-100 transition-all duration-300"
             >
               <p
                   class="flex-1 text-sm text-gray-800 select-text whitespace-pre-line break-words leading-snug transition-all duration-300"
@@ -189,7 +190,7 @@ function toggleExpanded(index: number) {
               </p>
 
               <button
-                  v-if="item[col].length > 70"
+                  v-if="item[col].length > 25"
                   @click="toggleExpanded(index)"
                   :aria-expanded="expandedRowIndex === index"
                   class="text-gray-500 hover:text-blue-600 transition-colors duration-150 mt-0.5 shrink-0 cursor-pointer focus:outline-none"
