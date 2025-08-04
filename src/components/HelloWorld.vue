@@ -53,6 +53,7 @@ const filterOptions = computed(() => {
       }
     })
   })
+  console.log(options)
 
   return Object.fromEntries(
       Object.entries(options).map(([field, set]) => [field, [...set].sort()])

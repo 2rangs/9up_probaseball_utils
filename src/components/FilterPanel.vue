@@ -44,6 +44,7 @@ const toggleFilter = (field: string, value: string) => {
   } else {
     selected.push(value)
   }
+  console.log( { ...props.filters, [field]: selected })
   emit('update:filters', { ...props.filters, [field]: selected })
 }
 
@@ -58,19 +59,34 @@ const actualPositions = computed(() => {
 })
 
 const gradeLabels: Record<string, string> = {
-  DGN: '디그니티',
-  TOP: '탑클래스',
-  ACE: '에이스 피쳐',
-  HIT: '히트 배터',
-  POS: '포스트시즌',
-  GG: '골든글러브',
-  TEA: '팀',
-  SEA: '시즌',
-  ROY: '루키 오브더 예어',
-  MMVP: '이달의 MVP',
-  ASG: '올스타'
+  DGN: 'Dignity',
+  TOP: 'Top Class',
+  ACE: 'Ace Pitcher',
+  HIT: 'Hit Batter',
+  POS: 'Post season',
+  GG: 'Golden Glove',
+  TEA: 'Team Player',
+  SEA: 'Season',
+  ROY: 'Rookie Of The Year',
+  MMVP: 'Monthly MVP',
+  ASG: 'ALLSTAR'
 }
-
+const gradeOrder = [
+  'DGN',
+  'TOP',
+  'ACE',
+  'HIT',
+  'POS',
+  'GG',
+  'TEA',
+  'SEA',
+  'ROY',
+  'MMVP',
+  'ASG'
+]
+const visibleGrades = computed(() => {
+  return gradeOrder.filter(g => props.filterOptions.grade?.includes(g))
+})
 const teamLogos: Record<string, string> = {
   kia: '/assets/logos/symbol/emblem_s_01_kia.png',
   haitai: '/assets/logos/symbol/emblem_s_01_haitai.png',
@@ -117,7 +133,7 @@ const teamLogos: Record<string, string> = {
         <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
           {{ rarityField }}
         </label>
-        <div class="bg-white dark:bg-gray-800 rounded-md p-1.5 shadow-sm border border-gray-100 dark:border-gray-700">
+            <div class="bg-white max-w-[300px]">
           <div class="flex gap-0.5 items-center justify-center">
             <button
                 v-for="i in 6"
@@ -134,46 +150,42 @@ const teamLogos: Record<string, string> = {
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Grade -->
-      <div class="space-y-1">
+
+
+    <!-- Second Row: Baseball Field Position Layout -->
+<!-- Second Row: Baseball Field Position Layout -->
+<div class="mb-4">
+    <div class="space-y-1">
         <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-          grade
+          team
         </label>
-        <div class="bg-white dark:bg-gray-800 rounded-md p-1.5 shadow-sm border border-gray-100 dark:border-gray-700">
-          <div class="flex flex-wrap gap-0.5">
+        <div class="bg-white grid ">
+          <div class="grid-cols-6 gap-0.5">
             <button
-                v-for="grade in props.filterOptions.grade"
-                :key="grade"
-                @click="toggleFilter('grade', grade)"
-                :class="[
-                  'px-1.5 py-0.5 rounded text-xs font-medium transition-colors cursor-pointer',
-                  isSelected('grade', grade)
-                    ? 'bg-yellow-400 text-black shadow-sm'
-                    : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
-                ]"
+              v-for="grade in visibleGrades"
+              :key="grade"
+              @click="toggleFilter('grade', grade)"
+              :class="[
+                'p-1 m-1 rounded text-xs font-medium transition-colors cursor-pointer',
+                isSelected('grade', grade)
+                  ? 'bg-yellow-400 text-black shadow-sm'
+                  : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+              ]"
             >
               {{ gradeLabels[grade] || grade }}
             </button>
           </div>
-        </div>
-      </div>
-
-      <!-- Team -->
-      <div class="space-y-1">
-        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-          team
-        </label>
-        <div class="bg-white dark:bg-gray-800 rounded-md p-1.5 shadow-sm border border-gray-100 dark:border-gray-700">
-          <div class="grid grid-cols-6 gap-0.5">
+          <div class="grid-cols-6 gap-0.5">
             <button
                 v-for="team in props.filterOptions.team"
                 :key="team"
                 @click="toggleFilter('team', team)"
                 :class="[
-                  'relative p-1 rounded transition-colors cursor-pointer',
+                  'relative p-1 m-1 rounded transition-colors cursor-pointer',
                   isSelected('team', team)
-                    ? 'bg-blue-50 dark:bg-blue-900/30 ring-1 ring-blue-400'
+                    ? 'bg-gray-50 dark:bg-blue-900/30 ring-1 ring-blue-400'
                     : 'bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600'
                 ]"
             >
@@ -191,186 +203,127 @@ const teamLogos: Record<string, string> = {
           </div>
         </div>
       </div>
-    </div>
+</div>
 
-    <!-- Second Row: Baseball Field Position Layout -->
-    <div class="mb-4">
-      <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
-        position
-      </label>
-      <div class="bg-gradient-to-b from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-lg p-4 shadow-sm border border-green-200 dark:border-green-700">
-        <!-- Baseball Field Layout -->
-        <div class="relative w-full h-32">
-          <!-- Outfield -->
-          <div class="absolute top-2 left-1/2 transform -translate-x-1/2">
-            <button
-                v-if="actualPositions.includes('CF')"
-                @click="toggleFilter('position', 'CF')"
-                :class="[
-                  'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
-                  isSelected('position', 'CF')
-                    ? 'bg-emerald-500 text-white shadow-lg'
-                    : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md'
-                ]"
-            >
-              CF
-            </button>
-          </div>
-          <div class="absolute top-4 left-8">
-            <button
-                v-if="actualPositions.includes('LF')"
-                @click="toggleFilter('position', 'LF')"
-                :class="[
-                  'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
-                  isSelected('position', 'LF')
-                    ? 'bg-emerald-500 text-white shadow-lg'
-                    : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md'
-                ]"
-            >
-              LF
-            </button>
-          </div>
-          <div class="absolute top-4 right-8">
-            <button
-                v-if="actualPositions.includes('RF')"
-                @click="toggleFilter('position', 'RF')"
-                :class="[
-                  'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
-                  isSelected('position', 'RF')
-                    ? 'bg-emerald-500 text-white shadow-lg'
-                    : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md'
-                ]"
-            >
-              RF
-            </button>
-          </div>
-
-          <!-- Infield -->
-          <div class="absolute top-12 left-4">
-            <button
-                v-if="actualPositions.includes('3B')"
-                @click="toggleFilter('position', '3B')"
-                :class="[
-                  'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
-                  isSelected('position', '3B')
-                    ? 'bg-emerald-500 text-white shadow-lg'
-                    : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md'
-                ]"
-            >
-              3B
-            </button>
-          </div>
-          <div class="absolute top-14 left-1/3 transform -translate-x-1/2">
-            <button
-                v-if="actualPositions.includes('SS')"
-                @click="toggleFilter('position', 'SS')"
-                :class="[
-                  'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
-                  isSelected('position', 'SS')
-                    ? 'bg-emerald-500 text-white shadow-lg'
-                    : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md'
-                ]"
-            >
-              SS
-            </button>
-          </div>
-          <div class="absolute top-14 right-1/3 transform translate-x-1/2">
-            <button
-                v-if="actualPositions.includes('2B')"
-                @click="toggleFilter('position', '2B')"
-                :class="[
-                  'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
-                  isSelected('position', '2B')
-                    ? 'bg-emerald-500 text-white shadow-lg'
-                    : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md'
-                ]"
-            >
-              2B
-            </button>
-          </div>
-          <div class="absolute top-12 right-4">
-            <button
-                v-if="actualPositions.includes('1B')"
-                @click="toggleFilter('position', '1B')"
-                :class="[
-                  'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
-                  isSelected('position', '1B')
-                    ? 'bg-emerald-500 text-white shadow-lg'
-                    : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md'
-                ]"
-            >
-              1B
-            </button>
-          </div>
-
-          <!-- Battery -->
-          <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2">
-            <button
-                v-if="actualPositions.includes('P')"
-                @click="toggleFilter('position', 'P')"
-                :class="[
-                  'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
-                  isSelected('position', 'P')
-                    ? 'bg-emerald-500 text-white shadow-lg'
-                    : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md'
-                ]"
-            >
-              P
-            </button>
-          </div>
-          <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2">
-            <button
-                v-if="actualPositions.includes('C')"
-                @click="toggleFilter('position', 'C')"
-                :class="[
-                  'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
-                  isSelected('position', 'C')
-                    ? 'bg-emerald-500 text-white shadow-lg'
-                    : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md'
-                ]"
-            >
-              C
-            </button>
-          </div>
-
-          <!-- DH (Designated Hitter) - 별도 위치 -->
-          <div class="absolute top-16 right-2">
-            <button
-                v-if="actualPositions.includes('DH')"
-                @click="toggleFilter('position', 'DH')"
-                :class="[
-                  'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
-                  isSelected('position', 'DH')
-                    ? 'bg-purple-500 text-white shadow-lg'
-                    : 'bg-white/80 text-gray-700 hover:bg-purple-100 shadow-md'
-                ]"
-            >
-              DH
-            </button>
-          </div>
-
-          <!-- Additional positions if any -->
-          <div class="absolute bottom-2 left-4 flex gap-1">
-            <button
-                v-for="pos in actualPositions.filter(p => !['C', 'P', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH'].includes(p))"
-                :key="pos"
-                @click="toggleFilter('position', pos)"
-                :class="[
-                  'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
-                  isSelected('position', pos)
-                    ? 'bg-emerald-500 text-white shadow-lg'
-                    : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md'
-                ]"
-            >
-              {{ pos }}
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Third Row: Combined Input and Select Fields -->
     <div class="mb-4">
+        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
+          position
+        </label>
+  <div class="max-w-[300px] rounded-lg p-4 shadow-sm border border-green-200 dark:border-green-700">
+    <!-- Baseball Field Layout -->
+    <div class="relative w-full h-40 mx-auto">
+      <!-- Outfield -->
+      <div class="absolute top-[8%] left-1/2 transform -translate-x-1/2">
+        <button v-if="actualPositions.includes('CF')" @click="toggleFilter('position', 'CF')"
+          :class="[
+            'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
+            isSelected('position', 'CF')
+              ? 'bg-emerald-500 text-white shadow-lg scale-105'
+              : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md hover:scale-105'
+          ]">CF</button>
+      </div>
+      <div class="absolute top-[8%] left-[15%]">
+        <button v-if="actualPositions.includes('LF')" @click="toggleFilter('position', 'LF')"
+          :class="[
+            'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
+            isSelected('position', 'LF')
+              ? 'bg-emerald-500 text-white shadow-lg scale-105'
+              : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md hover:scale-105'
+          ]">LF</button>
+      </div>
+      <div class="absolute top-[8%] right-[15%]">
+        <button v-if="actualPositions.includes('RF')" @click="toggleFilter('position', 'RF')"
+          :class="[
+            'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
+            isSelected('position', 'RF')
+              ? 'bg-emerald-500 text-white shadow-lg scale-105'
+              : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md hover:scale-105'
+          ]">RF</button>
+      </div>
+
+      <!-- Infield -->
+      <div class="absolute top-[50%] left-[8%]">
+        <button v-if="actualPositions.includes('B3')" @click="toggleFilter('position', 'B3')"
+          :class="[
+            'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
+            isSelected('position', 'B3')
+              ? 'bg-emerald-500 text-white shadow-lg scale-105'
+              : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md hover:scale-105'
+          ]">3B</button>
+      </div>
+      <div class="absolute top-[50%] right-[8%]">
+        <button v-if="actualPositions.includes('B1')" @click="toggleFilter('position', 'B1')"
+          :class="[
+            'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
+            isSelected('position', 'B1')
+              ? 'bg-emerald-500 text-white shadow-lg scale-105'
+              : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md hover:scale-105'
+          ]">1B</button>
+      </div>
+      <div class="absolute top-[40%] left-[34%]">
+        <button v-if="actualPositions.includes('SS')" @click="toggleFilter('position', 'SS')"
+          :class="[
+            'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
+            isSelected('position', 'SS')
+              ? 'bg-emerald-500 text-white shadow-lg scale-105'
+              : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md hover:scale-105'
+          ]">SS</button>
+      </div>
+      
+      <div class="absolute top-[40%] right-[34%]">
+        <button v-if="actualPositions.includes('B2')" @click="toggleFilter('position', 'B2')"
+          :class="[
+            'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
+            isSelected('position', 'B2')
+              ? 'bg-emerald-500 text-white shadow-lg scale-105'
+              : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md hover:scale-105'
+          ]">2B</button>
+      </div>
+
+      <div class="absolute top-[40%] left-[34%]">
+        <button v-if="actualPositions.includes('SP')" @click="toggleFilter('position', 'SP')"
+          :class="[
+            'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
+            isSelected('position', 'SP')
+              ? 'bg-emerald-500 text-white shadow-lg scale-105'
+              : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md hover:scale-105'
+          ]">SP</button>
+      </div>
+      
+      <div class="absolute top-[40%] right-[34%]">
+        <button v-if="actualPositions.includes('RP')" @click="toggleFilter('position', 'RP')"
+          :class="[
+            'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
+            isSelected('position', 'RP')
+              ? 'bg-emerald-500 text-white shadow-lg scale-105'
+              : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md hover:scale-105'
+          ]">RP</button>
+      </div>
+      
+
+      <!-- Catcher & DH -->
+      <div class="absolute bottom-[8%] left-[45%]">
+        <button v-if="actualPositions.includes('C')" @click="toggleFilter('position', 'C')"
+          :class="[
+            'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
+            isSelected('position', 'C')
+              ? 'bg-emerald-500 text-white shadow-lg scale-105'
+              : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md hover:scale-105'
+          ]">C</button>
+      </div>
+      <div class="absolute bottom-[8%] right-[20%]">
+        <button v-if="actualPositions.includes('DH')" @click="toggleFilter('position', 'DH')"
+          :class="[
+            'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
+            isSelected('position', 'DH')
+              ? 'bg-purple-500 text-white shadow-lg scale-105'
+              : 'bg-white/80 text-gray-700 hover:bg-purple-100 shadow-md hover:scale-105'
+          ]">DH</button>
+      </div>
+    </div>
+  </div>
       <h3 class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2 flex items-center gap-1">
         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
@@ -405,7 +358,7 @@ const teamLogos: Record<string, string> = {
 
       <!-- Select Fields -->
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-        <template v-for="field in selectFields.filter(f => f !== 'grade')" :key="field">
+        <template v-for="field in selectFields.filter(f => f !== 'grade' && f !== 'position')" :key="field">
           <div class="space-y-1">
             <label class="block text-xs font-medium text-gray-600 dark:text-gray-300 capitalize">
               {{ field }}
