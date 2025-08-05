@@ -30,7 +30,7 @@ const fieldLabels: Record<string, string> = {
   position: '포지션',
   handType: '투타',
   pitchingType: '투구 폼',
-  battingHand: '타자 유형',
+  battingHand: '타격 유형',
   throwHand: '투구 유형',
   skill: '스킬',
   synergy: '시너지',

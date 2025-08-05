@@ -334,8 +334,8 @@ const teamLogos: Record<string, string> = {
               :class="[
                 'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
                 isSelected('position', 'DH')
-                  ? 'bg-purple-500 text-white shadow-lg scale-105'
-                  : 'bg-white/80 text-gray-700 hover:bg-purple-100 shadow-md hover:scale-105'
+                  ? 'bg-blue-500 text-white border-blue-500 shadow-sm'
+            : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20'
               ]">DH</button>
           </div>
         </div>
