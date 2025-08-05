@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
 import Papa from 'papaparse'
-import PlayerTable from './table.vue'
-import FilterPanel from './FilterPanel.vue'
+import PlayerTable from '@/components/table.vue'
+import FilterPanel from '@/components/FilterPanel.vue'
 import { Search, Filter, Star, User } from 'lucide-vue-next'
 
 /** Tabs and State */
@@ -103,15 +103,25 @@ const filteredPlayers = computed(() => {
 
         return selected.some((sel: string) => playerTeams.includes(sel.trim()))
       }
-
       if (field === 'year') {
-        const playerYears = typeof p.year === 'string'
-            ? JSON.parse(p.year)
-            : Array.isArray(p.year)
-                ? p.year
-                : [p.year]
-        return selected.some((sel: string) => playerYears.includes(Number(sel)))
+        let playerYears: number[] = []
+
+        try {
+          if (typeof p.year === 'string') {
+            const parsed = JSON.parse(p.year)
+            playerYears = Array.isArray(parsed) ? parsed : [parsed]
+          } else if (Array.isArray(p.year)) {
+            playerYears = p.year
+          } else {
+            playerYears = [p.year]
+          }
+        } catch {
+          playerYears = []
+        }
+
+        return selected.every((sel: string) => playerYears.includes(Number(sel))) // ✅ AND
       }
+
 
       if (field === 'skill') {
         const playerSkill = typeof p.skill === 'string'
@@ -209,14 +219,14 @@ async function loadCsv() {
 <template>
   <div class="min-h-screen p-8 space-y-8 font-sans">
     <!-- Tabs -->
-    <div class="flex gap-4">
+    <div class="flex gap-4 w-[1280px] m-auto">
       <button
           v-for="tab in tabs"
           :key="tab"
           @click="selectedTab = tab"
           :class="selectedTab === tab
-          ? 'bg-[#e7cf86] text-black shadow-md scale-105'
-          : 'bg-[#1a1a1a] text-[#e7cf86] hover:bg-[#333] border border-[#e7cf86]'"
+          ?  'bg-blue-500 text-white hover:bg-blue-600 cursor-pointer'
+          : 'bg-white text-black border border-blue-400 text-blue-500 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20'"
           class="px-5 py-2 rounded-lg font-semibold transition-transform"
       >
         {{ tab }}

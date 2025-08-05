@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const props = defineProps<{
   show: boolean
+  player: Record<string, any> | null
 }>()
 
 const emit = defineEmits<{
@@ -27,15 +28,17 @@ function onBackdropClick(e: MouseEvent) {
       <!-- Modal (슬라이드 인/아웃만) -->
       <transition name="slide">
         <div
-            class="absolute top-0 right-0 w-[400px] h-screen bg-white border-l border-gray-200 shadow-xl overflow-y-auto"
+            class="absolute top-0 right-0 w-[750px] h-screen bg-white dark:bg-gray-900 border-l border-gray-200 dark:border-gray-700 shadow-xl overflow-y-auto"
             @click.stop
         >
           <div class="p-6 relative h-full">
             <button
-                class="absolute top-4 right-4 text-gray-500 hover:text-black"
+                class="absolute top-4 right-4 text-gray-500 hover:text-black dark:hover:text-white"
                 @click="close"
             >✕</button>
-            <slot />
+
+            <!-- 👉 슬롯에 player 전달 -->
+            <slot :player="player" />
           </div>
         </div>
       </transition>
@@ -44,7 +47,6 @@ function onBackdropClick(e: MouseEvent) {
 </template>
 
 <style scoped>
-/* Backdrop Fade */
 .fade-enter-from, .fade-leave-to {
   opacity: 0;
 }
@@ -55,7 +57,6 @@ function onBackdropClick(e: MouseEvent) {
   opacity: 1;
 }
 
-/* Modal Slide */
 .slide-enter-from {
   transform: translateX(100%);
 }

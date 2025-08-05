@@ -212,8 +212,8 @@ const teamLogos: Record<string, string> = {
                 :class="[
           'px-2 py-1 rounded text-xs font-medium transition-colors cursor-pointer',
           isSelected('grade', grade)
-            ? 'bg-yellow-400 text-black shadow-sm'
-            : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+            ? 'bg-blue-500 text-white'
+            : 'bg-gray-400 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
         ]"
             >
               {{ gradeLabels[grade] || grade }}
@@ -237,8 +237,8 @@ const teamLogos: Record<string, string> = {
               :class="[
                 'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
                 isSelected('position', 'CF')
-                  ? 'bg-emerald-500 text-white shadow-lg scale-105'
-                  : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md hover:scale-105'
+                  ? 'bg-blue-500 text-white border-blue-500 shadow-sm'
+            : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20'
               ]">CF</button>
           </div>
           <div class="absolute top-[8%] left-[15%]">
@@ -246,8 +246,8 @@ const teamLogos: Record<string, string> = {
               :class="[
                 'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
                 isSelected('position', 'LF')
-                  ? 'bg-emerald-500 text-white shadow-lg scale-105'
-                  : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md hover:scale-105'
+                  ? 'bg-blue-500 text-white border-blue-500 shadow-sm'
+            : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20'
               ]">LF</button>
           </div>
           <div class="absolute top-[8%] right-[15%]">
@@ -255,8 +255,8 @@ const teamLogos: Record<string, string> = {
               :class="[
                 'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
                 isSelected('position', 'RF')
-                  ? 'bg-emerald-500 text-white shadow-lg scale-105'
-                  : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md hover:scale-105'
+                  ? 'bg-blue-500 text-white border-blue-500 shadow-sm'
+            : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20'
               ]">RF</button>
           </div>
 
@@ -266,8 +266,8 @@ const teamLogos: Record<string, string> = {
               :class="[
                 'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
                 isSelected('position', 'B3')
-                  ? 'bg-emerald-500 text-white shadow-lg scale-105'
-                  : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md hover:scale-105'
+                  ? 'bg-blue-500 text-white border-blue-500 shadow-sm'
+            : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20'
               ]">3B</button>
           </div>
           <div class="absolute top-[50%] right-[8%]">
@@ -275,8 +275,8 @@ const teamLogos: Record<string, string> = {
               :class="[
                 'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
                 isSelected('position', 'B1')
-                  ? 'bg-emerald-500 text-white shadow-lg scale-105'
-                  : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md hover:scale-105'
+                  ? 'bg-blue-500 text-white border-blue-500 shadow-sm'
+            : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20'
               ]">1B</button>
           </div>
           <div class="absolute top-[40%] left-[34%]">
@@ -284,8 +284,8 @@ const teamLogos: Record<string, string> = {
               :class="[
                 'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
                 isSelected('position', 'SS')
-                  ? 'bg-emerald-500 text-white shadow-lg scale-105'
-                  : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md hover:scale-105'
+                  ? 'bg-blue-500 text-white border-blue-500 shadow-sm'
+            : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20'
               ]">SS</button>
           </div>
 
@@ -294,8 +294,8 @@ const teamLogos: Record<string, string> = {
               :class="[
                 'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
                 isSelected('position', 'B2')
-                  ? 'bg-emerald-500 text-white shadow-lg scale-105'
-                  : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md hover:scale-105'
+                  ? 'bg-blue-500 text-white border-blue-500 shadow-sm'
+            : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20'
               ]">2B</button>
           </div>
 
@@ -304,8 +304,8 @@ const teamLogos: Record<string, string> = {
               :class="[
                 'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
                 isSelected('position', 'SP')
-                  ? 'bg-emerald-500 text-white shadow-lg scale-105'
-                  : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md hover:scale-105'
+                  ? 'bg-blue-500 text-white border-blue-500 shadow-sm'
+            : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20'
               ]">SP</button>
           </div>
 
@@ -314,8 +314,8 @@ const teamLogos: Record<string, string> = {
               :class="[
                 'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
                 isSelected('position', 'RP')
-                  ? 'bg-emerald-500 text-white shadow-lg scale-105'
-                  : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md hover:scale-105'
+                  ? 'bg-blue-500 text-white border-blue-500 shadow-sm'
+            : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20'
               ]">RP</button>
           </div>
 
@@ -325,8 +325,8 @@ const teamLogos: Record<string, string> = {
               :class="[
                 'px-2 py-1 rounded text-xs font-bold transition-colors cursor-pointer',
                 isSelected('position', 'C')
-                  ? 'bg-emerald-500 text-white shadow-lg scale-105'
-                  : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md hover:scale-105'
+                  ? 'bg-blue-500 text-white border-blue-500 shadow-sm'
+            : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20'
               ]">C</button>
           </div>
           <div class="absolute bottom-[8%] right-[20%]">
@@ -394,10 +394,6 @@ const teamLogos: Record<string, string> = {
           :src="teamLogos[team]"
           :alt="team"
           class="w-8 h-8 object-contain mx-auto"
-        />
-        <div
-          v-if="isSelected('team', team)"
-          class="absolute -top-0.5 -right-0.5 w-2 h-2 bg-blue-500 rounded-full"
         />
       </button>
     </div>

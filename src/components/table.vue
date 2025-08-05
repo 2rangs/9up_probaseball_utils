@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { Star, ExternalLink, ChevronDown, ChevronUp} from 'lucide-vue-next'
 import SideModal from './SideModal.vue' // 실제 위치에 맞게 수정
+import PlayerDetail from './PlayerDetail.vue' // 경로 반드시 맞게!
 
 const props = defineProps({
   items: {
@@ -225,14 +226,14 @@ function toggleExpanded(index: number) {
     </table>
   </div>
 
-  <SideModal v-model:show="showModal">
-    <h2 class="text-lg font-bold mb-4">선수 상세정보</h2>
-    <div v-if="selectedItem">
-      {{selectedItem}}
-      <p class="mb-2"><strong>이름:</strong> {{ selectedItem.name }}</p>
-      <p class="mb-2"><strong>팀:</strong> {{ findTeamLogoByName(selectedItem.team) }}</p>
-      <p class="mb-2"><strong>포지션:</strong> {{ parsePosition(selectedItem.position) }}</p>
-      <p class="mb-2"><strong>시너지:</strong> {{ selectedItem.synergy }}</p>
-    </div>
+  <SideModal
+      v-if="selectedItem"
+      :show="showModal"
+      :player="selectedItem"
+      @update:show="val => showModal = val"
+  >
+    <PlayerDetail :player="selectedItem" />
   </SideModal>
+
+
 </template>
