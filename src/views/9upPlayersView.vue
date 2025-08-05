@@ -7,6 +7,10 @@ import { Search, Filter, Star, User } from 'lucide-vue-next'
 
 /** Tabs and State */
 const tabs = ['Batters', 'Pitchers']
+const tabLabels: Record<string, string> = {
+  Batters: '타자',
+  Pitchers: '투수',
+}
 const selectedTab = ref<'Batters' | 'Pitchers'>('Batters')
 const players = ref<Record<string, any>[]>([])
 const selectedPlayer = ref(null)
@@ -218,18 +222,19 @@ async function loadCsv() {
 
 <template>
   <div class="min-h-screen p-8 space-y-8 font-sans">
-    <!-- Tabs -->
-    <div class="flex gap-4 w-[1280px] m-auto">
+    <div class="flex gap-4 w-[1280px] mx-auto">
       <button
           v-for="tab in tabs"
           :key="tab"
           @click="selectedTab = tab"
-          :class="selectedTab === tab
-          ?  'bg-blue-500 text-white hover:bg-blue-600 cursor-pointer'
-          : 'bg-white text-black border border-blue-400 text-blue-500 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20'"
-          class="px-5 py-2 rounded-lg font-semibold transition-transform"
+          :class="[
+        'px-5 py-2 rounded-lg font-semibold transition-transform cursor-pointer',
+        selectedTab === tab
+          ? 'bg-blue-500 text-white hover:bg-blue-600'
+          : 'bg-white text-black border border-blue-400 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20'
+      ]"
       >
-        {{ tab }}
+        {{ tabLabels[tab] }}
       </button>
     </div>
 
