@@ -212,7 +212,7 @@ function toggleExpanded(index: number) {
 
 
           <template v-else-if="col === 'open'">
-            <button @click="openModal(item)" class="text-blue-600 underline text-sm">
+            <button @click="openModal(item)" class="text-blue-600 underline text-sm cursor-pointer">
               <ExternalLink />
             </button>
           </template>

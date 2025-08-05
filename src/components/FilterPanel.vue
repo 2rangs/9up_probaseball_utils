@@ -486,7 +486,7 @@ const teamLogos: Record<string, string> = {
   </div>
   <button
     @click="clearAllFilters"
-    class="px-3 py-1.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors text-xs font-medium flex items-center gap-1"
+    class="px-3 py-1.5 bg-red-100 text-red-700 dark:text-gray-300 rounded-md hover:bg-red-200 dark:hover:bg-gray-600 transition-colors text-xs font-medium flex items-center gap-1"
   >
     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
