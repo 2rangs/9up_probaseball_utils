@@ -8,6 +8,7 @@ const props = defineProps({
   selectFields: Array as () => string[],
   rarityField: String,
   filterOptions: Object as PropType<Record<string, string[]>>,
+  fieldLabels:  Object as PropType<Record<string, string>>,
   filters: Object as PropType<Record<string, any>>
 })
 
@@ -107,6 +108,24 @@ const gradeOrder = [
 const visibleGrades = computed(() => {
   return gradeOrder.filter(g => props.filterOptions.grade?.includes(g))
 })
+
+function getSpecialFieldLabel(field: string, code: string): string {
+  const handednessMap = { L: '좌', R: '우', S: '양' }
+  const pitchingMap = { O: '오버핸드', S: '사이드암', U: '언더핸드' }
+
+  const upperCode = code.toUpperCase()
+
+  if (['battingHand', 'throwHand'].includes(field)) {
+    return handednessMap[upperCode] || code
+  }
+
+  if (field === 'pitchingType') {
+    return pitchingMap[upperCode] || code
+  }
+
+  return code
+}
+
 const teamLogos: Record<string, string> = {
   kia: '/assets/logos/symbol/emblem_s_01_kia.png',
   haitai: '/assets/logos/symbol/emblem_s_01_haitai.png',
@@ -136,106 +155,78 @@ const teamLogos: Record<string, string> = {
 
 <template>
   <div class="max-w-[1280px] m-auto">
-<!-- 통합 필터 행 -->
-<div class="flex flex-wrap gap-6 items-end bg-white dark:bg-gray-900 p-4 rounded-lg shadow border border-gray-200 dark:border-gray-700">
-  
-  <!-- 🔍 name + synergy 검색 통합 -->
-  <div class="w-full sm:w-[240px]">
-    <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">이름 또는 시너지</label>
-    <div class="relative">
-      <input
-        type="text"
-        :value="props.filters.search || ''"
-        @input="update('search', $event.target.value)"
-        placeholder="이름 또는 시너지 검색..."
-        class="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 pr-10 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 shadow-sm hover:shadow-md transition focus:ring-2 focus:ring-blue-500 focus:outline-none"
-      />
-      <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg>
+    <div class="mb-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <!-- 검색 필드 (우측 정렬되게 col-start 자동으로 맞춰짐) -->
+      <div class="sm:col-start-3">
+        <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">      {{`${fieldLabels['name']} 또는 ${fieldLabels['synergy']}`}}</label>
+        <div class="relative">
+          <input
+              type="text"
+              :value="props.filters.search || ''"
+              @input="update('search', $event.target.value)"
+              placeholder="이름 또는 시너지 검색..."
+              class="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 pr-10 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 shadow-sm hover:shadow-md transition focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          />
+          <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+      <div class="p-4 bg-white/80 dark:bg-gray-800/50 space-y-4">
+        <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+          {{fieldLabels['grade']}} / {{fieldLabels['rarity']}}
+        </label>
 
-  <!-- ⭐ Rarity -->
-  <div class="space-y-1">
-    <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400">Rarity</label>
-    <div class="flex gap-1 items-center">
-      <button
-        v-for="i in 6"
-        :key="i"
-        @click="update(rarityField, i === props.filters[rarityField] ? '' : i)"
-        class="p-0.5 rounded hover:bg-yellow-100 dark:hover:bg-yellow-900/20 transition-colors"
-      >
-        <Star
-          :class="i <= props.filters[rarityField] ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600'"
-          class="w-4 h-4"
-          fill="currentColor"
-        />
-      </button>
-    </div>
-  </div>
+        <!-- Rarity (별점) -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+          <div class="text-xs font-medium text-gray-600 dark:text-gray-300 sm:w-20">     {{fieldLabels['rarity']}}</div>
+          <div class="flex gap-1 sm:flex-1 sm:justify-start">
+            <button
+                v-for="i in 6"
+                :key="i"
+                @click="update(rarityField, i === props.filters[rarityField] ? '' : i)"
+                class="p-1 rounded hover:bg-yellow-100 dark:hover:bg-yellow-900/20 transition-colors"
+            >
+              <Star
+                  :class="i <= props.filters[rarityField] ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600'"
+                  class="w-5 h-5"
+                  fill="currentColor"
+              />
+            </button>
+          </div>
+        </div>
 
-  <!-- 🔘 나머지 버튼형 필터들 -->
-  <template v-for="field in selectFields.filter(f => !['grade', 'position', 'skill', 'enhancedSkill', 'year'].includes(f))" :key="field">
-    <div class="space-y-1">
-      <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 capitalize">
-        {{ field }}
-      </label>
-      <div class="flex gap-1 flex-wrap">
-        <button
-          v-for="option in props.filterOptions[field]"
-          :key="option"
-          @click="toggleFilter(field, option)"
-          :class="[
-            'px-2 py-1 rounded text-xs font-medium transition border',
-            isSelected(field, option)
-              ? 'bg-blue-500 text-white border-blue-500 shadow-sm'
-              : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20'
-          ]"
-        >
-          {{ option }}
-        </button>
-      </div>
-    </div>
-  </template>
-</div>
-
-
-
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-
-
-
-  <!-- 등급 선택 -->
-  <div>
-    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
-      Grade
-    </label>
-    <div class="grid grid-cols-6 gap-1">
-      <button
-        v-for="grade in visibleGrades"
-        :key="grade"
-        @click="toggleFilter('grade', grade)"
-        :class="[
-          'p-1 rounded text-xs font-medium transition-colors cursor-pointer',
+        <!-- Grade (등급 버튼) -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+          <div class="text-xs font-medium text-gray-600 dark:text-gray-300 sm:w-20">     {{fieldLabels['grade']}}</div>
+          <div class="flex flex-wrap gap-1 sm:flex-1 sm:justify-start">
+            <button
+                v-for="grade in visibleGrades"
+                :key="grade"
+                @click="toggleFilter('grade', grade)"
+                :class="[
+          'px-2 py-1 rounded text-xs font-medium transition-colors cursor-pointer',
           isSelected('grade', grade)
             ? 'bg-yellow-400 text-black shadow-sm'
             : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
         ]"
-      >
-        {{ gradeLabels[grade] || grade }}
-      </button>
-    </div>
-  </div>
+            >
+              {{ gradeLabels[grade] || grade }}
+            </button>
+          </div>
+        </div>
+      </div>
 
 
   <!-- 포지션 야구장 UI -->
   <div class="rounded-lg ">
     <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
-      Position
+      {{fieldLabels['position']}}
     </label>
     <div class="grid-col-3 rounded-lg p-4">
         <!-- Baseball Field Layout -->
@@ -297,7 +288,7 @@ const teamLogos: Record<string, string> = {
                   : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md hover:scale-105'
               ]">SS</button>
           </div>
-          
+
           <div class="absolute top-[40%] right-[34%]">
             <button v-if="actualPositions.includes('B2')" @click="toggleFilter('position', 'B2')"
               :class="[
@@ -317,7 +308,7 @@ const teamLogos: Record<string, string> = {
                   : 'bg-white/80 text-gray-700 hover:bg-emerald-100 shadow-md hover:scale-105'
               ]">SP</button>
           </div>
-          
+
           <div class="absolute top-[40%] right-[34%]">
             <button v-if="actualPositions.includes('RP')" @click="toggleFilter('position', 'RP')"
               :class="[
@@ -349,15 +340,45 @@ const teamLogos: Record<string, string> = {
           </div>
         </div>
       </div>
+
+    <div class="grid grid-flow-col  gap-4 overflow-x-auto">
+      <div
+          v-for="field in selectFields.filter(f => !['grade', 'position', 'skill','search', 'enhancedSkill', 'year'].includes(f))"
+          :key="field"
+          class="flex flex-col items-center space-y-1"
+      >
+        <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 capitalize text-center">
+          {{ fieldLabels[field] }}
+        </label>
+        <div class="flex gap-1 flex-wrap justify-center">
+          <button
+              v-for="option in props.filterOptions[field]"
+              :key="option"
+              @click="() => update(field, props.filters[field] === option ? null : option)"
+              :class="[
+          'px-2 py-1 rounded text-xs font-medium transition border',
+          props.filters[field] === option
+            ? 'bg-blue-500 text-white border-blue-500 shadow-sm'
+            : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20'
+        ]"
+          >
+            {{ getSpecialFieldLabel(field, option) }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+
   </div>
 
-  
+
   <!-- 팀 선택 -->
   <div>
     <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
-      Team
+      {{fieldLabels['team']}}
     </label>
-    <div class="grid grid-cols-6 gap-1">
+    <div class="grid grid-cols-5 gap-1">
       <button
         v-for="team in props.filterOptions.team"
         :key="team"
@@ -372,7 +393,7 @@ const teamLogos: Record<string, string> = {
         <img
           :src="teamLogos[team]"
           :alt="team"
-          class="w-5 h-5 object-contain mx-auto"
+          class="w-8 h-8 object-contain mx-auto"
         />
         <div
           v-if="isSelected('team', team)"
@@ -387,21 +408,15 @@ const teamLogos: Record<string, string> = {
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
   <!-- 연도 필터 -->
   <div class="bg-white dark:bg-gray-900 rounded-lg p-4 shadow border border-gray-200 dark:border-gray-700 flex flex-col">
-    <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2 flex items-center gap-1">
-      <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707L13 13v4l-2 2v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
-      </svg>
-      연도 선택
-    </h3>
+    <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2 flex items-center gap-1">{{fieldLabels['year']}}</h3>
     <div class="flex-1 overflow-y-auto max-h-48 rounded-lg border border-gray-200 dark:border-gray-700 p-2 bg-gray-50 dark:bg-gray-800">
-      <div class="grid grid-cols-5 gap-2">
+      <div class="grid grid-cols-4 gap-2">
         <button
           v-for="year in yearOptions"
           :key="year"
           @click="toggleFilter('year', year)"
           :class="[
-            'px-2 py-1 rounded text-xs font-medium transition',
+            'px-2 py-1 rounded text-xs font-medium transition border',
             isSelected('year', year)
              ? 'bg-blue-500 text-white border-blue-500 shadow'
               : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20'
@@ -412,13 +427,13 @@ const teamLogos: Record<string, string> = {
       </div>
     </div>
     <div class="text-xs text-gray-500 dark:text-gray-400 mt-2">
-      선택된 연도: {{ Array.isArray(props.filters.year) ? props.filters.year.length : 0 }}개
+      선택된 {{fieldLabels['year']}}: {{ Array.isArray(props.filters.year) ? props.filters.year.length : 0 }}개
     </div>
   </div>
 
   <!-- 스킬 필터 -->
   <div class="bg-white dark:bg-gray-900 rounded-lg p-4 shadow border border-gray-200 dark:border-gray-700 flex flex-col">
-    <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">스킬</h3>
+    <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">{{ fieldLabels['skill'] }}</h3>
     <div class="flex-1 overflow-y-auto max-h-48 rounded-lg border border-gray-200 dark:border-gray-700 p-2 bg-gray-50 dark:bg-gray-800">
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5">
         <button
@@ -437,13 +452,13 @@ const teamLogos: Record<string, string> = {
       </div>
     </div>
     <div class="text-xs text-gray-500 dark:text-gray-400 mt-2">
-      선택된 스킬: {{ Array.isArray(props.filters.skill) ? props.filters.skill.length : 0 }}개
+      선택된 {{ fieldLabels['skill'] }}: {{ Array.isArray(props.filters.skill) ? props.filters.skill.length : 0 }}개
     </div>
   </div>
 
   <!-- 강화 스킬 필터 -->
   <div class="bg-white dark:bg-gray-900 rounded-lg p-4 shadow border border-gray-200 dark:border-gray-700 flex flex-col">
-    <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">강화 스킬</h3>
+    <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">{{fieldLabels['enhancedSkill']}}</h3>
     <div class="flex-1 overflow-y-auto max-h-48 rounded-lg border border-gray-200 dark:border-gray-700 p-2 bg-gray-50 dark:bg-gray-800">
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5">
         <button
@@ -462,7 +477,7 @@ const teamLogos: Record<string, string> = {
       </div>
     </div>
     <div class="text-xs text-gray-500 dark:text-gray-400 mt-2">
-      선택된 강화 스킬: {{ Array.isArray(props.filters.enhancedSkill) ? props.filters.enhancedSkill.length : 0 }}개
+      선택된 {{fieldLabels['enhancedSkill']}}: {{ Array.isArray(props.filters.enhancedSkill) ? props.filters.enhancedSkill.length : 0 }}개
     </div>
   </div>
 </div>

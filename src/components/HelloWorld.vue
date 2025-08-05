@@ -1,35 +1,58 @@
-<script setup>
-import PlayerTable from './table.vue'
-import {ref, computed, onMounted, watch} from 'vue'
+<script setup lang="ts">
+import { ref, computed, onMounted, watch } from 'vue'
 import Papa from 'papaparse'
-import {
-  Search, Filter, Star, User
-} from 'lucide-vue-next'
-import FilterPanel from "./FilterPanel.vue";
+import PlayerTable from './table.vue'
+import FilterPanel from './FilterPanel.vue'
+import { Search, Filter, Star, User } from 'lucide-vue-next'
 
+/** Tabs and State */
 const tabs = ['Batters', 'Pitchers']
-const selectedTab = ref('Batters')
-
-const players = ref([])
+const selectedTab = ref<'Batters' | 'Pitchers'>('Batters')
+const players = ref<Record<string, any>[]>([])
 const selectedPlayer = ref(null)
-const filters = ref({})
+const filters = ref<Record<string, any>>({})
 const currentPage = ref(1)
 const pageSize = 20
 
+/** Field Definitions */
 const inputFields = ['name', 'team', 'year', 'skill', 'synergy']
-const selectFields = ['grade', 'position', 'battingHand', 'throwHand', 'pitchingType', 'skill','enhancedSkill']
 const rarityField = 'rarity'
-const allFields = [...inputFields, ...selectFields, rarityField]
+const fieldLabels: Record<string, string> = {
+  grade: '등급',
+  rarity: '레어도',
+  name: '이름',
+  team: '팀',
+  year: '연도',
+  position: '포지션',
+  handType: '투타',
+  pitchingType: '투구 폼',
+  battingHand: '타자 유형',
+  throwHand: '투구 유형',
+  skill: '스킬',
+  synergy: '시너지',
+  enhancedSkill: '강화 스킬',
+  search: '이름/시너지 검색'
+}
 
+
+const selectFields = computed(() => {
+  const common = ['grade', 'position', 'throwHand', 'skill', 'search', 'enhancedSkill']
+  return selectedTab.value === 'Pitchers'
+      ? [...common, 'pitchingType']
+      : [...common, 'battingHand']
+})
+
+const allFields = computed(() => [...inputFields, ...selectFields.value, rarityField])
+
+/** Table Columns */
 const columns = ref([
   'grade', 'rarity', 'name', 'team', 'year', 'position', 'handType', 'pitchingType', 'synergy', 'open'
 ])
 
+/** Filter Option Extraction */
 const filterOptions = computed(() => {
-  const options = {}
-
-  // 포함할 필드
-  const fieldsToScan = [...selectFields, 'team', 'grade', 'skill']
+  const options: Record<string, Set<string>> = {}
+  const fieldsToScan = [...selectFields.value, 'team', 'grade', 'skill']
 
   fieldsToScan.forEach(field => {
     options[field] = new Set()
@@ -53,95 +76,70 @@ const filterOptions = computed(() => {
       }
     })
   })
-  console.log(options)
 
   return Object.fromEntries(
       Object.entries(options).map(([field, set]) => [field, [...set].sort()])
   )
 })
 
-
+/** Filtering Logic */
 const filteredPlayers = computed(() => {
   return players.value.filter(p => {
-    return allFields.every(field => {
+    return allFields.value.every(field => {
       const selected = filters.value[field]
 
       if (!selected || (Array.isArray(selected) && selected.length === 0)) return true
 
-      // ⭐ rarity (숫자 비교)
       if (field === rarityField) {
         return Number(p[field]) === Number(selected)
       }
 
-      // 🧢 팀: 다중 OR 조건
       if (field === 'team') {
-        if (typeof selected === 'string') {
-          return String(p[field] ?? '').toLowerCase().includes(String(selected).toLowerCase())
-        }
-        if (!Array.isArray(selected)) return false
+        const playerTeams = typeof p.team === 'string'
+            ? p.team.split(',').map(t => t.trim())
+            : Array.isArray(p.team)
+                ? p.team.map(t => t.trim())
+                : [String(p.team || '')]
 
-        let playerTeams = []
-        if (typeof p.team === 'string') {
-          playerTeams = p.team.split(',').map(t => t.trim()).filter(t => t !== '')
-        } else if (Array.isArray(p.team)) {
-          playerTeams = p.team.map(t => String(t).trim()).filter(t => t !== '')
-        } else {
-          playerTeams = [String(p.team || '').trim()].filter(t => t !== '')
-        }
-
-        return selected.some(sel => playerTeams.includes(String(sel).trim()))
+        return selected.some((sel: string) => playerTeams.includes(sel.trim()))
       }
 
-      // 🗓 year: 다중 OR 조건 (ex: [2011, 2012])
       if (field === 'year') {
-        if (!Array.isArray(selected)) return false
-
-        let playerYears = []
-        try {
-          if (typeof p.year === 'string') {
-            playerYears = JSON.parse(p.year)
-          } else if (Array.isArray(p.year)) {
-            playerYears = p.year
-          } else {
-            playerYears = [Number(p.year)]
-          }
-        } catch {
-          return false
-        }
-
-        return selected.some(sel => playerYears.includes(Number(sel)))
+        const playerYears = typeof p.year === 'string'
+            ? JSON.parse(p.year)
+            : Array.isArray(p.year)
+                ? p.year
+                : [p.year]
+        return selected.some((sel: string) => playerYears.includes(Number(sel)))
       }
-if (field === 'skill') {
-  if (!Array.isArray(selected)) return false
 
-  const playerSkill = typeof p.skill === 'string'
-    ? p.skill.split(',').map(s => s.trim())
-    : Array.isArray(p.skill)
-      ? p.skill
-      : [String(p.skill)]
+      if (field === 'skill') {
+        const playerSkill = typeof p.skill === 'string'
+            ? p.skill.split(',').map(s => s.trim())
+            : Array.isArray(p.skill)
+                ? p.skill
+                : [String(p.skill)]
+        return selected.every((sel: string) => playerSkill.includes(sel))
+      }
 
-  return selected.every(sel => playerSkill.includes(String(sel)))
-}
-
-
-
-      // ⚾ 포지션: 다중 AND 조건
       if (field === 'position') {
         try {
           const playerPos = JSON.parse(p.position || '[]')
-          if (!Array.isArray(playerPos)) return false
-          return Array.isArray(selected) && selected.every(sel => playerPos.includes(sel))
+          return selected.every((sel: string) => playerPos.includes(sel))
         } catch {
           return false
         }
       }
 
-      // 🔍 문자열 포함 검색
-      if (inputFields.includes(field) && field !== 'team') {
+      if (field === 'search') {
+        const keyword = selected.toLowerCase()
+        return [p.name, p.synergy].some(val => String(val || '').toLowerCase().includes(keyword))
+      }
+
+      if (inputFields.includes(field)) {
         return String(p[field] ?? '').toLowerCase().includes(String(selected).toLowerCase())
       }
 
-      // 🎖 등급: 다중 OR 조건
       if (Array.isArray(selected)) {
         return selected.includes(p[field])
       }
@@ -151,6 +149,7 @@ if (field === 'skill') {
   })
 })
 
+/** Pagination */
 const paginatedPlayers = computed(() => {
   const start = (currentPage.value - 1) * pageSize
   return filteredPlayers.value.slice(start, start + pageSize)
@@ -162,6 +161,7 @@ const pageNumbers = computed(() => {
   const maxButtons = 7
   const total = totalPages.value
   const current = currentPage.value
+
   if (total <= maxButtons) return [...Array(total).keys()].map(i => i + 1)
 
   const start = Math.max(2, current - 2)
@@ -175,13 +175,17 @@ const pageNumbers = computed(() => {
   return [1, ...range, total]
 })
 
+/** Watch Tab Switch */
 watch(selectedTab, () => {
   loadCsv()
   selectedPlayer.value = null
-  Object.keys(filters.value).forEach(k => filters.value[k] = '')
+  Object.keys(filters.value).forEach(k => {
+    if (k !== 'grade') filters.value[k] = ''
+  })
   currentPage.value = 1
 })
 
+/** Load CSV */
 onMounted(loadCsv)
 
 async function loadCsv() {
@@ -196,37 +200,41 @@ async function loadCsv() {
     skipEmptyLines: true,
     complete: (results) => {
       players.value = results.data
+      filters.value.grade = filterOptions.value.grade ?? []
     }
   })
 }
 </script>
 
 <template>
-  <div class="min-h-screen  p-8 space-y-8 font-sans">
+  <div class="min-h-screen p-8 space-y-8 font-sans">
     <!-- Tabs -->
     <div class="flex gap-4">
       <button
           v-for="tab in tabs"
           :key="tab"
           @click="selectedTab = tab"
-          :class="selectedTab === tab ? 'bg-[#e7cf86] text-black shadow-md scale-105' : 'bg-[#1a1a1a] text-[#e7cf86] hover:bg-[#333] border border-[#e7cf86]'"
+          :class="selectedTab === tab
+          ? 'bg-[#e7cf86] text-black shadow-md scale-105'
+          : 'bg-[#1a1a1a] text-[#e7cf86] hover:bg-[#333] border border-[#e7cf86]'"
           class="px-5 py-2 rounded-lg font-semibold transition-transform"
       >
         {{ tab }}
       </button>
     </div>
 
+    <!-- Filters -->
     <FilterPanel
         :all-fields="allFields"
         :select-fields="selectFields"
         :rarity-field="rarityField"
         :filter-options="filterOptions"
+        :field-labels="fieldLabels"
         v-model:filters="filters"
     />
 
-
-    <!-- Player Table -->
-    <PlayerTable :items="paginatedPlayers" :columns="columns"/>
+    <!-- Table -->
+    <PlayerTable :items="paginatedPlayers" :columns="columns" />
 
     <!-- Pagination -->
     <div class="flex justify-center items-center gap-1 mt-8 flex-wrap">
