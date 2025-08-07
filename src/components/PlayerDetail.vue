@@ -325,18 +325,24 @@ const findSynergy = (synergy: string) => {
       <!-- 오른쪽: 정보 + 능력치 + 레이더 -->
       <div class="space-y-6">
         <div class="flex flex-wrap items-center gap-3">
-          <span class="text-sm px-2 py-0.5 rounded bg-blue-100 text-blue-700 dark:bg-blue-800/30 dark:text-blue-300">
-            {{ player.grade }}
-          </span>
-          <div class="flex items-center gap-1">
+
+          <img
+              :src="`/assets/logos/grade/${ player.grade}.png`"
+              alt="등급 이미지"
+              class="w-24"
+          />
+        <div>
+          <div class="flex items-center gap-0.5 p-2">
             <Star
                 v-for="n in Number(player.rarity)"
                 :key="n"
                 class="w-4 h-4 text-yellow-400 fill-yellow-400"
             />
+
           </div>
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white p-2">{{ player.name }}</h2>
         </div>
-        <h2 class="text-xl font-bold text-gray-900 dark:text-white">{{ player.name }}</h2>
+        </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>

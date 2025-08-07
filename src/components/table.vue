@@ -111,13 +111,25 @@ function toggleExpanded(index: number) {
 
 <template>
   <div class="overflow-x-auto max-w-[1280px] m-auto">
-    <table class="min-w-full text-sm table-auto">
+    <table class="min-w-full text-sm table-fixed">
       <thead class="bg-gray-100 text-gray-700 font-semibold text-xs uppercase tracking-wide">
       <tr>
         <th
             v-for="col in columns"
             :key="col"
-            class="px-4 py-3 border-b border-gray-300 whitespace-nowrap text-center"
+            :class="[
+              'border-b border-gray-300 whitespace-nowrap text-center h-[48px]',
+              col === 'grade' ? 'w-[100px]' :
+              col === 'rarity' ? 'w-[100px]' :
+              col === 'team' ? 'w-[150px]' :
+              col === 'year' ? 'w-[80px]' :
+              col === 'position' ? 'w-[100px]' :
+              col === 'handType' ? 'w-[100px]' :
+              col === 'pitchingType' ? 'w-[120px]' :
+              col === 'synergy' ? 'w-[300px]' :
+              col === 'open' ? 'w-[50px]' :
+              'w-[120px]'
+            ]"
         >
           {{ head[col] }}
         </th>
@@ -134,11 +146,29 @@ function toggleExpanded(index: number) {
             v-for="col in columns"
             :key="col"
             :class="[
-              'px-4 py-2 border-b border-gray-200 whitespace-nowrap align-middle text-sm text-gray-800',
-              col === 'synergy' ? 'text-left' : 'text-center'
+              'border-b border-gray-200 whitespace-nowrap align-middle text-sm text-gray-800 h-[48px]',
+              col === 'synergy' ? 'text-left' : 'text-center',
+              col === 'grade' ? 'w-[80px]' :
+              col === 'rarity' ? 'w-[100px]' :
+              col === 'team' ? 'w-[150px]' :
+              col === 'year' ? 'w-[80px]' :
+              col === 'position' ? 'w-[100px]' :
+              col === 'handType' ? 'w-[100px]' :
+              col === 'pitchingType' ? 'w-[120px]' :
+              col === 'synergy' ? 'w-[300px]' :
+              col === 'open' ? 'w-[50px]' :
+              'w-[120px]'
             ]"
         >
-          <template v-if="col === 'rarity'">
+          <template v-if="col === 'grade'">
+            <img
+                :src="`/assets/logos/grade/${item[col]}.png`"
+                :alt="item[col]"
+                class="w-[80px]"
+            />
+          </template>
+
+          <template v-else-if="col === 'rarity'">
             <div class="flex justify-center gap-0.5">
               <Star
                   v-for="i in Number(item[col])"
@@ -190,8 +220,8 @@ function toggleExpanded(index: number) {
               <p
                   class="flex-1 text-sm text-gray-800 select-text whitespace-pre-line break-words leading-snug transition-all duration-300"
                   :style="expandedRowIndex === index
-        ? {}
-        : { display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }"
+                    ? {}
+                    : { display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }"
               >
                 {{ item[col] }}
               </p>
@@ -210,12 +240,6 @@ function toggleExpanded(index: number) {
               </button>
             </div>
           </template>
-
-
-
-
-
-
 
           <template v-else-if="col === 'open'">
             <button @click="openModal(item)" class="text-blue-600 underline text-sm cursor-pointer">
@@ -240,6 +264,5 @@ function toggleExpanded(index: number) {
   >
     <PlayerDetail :player="selectedItem" />
   </SideModal>
-
-
 </template>
+

@@ -202,24 +202,34 @@ const teamLogos: Record<string, string> = {
         </div>
 
         <!-- Grade (등급 버튼) -->
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-          <div class="text-xs font-medium text-gray-600 dark:text-gray-300 sm:w-20">     {{fieldLabels['grade']}}</div>
-          <div class="flex flex-wrap gap-1 sm:flex-1 sm:justify-start">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+          <!-- 레이블 -->
+          <div class="text-xs font-semibold text-gray-600 dark:text-gray-300 w-20 shrink-0">
+            {{ fieldLabels['grade'] }}
+          </div>
+
+          <!-- 버튼 그룹 -->
+          <div class="flex flex-wrap gap-2 sm:flex-1">
             <button
                 v-for="grade in visibleGrades"
                 :key="grade"
                 @click="toggleFilter('grade', grade)"
                 :class="[
-          'px-2 py-1 rounded text-xs font-medium transition-colors cursor-pointer',
-          isSelected('grade', grade)
-            ? 'bg-blue-500 text-white'
-            : 'bg-gray-400 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
-        ]"
+        'px-1 py-1 rounded-md border transition shadow-sm',
+        isSelected('grade', grade)
+          ? 'bg-blue-600 border-blue-600 text-white'
+          : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700'
+      ]"
             >
-              {{ gradeLabels[grade] || grade }}
+              <img
+                  :src="`/assets/logos/grade/${grade}.png`"
+                  :alt="grade"
+                  class="w-12 h-auto object-contain"
+              />
             </button>
           </div>
         </div>
+
       </div>
 
 
