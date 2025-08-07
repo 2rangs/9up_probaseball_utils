@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Radar } from 'vue-chartjs'
 import { computed, onMounted, ref } from 'vue'
+import { ChevronDown, ChevronUp, Star} from 'lucide-vue-next'
 import {
   Chart as ChartJS,
   Title,
@@ -21,13 +22,28 @@ const teamData = ref<any[]>([])
 const normalSkillData = ref<any[]>([])
 const enhancedSkillData = ref<any[]>([])
 const selectedEffectIndex = ref(0)
+const synergyData = ref<any[]>([])
+const expandedSynergies = ref<any[]>([])
 
+function toggleSynergy(s: string) {
+  const idx = expandedSynergies.value.indexOf(s)
+  if (idx === -1) {
+    expandedSynergies.value.push(s)
+  } else {
+    expandedSynergies.value.splice(idx, 1)
+  }
+}
 
+function isExpanded(s: string) {
+  return expandedSynergies.value.includes(s)
+}
 onMounted(async () => {
   const res = await fetch('/DB/setting.json')
   const normalSkillRes = await fetch('/DB/normal_skill.json')
   const enhancedSkillRes = await fetch('/DB/enhanced_skill.json')
+  const synergyRes = await fetch('/DB/synergys.json')
 
+  synergyData.value = await synergyRes.json()
   normalSkillData.value = await normalSkillRes.json()
   enhancedSkillData.value = await enhancedSkillRes.json()
   teamData.value = await res.json()
@@ -207,12 +223,17 @@ const matchSkillInfo = (skill: string, type: string, year?: string) => {
   return ''
 }
 
+
+const findSynergy = (synergy: string) => {
+  return synergyData.value.find(item => item.synergy === synergy)
+}
+
 </script>
 
 <template>
   <div
       v-if="player"
-      class="bg-white dark:bg-gray-900 rounded-xl shadow-md max-w-5xl mx-auto overflow-hidden p-4 space-y-6"
+      class="bg-white dark:bg-gray-900 max-w-5xl mx-auto overflow-hidden space-y-6"
   >
     <!-- 상단: 이미지 + 기본정보 -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -226,120 +247,97 @@ const matchSkillInfo = (skill: string, type: string, year?: string) => {
           </div>
         </div>
 
-<div v-if="player.enhancedSkill" class="space-y-4">
-  <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2">강화 스킬</p>
+        <!-- 강화 스킬 -->
+        <div v-if="player.enhancedSkill" class="space-y-4">
+          <div class="flex gap-4 items-start">
+            <img
+                v-if="player.grade === 'GG'"
+                :src="`/assets/logos/skills/${matchSkillInfo(player.enhancedSkill, 'enhanced:GG', JSON.parse(player.year)?.[0])}${JSON.parse(player.year)[0]}.png`"
+                alt="강화 스킬 이미지"
+                class="w-16 h-16 rounded-lg object-contain shadow-md"
+            />
+            <img
+                v-else
+                :src="`/assets/logos/skills/${matchSkillInfo(player.enhancedSkill, 'enhanced')}.png`"
+                alt="강화 스킬 이미지"
+                class="w-16 h-16 rounded-lg object-contain"
+            />
 
-  <div class="flex gap-4 items-start rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-5 shadow-sm dark:shadow-md">
-    <!-- 이미지 -->
+            <div class="flex-1 space-y-1 text-sm text-gray-800 dark:text-gray-100">
+              <h4 class="text-base font-bold text-yellow-600 dark:text-yellow-300 leading-tight">
+                {{ player.enhancedSkill }}<template v-if="player.grade === 'GG'"> {{ JSON.parse(player.year)?.[0] }}</template>
+              </h4>
+              <p class="text-xs text-gray-600 dark:text-gray-400 whitespace-pre-line leading-relaxed italic">
+                {{ matchSkillInfo(player.enhancedSkill, 'description:enhanced') }}
+              </p>
+            </div>
+          </div>
 
-        <img
-        v-if="  player.grade === 'GG'"
-      :src="`/assets/logos/skills/${ matchSkillInfo(
-        player.enhancedSkill,
-        'enhanced:GG',
-        player.grade === 'GG' && typeof player.year === 'string'
-          ? JSON.parse(player.year)?.[0]
-          : undefined
-      ) }${JSON.parse(player.year)[0]}.png`"
-      alt="강화 스킬 이미지"
-      class="w-16 h-16 rounded-lg object-contain shadow-md"
-    />
-        <img
-        v-else
-      :src="`/assets/logos/skills/${matchSkillInfo(player.enhancedSkill, 'enhanced')}.png`"
-      alt="강화 스킬 이미지"
-      class="w-16 h-16 rounded-lg object-contain shadow-md"
-    />
+          <!-- 레벨 버튼 -->
+          <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 mt-1">
+            <template v-if="player.grade === 'GG'">
+              <button
+                  v-for="(effect, i) in matchSkillInfo(player.enhancedSkill, 'effects_by_year', JSON.parse(player.year)) || []"
+                  :key="'btn-' + i"
+                  @click="selectedEffectIndex = i"
+                  :class="[
+                  'w-full px-2 py-1 text-xs rounded border font-semibold transition text-center',
+                  selectedEffectIndex === i
+                    ? 'bg-blue-600 text-white border-blue-600'
+                    : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600'
+                ]"
+              >
+                <p v-if="i === 0">기본</p>
+                <p v-else>Lv.{{ i }}</p>
+              </button>
+            </template>
+            <template v-else>
+              <button
+                  v-for="(effect, j) in matchSkillInfo(player.enhancedSkill, 'effects_by_level') || []"
+                  :key="'btn-' + j"
+                  @click="selectedEffectIndex = j"
+                  :class="[
+                  'w-full px-2 py-1 text-xs rounded border font-semibold transition text-center',
+                  selectedEffectIndex === j
+                    ? 'bg-blue-600 text-white border-blue-600'
+                    : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600'
+                ]"
+              >
+                <p v-if="j === 0">기본</p>
+                <p v-else>Lv.{{ j }}</p>
+              </button>
+            </template>
+          </div>
 
-    <!-- 텍스트 정보 -->
-    <div class="flex-1 space-y-3 text-sm text-gray-800 dark:text-gray-100">
-      <!-- 이름 -->
-      <h4  v-if="  player.grade === 'GG'" class="text-base font-bold text-yellow-600 dark:text-yellow-300 leading-tight">
-        {{player.enhancedSkill}}  {{JSON.parse(player.year)?.[0] }}
-      </h4>
-      <h4 v-else class="text-base font-bold text-yellow-600 dark:text-yellow-300 leading-tight">
-        {{ matchSkillInfo(player.enhancedSkill, 'enhanced')}}
-      </h4>
-
-      <!-- 설명 -->
-        <p class="text-xs text-gray-600 dark:text-gray-400 whitespace-pre-line leading-relaxed">
-        {{ matchSkillInfo(player.enhancedSkill, 'description:enhanced') }}
-      </p>
-
-      <!-- 레벨 버튼 -->
-      <div class="flex flex-wrap gap-2 mt-1">
-      <button
-         v-if="  player.grade === 'GG'"
-          v-for="(effect, i) in  matchSkillInfo(player.enhancedSkill, 'effects_by_year', JSON.parse(player.year)) || []"
-          :key="'btn-' + i"
-          @click="selectedEffectIndex = i"
-          :class="[
-            'px-2 py-1 text-xs rounded border font-semibold transition',
-            selectedEffectIndex === i
-              ? 'bg-blue-600 text-white border-blue-600'
-              : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600'
-          ]"
-        >
-         <p v-if="i == 0">기본</p>
-         <p v-else> Lv.{{ i  }}</p>
-      </button>
-
-        
-        <button
-          v-else
-          v-for="(effect, j) in matchSkillInfo(player.enhancedSkill, 'effects_by_level') || []"
-          :key="'btn-' + j"
-          @click="selectedEffectIndex = j"
-          :class="[
-            'px-2 py-1 text-xs rounded border font-semibold transition',
-            selectedEffectIndex === j
-              ? 'bg-blue-600 text-white border-blue-600'
-              : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600'
-          ]"
-        >
-        <p v-if="j == 0">기본</p>
-         <p v-else> Lv.{{ j  }}</p>
-        </button>
-      </div>
-
-      <!-- 선택된 효과 -->
-      <div
-        v-if="  player.grade === 'GG'"
-          class="mt-3 text-xs text-blue-800 dark:text-blue-300 whitespace-pre-line leading-snug border-t pt-2 border-gray-200 dark:border-gray-600"
-      >
-        {{
-          matchSkillInfo(player.enhancedSkill, 'effects_by_year',JSON.parse(player.year))[selectedEffectIndex]
-        }}
-      </div>
-       <!-- 선택된 효과 -->
-      <div
-        v-else
-          class="mt-3 text-xs text-blue-800 dark:text-blue-300 whitespace-pre-line leading-snug border-t pt-2 border-gray-200 dark:border-gray-600"
-      >
-        {{
-          matchSkillInfo(player.enhancedSkill, 'effects_by_level')[selectedEffectIndex]
-        }}
-      </div>
-    </div>
-  </div>
-</div>
-
+          <!-- 선택된 효과 -->
+          <div
+              class="mt-3 text-sm text-blue-800 dark:text-blue-300 whitespace-pre-line leading-snug border-t pt-2 border-gray-200 dark:border-gray-600"
+          >
+            {{
+              player.grade === 'GG'
+                  ? matchSkillInfo(player.enhancedSkill, 'effects_by_year', JSON.parse(player.year))[selectedEffectIndex]
+                  : matchSkillInfo(player.enhancedSkill, 'effects_by_level')[selectedEffectIndex]
+            }}
+          </div>
+        </div>
       </div>
 
       <!-- 오른쪽: 정보 + 능력치 + 레이더 -->
       <div class="space-y-6">
-        <!-- 이름, 등급, 레어도 -->
         <div class="flex flex-wrap items-center gap-3">
-          <h2 class="text-xl font-bold text-gray-900 dark:text-white">{{ player.name }}</h2>
           <span class="text-sm px-2 py-0.5 rounded bg-blue-100 text-blue-700 dark:bg-blue-800/30 dark:text-blue-300">
-            등급: {{ player.grade }}
+            {{ player.grade }}
           </span>
-          <span class="text-sm px-2 py-0.5 rounded bg-purple-100 text-purple-700 dark:bg-purple-800/30 dark:text-purple-300">
-            레어도: {{ player.rarity }}
-          </span>
+          <div class="flex items-center gap-1">
+            <Star
+                v-for="n in Number(player.rarity)"
+                :key="n"
+                class="w-4 h-4 text-yellow-400 fill-yellow-400"
+            />
+          </div>
         </div>
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white">{{ player.name }}</h2>
 
-        <!-- 기본 정보 -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <p class="text-xs text-gray-500 dark:text-gray-400">소속 팀</p>
@@ -368,8 +366,11 @@ const matchSkillInfo = (skill: string, type: string, year?: string) => {
           </div>
         </div>
 
-        <!-- 능력치 -->
-        <div class="space-y-4">
+        <div class="text-center h-[300px]">
+          <Radar :data="radarData" :options="radarOptions" class="m-auto" />
+        </div>
+
+        <div>
           <div class="flex items-center justify-between">
             <h3 class="text-base font-semibold text-gray-800 dark:text-white">능력치</h3>
             <span class="text-sm font-medium text-blue-600 dark:text-blue-400">
@@ -378,93 +379,110 @@ const matchSkillInfo = (skill: string, type: string, year?: string) => {
           </div>
 
           <div class="grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-gray-700 dark:text-gray-200">
-            <div
-                v-for="(a, i) in abilities"
-                :key="i"
-                class="flex justify-between"
-            >
+            <div v-for="(a, i) in abilities" :key="i" class="flex justify-between">
               <span>{{ a.label }}</span>
               <span class="font-semibold">{{ a.value }}</span>
             </div>
           </div>
 
-          <!-- 레이더 -->
-          <div class="text-center">
-            <Radar :data="radarData" :options="radarOptions" class="inline-block max-w-[380px] mt-4" />
-          </div>
-
-          <!-- 제외 능력치 -->
-          <div>
-            <div class="grid grid-cols-3 gap-2 text-sm text-gray-800 dark:text-gray-200">
-              <div
-                  v-for="(a, i) in excludedAbilities"
-                  :key="'excluded-ability-' + i"
-                  class="flex flex-col items-center text-center px-3 py-3"
-              >
-                <span class="font-medium text-gray-600 dark:text-gray-300">{{ a.label }}</span>
-                <span class="mt-1 text-base font-bold text-gray-900 dark:text-white">{{ a.value ?? '-' }}</span>
-              </div>
+          <div class="grid grid-cols-3 gap-2 text-sm text-gray-800 dark:text-gray-200 mt-4">
+            <div
+                v-for="(a, i) in excludedAbilities"
+                :key="'excluded-ability-' + i"
+                class="flex flex-col items-center text-center px-3 py-3"
+            >
+              <span class="font-medium text-gray-600 dark:text-gray-300">{{ a.label }}</span>
+              <span class="mt-1 text-base font-bold text-gray-900 dark:text-white">{{ a.value ?? '-' }}</span>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- 스킬 + 시너지 나란히 -->
- <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-  <!-- 🟦 스킬 -->
-  <div v-if="player.skill" class="pb-16">
-    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2">스킬</p>
-    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 relative overflow-visible">
-      <div
-        v-for="(skill, i) in player.skill.split(',').map(s => s.trim()).filter(Boolean)"
-        :key="'skill-' + i"
-        class="group relative aspect-square w-full border rounded-lg bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-600 flex flex-col items-center justify-center text-center text-sm font-medium text-gray-700 dark:text-gray-200 px-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer overflow-visible"
-      >
-        <!-- 툴팁 -->
+
+    <!-- 하단: 스킬 + 시너지 -->
+    <div class="flex flex-col md:flex-row gap-6">
+      <!-- 스킬 -->
+      <div class="flex-1 space-y-3">
+        <h3 class="text-sm font-semibold text-gray-600 dark:text-gray-300">스킬</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <div
+              v-for="(skill, i) in player.skill.split(',').map(s => s.trim()).filter(Boolean)"
+              :key="'skill-' + i"
+              class="group relative flex flex-col items-center justify-center text-center text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl px-2 py-3 hover:shadow-md transition aspect-square"
+              :class="{ 'tooltip-up': i >= player.skill.split(',').length - 3 }"
+          >
+            <div
+                class="tooltip-content absolute z-50 w-64 max-w-[90vw] text-xs bg-gray-900 dark:bg-gray-700 text-white px-4 py-3 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out pointer-events-none break-words"
+                :class="[
+                i % 3 === 0 ? 'left-2 origin-left' :
+                i % 3 === 2 ? 'right-2 origin-right' :
+                'left-1/2 -translate-x-1/2 origin-center'
+              ]"
+            >
+              <p class="font-semibold text-yellow-300 mb-1">{{ skill }}</p>
+              <p class="text-gray-200 leading-relaxed text-left whitespace-pre-line">
+                {{ matchSkillInfo(skill, 'description:normal') }}
+              </p>
+            </div>
+
+            <img
+                :src="`/assets/logos/skills/${matchSkillInfo(skill, 'normal')}.png`"
+                alt="스킬"
+                class="w-20 h-20 object-contain mb-1 transition-transform group-hover:scale-105"
+                loading="lazy"
+            />
+            <span class="text-xs font-bold leading-tight">{{ skill }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 시너지 -->
+      <div v-if="player.synergy" class="w-full md:max-w-sm space-y-3">
+        <h3 class="text-sm font-semibold text-gray-600 dark:text-gray-300">시너지</h3>
         <div
-          :class="[
-            'absolute z-[60] top-full mt-3 w-64 text-xs bg-gray-900 dark:bg-gray-700 text-white px-4 py-3 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out pointer-events-none',
-            i % 3 === 0 ? 'left-2' : i % 3 === 2 ? 'right-2' : 'left-1/2 transform -translate-x-1/2'
-          ]"
+            v-for="(synergy, i) in player.synergy.split(',').map(s => s.trim()).filter(Boolean)"
+            :key="'synergy-' + i"
+            class="border border-gray-300  rounded-lg overflow-hidden transition"
         >
-          <div class="relative">
-            <p class="font-semibold text-yellow-300 mb-1">{{ skill }}</p>
-            <p class="text-gray-200 leading-relaxed text-left whitespace-pre-line">
-              {{ matchSkillInfo(skill, 'description:normal') }}
+          <button
+              class="w-full cursor-pointer px-4 py-2 flex items-center justify-between text-sm font-medium"
+              @click="toggleSynergy(synergy)"
+          >
+            <span>{{ findSynergy(synergy)?.synergy }}</span>
+            <component
+                :is="isExpanded(synergy) ? ChevronUp : ChevronDown"
+                class="w-4 h-4"
+            />
+          </button>
+          <div
+              v-if="isExpanded(synergy)"
+              class="px-4 pb-3 text-sm dark:text-blue-100 space-y-1 transition-all"
+          >
+            <pre>{{ findSynergy(synergy)?.synergy_effect }}</pre>
+            <p class="text-xs text-gray-500 italic pt-2">
+              {{ findSynergy(synergy)?.description }}
             </p>
           </div>
         </div>
-
-        <!-- 이미지 -->
-        <img
-          :src="`/assets/logos/skills/${matchSkillInfo(skill, 'normal')}.png`"
-          alt="스킬"
-          class="w-10 h-10 object-contain mb-1 transition-transform group-hover:scale-105"
-          loading="lazy"
-        />
-
-        <!-- 텍스트 -->
-        <span class="text-xs leading-tight">{{ skill }}</span>
       </div>
     </div>
-  </div>
-
-  <!-- 🟪 시너지 -->
-  <div v-if="player.synergy">
-    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2">시너지</p>
-    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-      <div
-        v-for="(synergy, i) in player.synergy.split(',').map(s => s.trim()).filter(Boolean)"
-        :key="'synergy-' + i"
-        class="aspect-square w-full flex items-center justify-center text-center text-sm font-medium border rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-800 dark:text-blue-100 border-blue-200 dark:border-blue-600 overflow-hidden px-2"
-      >
-        {{ synergy }}
-      </div>
-    </div>
-  </div>
-</div>
-
-
   </div>
 </template>
 
+<style>
+/* tailwind 컴파일 대상에 포함되도록 classes 기반 */
+.tooltip-content {
+  top: 100%;
+  margin-top: 0.5rem; /* translate-y-2 */
+}
+
+/* tooltip-up 클래스가 붙은 경우: 위로 */
+.tooltip-up .tooltip-content {
+  top: auto;
+  bottom: 100%;
+  margin-top: 0;
+  margin-bottom: 0.5rem; /* -translate-y-2 */
+}
+
+
+</style>

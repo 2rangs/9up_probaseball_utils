@@ -1,8 +1,4 @@
 [
-  {
-    "category_id": 1,
-    "category": "시너지(기록)",
-    "synergies": [
       {
         "synergy": "100득점-100타점 클럽",
         "synergy_effect": "- 라인업에 2명 이상 기용 시 파워 +25 ",
@@ -317,13 +313,7 @@
         "synergy": "홈런 1위",
         "synergy_effect": "- 라인업에 4명 이상 기용 시 파워 +30 ",
         "description": "당해에 가장 많은 홈런을 친 선수들입니다."
-      }
-    ]
-  },
-  {
-    "category_id": 2,
-    "category": "시너지(기본)",
-    "synergies": [
+      },
       {
         "synergy": "1982",
         "synergy_effect": "- 라인업에 5~9명 기용 시 파워 +2% \n- 라인업에 10~19명 기용 시 파워 +5% \n- 라인업에 20명 이상 기용 시 파워 +7% ",
@@ -653,13 +643,7 @@
         "synergy": "히트",
         "synergy_effect": "- 라인업에 2~3명 기용 시 파워 +4% \n- 라인업에 4명 이상 기용 시 파워 +6% ",
         "description": "히트 등급 선수들입니다."
-      }
-    ]
-  },
-  {
-    "category_id": 3,
-    "category": "시너지(인물)",
-    "synergies": [
+      },
       {
         "synergy": "1982 국가대표팀",
         "synergy_effect": "- 라인업에 3명 이상 기용 시 파워 +40 ",
@@ -1629,13 +1613,7 @@
         "synergy": "후니하니",
         "synergy_effect": "- 라인업에 2명 기용 시 파워 +30 ",
         "description": "SSG의 세대교체를 대표하는 선수들입니다."
-      }
-    ]
-  },
-  {
-    "category_id": 4,
-    "category": "시너지(출신)",
-    "synergies": [
+      },
       {
         "synergy": "강릉고 출신",
         "synergy_effect": "- 라인업에 2명 기용 시 파워 +3% \n- 라인업에 3명 이상 기용 시 파워 +5% ",
@@ -2092,5 +2070,3 @@
         "description": "휘문고 야구부 출신 선수들입니다."
       }
     ]
-  }
-]

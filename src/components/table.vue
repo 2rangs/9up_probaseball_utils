@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import {ref, onMounted, watch} from 'vue'
 import { Star, ExternalLink, ChevronDown, ChevronUp} from 'lucide-vue-next'
 import SideModal from './SideModal.vue' // 실제 위치에 맞게 수정
 import PlayerDetail from './PlayerDetail.vue' // 경로 반드시 맞게!
@@ -94,7 +94,13 @@ function openModal(item: Record<string, any>) {
   selectedItem.value = item
   showModal.value = true
 }
-
+watch(showModal, (val) => {
+  if (val) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = ''
+  }
+})
 const expandedRowIndex = ref<number | null>(null)
 
 function toggleExpanded(index: number) {
