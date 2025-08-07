@@ -22,7 +22,7 @@ function onBackdropClick(e: MouseEvent) {
   <transition name="fade">
     <div
         v-if="show"
-        class="backdrop fixed inset-0 z-50 h-screen bg-black/30"
+        class="backdrop fixed inset-0 !z-50 h-screen bg-black/30"
         @click="onBackdropClick"
     >
       <!-- Modal (슬라이드 인/아웃만) -->

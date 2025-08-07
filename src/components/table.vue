@@ -119,7 +119,7 @@ function toggleExpanded(index: number) {
             :key="col"
             :class="[
               'border-b border-gray-300 whitespace-nowrap text-center h-[48px]',
-              col === 'grade' ? 'w-[100px]' :
+              col === 'grade' ? 'w-[80px]' :
               col === 'rarity' ? 'w-[100px]' :
               col === 'team' ? 'w-[150px]' :
               col === 'year' ? 'w-[80px]' :
@@ -127,7 +127,7 @@ function toggleExpanded(index: number) {
               col === 'handType' ? 'w-[100px]' :
               col === 'pitchingType' ? 'w-[120px]' :
               col === 'synergy' ? 'w-[300px]' :
-              col === 'open' ? 'w-[50px]' :
+              col === 'open' ? 'w-[80px]' :
               'w-[120px]'
             ]"
         >

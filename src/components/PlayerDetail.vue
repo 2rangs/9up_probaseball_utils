@@ -210,8 +210,10 @@ const matchSkillInfo = (skill: string, type: string, year?: string) => {
     return enhancedSkillData.value.find(s => s.enhanced_skill === skill)?.image || ''
   } else if (type === 'enhanced:GG') {
     return enhancedSkillData.value.find(s => s.enhanced_skill === skill)?.image || ''
-    }else if (type === 'description:normal') {
+  }else if (type === 'effects:normal') {
     return normalSkillData.value.find(s => s.skill === skill)?.effects || ''
+  }else if (type === 'description:normal') {
+    return normalSkillData.value.find(s => s.skill === skill)?.description || ''
   } else if (type === 'description:enhanced') {
     return enhancedSkillData.value.find(s => s.enhanced_skill === skill)?.description || []
   } else if (type === 'effects_by_level') {
@@ -233,7 +235,7 @@ const findSynergy = (synergy: string) => {
 <template>
   <div
       v-if="player"
-      class="bg-white dark:bg-gray-900 max-w-5xl mx-auto overflow-hidden space-y-6"
+      class="bg-white dark:bg-gray-900 max-w-5xl mx-auto overflow-hidden space-y-6 z-99"
   >
     <!-- 상단: 이미지 + 기본정보 -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -281,9 +283,9 @@ const findSynergy = (synergy: string) => {
                   :key="'btn-' + i"
                   @click="selectedEffectIndex = i"
                   :class="[
-                  'w-full px-2 py-1 text-xs rounded border font-semibold transition text-center',
+                  'w-full px-2 py-1 text-xs rounded border font-semibold transition text-center cursor-pointer',
                   selectedEffectIndex === i
-                    ? 'bg-blue-600 text-white border-blue-600'
+                    ? 'bg-blue-500 text-white border-blue-600'
                     : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600'
                 ]"
               >
@@ -297,7 +299,7 @@ const findSynergy = (synergy: string) => {
                   :key="'btn-' + j"
                   @click="selectedEffectIndex = j"
                   :class="[
-                  'w-full px-2 py-1 text-xs rounded border font-semibold transition text-center',
+                  'w-full px-2 py-1 text-xs rounded border font-semibold transition text-center cursor-pointer',
                   selectedEffectIndex === j
                     ? 'bg-blue-600 text-white border-blue-600'
                     : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600'
@@ -406,15 +408,15 @@ const findSynergy = (synergy: string) => {
     </div>
 
     <!-- 하단: 스킬 + 시너지 -->
-    <div class="flex flex-col md:flex-row gap-6">
+    <div class="flex flex-col md:flex-row gap-2">
       <!-- 스킬 -->
-      <div class="flex-1 space-y-3">
+      <div class="w-1/2 flex-1 space-y-3">
         <h3 class="text-sm font-semibold text-gray-600 dark:text-gray-300">스킬</h3>
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
           <div
               v-for="(skill, i) in player.skill.split(',').map(s => s.trim()).filter(Boolean)"
               :key="'skill-' + i"
-              class="group relative flex flex-col items-center justify-center text-center text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl px-2 py-3 hover:shadow-md transition aspect-square"
+              class="group relative flex flex-col items-center justify-center text-center text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800  rounded-xl px-2 py-3 transition aspect-square"
               :class="{ 'tooltip-up': i >= player.skill.split(',').length - 3 }"
           >
             <div
@@ -427,6 +429,9 @@ const findSynergy = (synergy: string) => {
             >
               <p class="font-semibold text-yellow-300 mb-1">{{ skill }}</p>
               <p class="text-gray-200 leading-relaxed text-left whitespace-pre-line">
+                {{ matchSkillInfo(skill, 'effects:normal') }}
+              </p>
+              <p class="text-gray-500 mt-8 italic leading-relaxed text-left whitespace-pre-line">
                 {{ matchSkillInfo(skill, 'description:normal') }}
               </p>
             </div>
@@ -443,7 +448,7 @@ const findSynergy = (synergy: string) => {
       </div>
 
       <!-- 시너지 -->
-      <div v-if="player.synergy" class="w-full md:max-w-sm space-y-3">
+      <div v-if="player.synergy" class="w-1/2  md:max-w-sm space-y-3">
         <h3 class="text-sm font-semibold text-gray-600 dark:text-gray-300">시너지</h3>
         <div
             v-for="(synergy, i) in player.synergy.split(',').map(s => s.trim()).filter(Boolean)"

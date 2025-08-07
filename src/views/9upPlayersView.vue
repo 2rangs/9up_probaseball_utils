@@ -104,7 +104,6 @@ const filteredPlayers = computed(() => {
             : Array.isArray(p.team)
                 ? p.team.map(t => t.trim())
                 : [String(p.team || '')]
-
         return selected.some((sel: string) => playerTeams.includes(sel.trim()))
       }
       if (field === 'year') {
@@ -221,7 +220,7 @@ async function loadCsv() {
 </script>
 
 <template>
-  <div class="min-h-screen p-8 space-y-8 font-sans">
+  <div class="min-h-screen pt-4 space-y-8 font-sans">
     <div class="flex gap-4 w-[1280px] mx-auto">
       <button
           v-for="tab in tabs"
@@ -247,7 +246,6 @@ async function loadCsv() {
         :field-labels="fieldLabels"
         v-model:filters="filters"
     />
-
     <!-- Table -->
     <PlayerTable :items="paginatedPlayers" :columns="columns" />
 

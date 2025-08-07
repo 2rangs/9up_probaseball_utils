@@ -41,7 +41,7 @@ const menuItems = [
 <template>
   <div class="relative min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white overflow-hidden">
     <!-- 헤더 -->
-    <header class="fixed top-0 left-0 right-0 h-14 bg-white dark:bg-gray-800 shadow z-40 px-4 flex items-center justify-between">
+    <header class="fixed top-0 left-0 right-0 h-14 bg-white dark:bg-gray-800 shadow z-10 px-4 flex items-center justify-between">
       <button @click="isSidebarOpen = !isSidebarOpen" class="text-gray-700 dark:text-white">
         <component :is="isSidebarOpen ? X : Menu" class="w-6 h-6 transition-transform duration-300" />
       </button>
@@ -53,7 +53,7 @@ const menuItems = [
     <transition name="fade">
       <div
           v-if="isSidebarOpen"
-          class="fixed inset-0 bg-black/40 z-40 "
+          class="fixed inset-0 bg-black/40 z-20 "
       ></div>
     </transition>
 
@@ -93,9 +93,25 @@ const menuItems = [
     </transition>
 
     <!-- 본문 -->
-    <main class="pt-14 px-4">
-      <router-view />
+    <!-- 본문 -->
+    <main
+        class="pt-14 px-4 relative min-h-screen overflow-hidden"
+        style="
+    background-image: url('/assets/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;"
+    >
+      <!-- 어두운 오버레이 -->
+      <div class="absolute inset-0 bg-black/70 z-0 pointer-events-none"></div>
+
+      <!-- 실제 콘텐츠 -->
+      <div class="relative">
+        <router-view />
+      </div>
     </main>
+
   </div>
 </template>
 
