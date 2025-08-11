@@ -483,8 +483,8 @@ const findSynergy = (synergy: string) => {
 <style>
 /* tailwind 컴파일 대상에 포함되도록 classes 기반 */
 .tooltip-content {
-  top: 100%;
-  margin-top: 0.5rem; /* translate-y-2 */
+  top: 90%;
+  margin-top: 0.2rem; /* translate-y-2 */
 }
 
 /* tooltip-up 클래스가 붙은 경우: 위로 */
