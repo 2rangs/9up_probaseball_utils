@@ -28,7 +28,7 @@
 
 ## 🧩 사용 기술 스택
 
-* **Frontend**: Vue 3, Vite, Tailwind CSS
+* **Frontend**: Vue 3, Vite, Tailwind CSS node v20
 * **데이터 처리**: PapaParse (CSV 파싱)
 * **아이콘**: Lucide Vue
 * **디자인 시스템**: 사용자 정의 컴포넌트 및 테마
@@ -50,6 +50,8 @@
 ## 🚀 실행 방법
 
 ```bash
+nvm install 20
+nvm use 20
 npm install
 npm run dev
 ```
