@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, defineEmits, computed, watch } from 'vue'
+import {defineProps, defineEmits, computed, watch, onMounted, ref} from 'vue'
 import { Star } from 'lucide-vue-next'
 import type { PropType } from 'vue'
 
@@ -137,6 +137,38 @@ const teamLogos: Record<string, string> = {
   dream: '/assets/logos/symbol/emblem_s_99_dream.png',
   nanum: '/assets/logos/symbol/emblem_s_99_nanum.png'
 }
+const normalSkillData = ref<any[]>([])
+const enhancedSkillData = ref<any[]>([])
+onMounted(async () => {
+  const normalSkillRes = await fetch('/DB/normal_skill.json')
+  const enhancedSkillRes = await fetch('/DB/enhanced_skill.json')
+  normalSkillData.value = await normalSkillRes.json()
+  enhancedSkillData.value = await enhancedSkillRes.json()
+})
+
+const matchSkillInfo = (skill: string, type: string, year?: string) => {
+  if (type === 'normal') {
+    return normalSkillData.value.find(s => s.skill === skill)?.image || ''
+  } else if (type === 'enhanced') {
+    return enhancedSkillData.value.find(s => s.enhanced_skill === skill)?.image || ''
+  } else if (type === 'enhanced:GG') {
+    return enhancedSkillData.value.find(s => s.enhanced_skill === skill)?.image || ''
+  }else if (type === 'effects:normal') {
+    return normalSkillData.value.find(s => s.skill === skill)?.effects || ''
+  }else if (type === 'description:normal') {
+    return normalSkillData.value.find(s => s.skill === skill)?.description || ''
+  } else if (type === 'description:enhanced') {
+    return enhancedSkillData.value.find(s => s.enhanced_skill === skill)?.description || []
+  } else if (type === 'effects_by_level') {
+    return enhancedSkillData.value.find(s => s.enhanced_skill === skill)?.effects_by_level || []
+  }
+  else if (type === 'effects_by_year') {
+    return enhancedSkillData.value.find(s => s.enhanced_skill === skill)?.effects_by_year[year] || []
+  }
+  return ''
+}
+
+
 </script>
 
 <template>
@@ -408,21 +440,45 @@ const teamLogos: Record<string, string> = {
       <!-- 스킬 -->
       <div class="bg-white/90 dark:bg-gray-900 rounded-lg p-4 shadow-sm hover:shadow-md border border-gray-200 dark:border-gray-700 flex flex-col">
         <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">{{ fieldLabels['skill'] }}</h3>
-        <div class="flex-1 overflow-y-auto max-h-48 rounded-lg border border-gray-200 dark:border-gray-700 p-2 bg-gray-50/80 dark:bg-gray-800/80">
-          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1.5">
+        <div class="flex-1 overflow-scroll max-h-48 rounded-lg border border-gray-200 dark:border-gray-700 p-2 bg-gray-50/80 dark:bg-gray-800/80">
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-9 gap-1">
             <button
                 v-for="skill in props.filterOptions.skill"
                 :key="skill"
+                :title="skill"
                 @click="toggleFilter('skill', skill)"
-                :class="[
-                'px-2 py-1 rounded-md text-xs font-medium transition border focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60',
-                isSelected('skill', skill)
-                  ? 'bg-blue-500 text-white border-blue-500 shadow'
-                  : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20'
-              ]"
+                @keydown.enter.prevent="toggleFilter('skill', skill)"
+                @keydown.space.prevent="toggleFilter('skill', skill)"
+                class="group relative w-[80px] sm:w-[70px] inline-flex flex-col items-center justify-center gap-2
+         rounded-xl border py-2  text-xs font-medium
+         transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400
+         disabled:opacity-60 disabled:cursor-not-allowed select-none"
+                :class="isSelected('skill', skill)
+    ? 'bg-blue-600 text-white border-blue-600'
+    : 'bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600'"
+                role="button"
                 :aria-pressed="isSelected('skill', skill)"
             >
-              {{ skill }}
+              <!-- 아이콘 -->
+              <div
+                  class="w-10 h-10 sm:w-11 sm:h-11 rounded-lg transition-colors duration-200"
+                  :class="isSelected('skill', skill)
+      ? 'bg-white/20'
+      : 'bg-gray-50 dark:bg-gray-700'"
+              >
+                <img
+                    :src="`/assets/logos/skills/${matchSkillInfo(skill, 'normal')}.png`"
+                    :alt="skill"
+                    class="w-full h-full object-contain"
+                    loading="lazy"
+                    decoding="async"
+                />
+              </div>
+
+              <!-- 라벨 -->
+              <span class="block w-full text-center  font-semibold">
+                {{ skill }}
+              </span>
             </button>
           </div>
         </div>

@@ -22,7 +22,7 @@ function onBackdropClick(e: MouseEvent) {
   <transition name="fade">
     <div
         v-if="show"
-        class="backdrop fixed inset-0 z-[1000] h-screen bg-black/40 backdrop-blur-[1px]"
+        class="backdrop fixed inset-0 z-[1000] h-screen bg-black/40"
         @click="onBackdropClick"
     >
       <!-- Panel -->
