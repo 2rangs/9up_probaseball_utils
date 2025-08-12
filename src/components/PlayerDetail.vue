@@ -491,7 +491,7 @@ const findSynergy = (synergy: string) => {
               보유 스킬
             </h3>
 
-            <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-3">
+            <div class="grid grid-cols-3 sm:grid-cols-4 gap-3">
               <div
                   v-for="(skill, i) in player.skill.split(',').map(s => s.trim()).filter(Boolean)"
                   :key="'skill-' + i"
