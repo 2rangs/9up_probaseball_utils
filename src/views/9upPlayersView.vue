@@ -220,22 +220,22 @@ async function loadCsv() {
 </script>
 
 <template>
-  <div class="min-h-screen pt-4 space-y-8 font-sans">
-    <div class="flex gap-4 w-[1280px] mx-auto p-2">
-      <button
-          v-for="tab in tabs"
-          :key="tab"
-          @click="selectedTab = tab"
-          :class="[
+  <div class="flex gap-4 w-[1280px] mx-auto p-2">
+    <button
+        v-for="tab in tabs"
+        :key="tab"
+        @click="selectedTab = tab"
+        :class="[
         'px-5 py-2 rounded-lg font-semibold transition-transform cursor-pointer',
         selectedTab === tab
           ? 'bg-blue-500 text-white hover:bg-blue-600'
           : 'bg-white text-black border border-blue-400 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20'
       ]"
-      >
-        {{ tabLabels[tab] }}
-      </button>
-    </div>
+    >
+      {{ tabLabels[tab] }}
+    </button>
+  </div>
+  <div class="min-h-screen pt-4 space-y-8 font-sans">
 
     <!-- Filters -->
     <FilterPanel
@@ -250,11 +250,11 @@ async function loadCsv() {
     <PlayerTable :items="paginatedPlayers" :columns="columns" />
 
     <!-- Pagination -->
-    <div class="flex justify-center items-center gap-1 mt-8 flex-wrap">
+    <div class="flex justify-center items-center gap-1 mb-8 flex-wrap">
       <button
           :disabled="currentPage === 1"
           @click="currentPage--"
-          class="px-3 py-1 border border-[#e7cf86] rounded-md text-sm hover:bg-[#333] disabled:opacity-40"
+          class="px-3 py-1 rounded-md border border-blue-500 text-blue-500 text-sm hover:bg-white disabled:opacity-40 cursor-pointer"
       >
         Prev
       </button>
@@ -264,8 +264,8 @@ async function loadCsv() {
           :key="page + ''"
           @click="typeof page === 'number' && (currentPage = page)"
           :disabled="page === '...'"
-          :class="page === currentPage ? 'bg-[#e7cf86] text-black' : 'hover:bg-[#e7cf86]'"
-          class="px-3 py-1 border border-[#e7cf86] rounded-md text-sm disabled:cursor-default"
+          :class="page === currentPage ? 'bg-blue-500 text-white ' : 'hover:bg-blue-400 hover:text-white'"
+          class="px-3 py-1 rounded-md text-sm disabled:cursor-default cursor-pointer"
       >
         {{ page }}
       </button>
@@ -273,7 +273,7 @@ async function loadCsv() {
       <button
           :disabled="currentPage === totalPages"
           @click="currentPage++"
-          class="px-3 py-1 border border-[#e7cf86] rounded-md text-sm hover:bg-[#333] disabled:opacity-40"
+          class="px-3 py-1  border border-blue-500 text-blue-500 rounded-md text-sm hover:bg-white disabled:opacity-40 cursor-pointer"
       >
         Next
       </button>
