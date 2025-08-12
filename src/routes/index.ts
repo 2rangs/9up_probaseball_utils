@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
  const routes = [
     {
         path: '/',
-        redirect: '/lineups',
+        redirect: '/players',
     },
     {
         path: '/lineups',

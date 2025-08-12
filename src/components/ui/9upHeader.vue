@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { Menu, X } from 'lucide-vue-next'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const isSidebarOpen = ref(false)
 const sidebarRef = ref<HTMLElement | null>(null)
 const route = useRoute()
-
+const router = useRouter()
+const title = ref("9up 프로야구 유틸리티")
 const handleClickOutside = (event: MouseEvent) => {
   const sidebar = sidebarRef.value
   if (isSidebarOpen.value && sidebar && !sidebar.contains(event.target as Node)) {
@@ -30,12 +31,20 @@ onBeforeUnmount(() => {
   window.removeEventListener('keydown', handleEscKey)
 })
 
-// 메뉴 목록
+// 메뉴 목록 (disable 추가)
 const menuItems = [
-  { name: '선수 검색', path: '/players' },
-  { name: '라인업 생성', path: '/lineups' },
-  { name: '사용 가이드', path: '/tips' },
+  { name: '선수 검색', path: '/players', disabled: false },
+  { name: '라인업 생성', path: '/lineups', disabled: true },
+  { name: '사용 가이드', path: '/tips', disabled: true },
 ]
+
+const navigate = (item: { path: string; disabled?: boolean }) => {
+  if (item.disabled) return // disabled 상태면 클릭 무시
+  isSidebarOpen.value = false
+  if (route.path !== item.path) {
+    router.push(item.path)
+  }
+}
 </script>
 
 <template>
@@ -43,18 +52,15 @@ const menuItems = [
     <!-- 헤더 -->
     <header class="fixed top-0 left-0 right-0 h-14 bg-white dark:bg-gray-800 shadow z-10 px-4 flex items-center justify-between">
       <button @click="isSidebarOpen = !isSidebarOpen" class="text-gray-700 dark:text-white">
-        <component :is="isSidebarOpen ? X : Menu" class="w-6 h-6 transition-transform duration-300" />
+        <component :is="isSidebarOpen ? X : Menu" class="w-6 h-6 transition-transform duration-300 cursor-pointer" />
       </button>
-      <h1 class="text-lg font-bold">9up 프로야구 유틸리티</h1>
+      <h1 class="text-lg font-bold">{{ title }}</h1>
       <div class="w-6 h-6"></div>
     </header>
 
-    <!-- 오버레이 배경 -->
+    <!-- 오버레이 -->
     <transition name="fade">
-      <div
-          v-if="isSidebarOpen"
-          class="fixed inset-0 bg-black/40 z-20 "
-      ></div>
+      <div v-if="isSidebarOpen" class="fixed inset-0 bg-black/40 z-20"></div>
     </transition>
 
     <!-- 사이드바 -->
@@ -62,61 +68,47 @@ const menuItems = [
       <aside
           v-if="isSidebarOpen"
           ref="sidebarRef"
-          class="fixed top-0 left-0 w-72 max-w-[90%] h-full bg-white dark:bg-gray-800 shadow-2xl z-50  p-5 flex flex-col"
+          class="fixed top-0 left-0 w-72 max-w-[90%] h-full bg-white dark:bg-gray-800 shadow-2xl z-50 p-5 flex flex-col"
       >
         <div class="flex items-center justify-between mb-6">
           <div class="flex items-center gap-3">
             <img src="/assets/9up_app_logo.webp" alt="logo" class="w-10 h-10 rounded-md" />
-            <h2 class="text-lg font-bold text-gray-800 dark:text-white">9up 프로야구</h2>
+            <h2 class="text-lg font-bold text-gray-800 dark:text-white">{{title}}</h2>
           </div>
           <button @click="isSidebarOpen = false">
-            <X class="w-5 h-5 text-gray-700 dark:text-white" />
+            <X class="w-5 h-5 text-gray-700 dark:text-white cursor-pointer" />
           </button>
         </div>
 
         <nav class="flex flex-col gap-2">
-          <router-link
+          <button
               v-for="(item, index) in menuItems"
               :key="index"
-              :to="item.path"
-              class="px-4 py-2 rounded-lg transition-all duration-200 font-medium"
+              @click="navigate(item)"
+              class="px-4 py-2 rounded-lg transition-all duration-200 font-medium text-left"
               :class="[
-              route.path === item.path
-                ? 'bg-blue-600 text-white shadow'
-                : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
+              item.disabled
+                ? 'text-gray-400 dark:text-gray-500 cursor-not-allowed opacity-60'
+                : route.path === item.path
+                  ? 'bg-blue-600 text-white shadow'
+                  : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
             ]"
+              :disabled="item.disabled"
           >
             {{ item.name }}
-          </router-link>
+          </button>
         </nav>
       </aside>
     </transition>
 
-    <!-- 본문 -->
-    <!-- 본문 -->
-    <main
-        class="pt-14 px-4 relative min-h-screen overflow-hidden"
-        style="
-    background-image: url('/assets/background.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;"
-    >
-      <!-- 어두운 오버레이 -->
-      <div class="absolute inset-0 bg-black/70 z-0 pointer-events-none"></div>
-
-      <!-- 실제 콘텐츠 -->
-      <div class="relative">
-        <router-view />
-      </div>
-    </main>
-
+    <!-- 실제 콘텐츠 -->
+    <div class="pt-14">
+      <router-view />
+    </div>
   </div>
 </template>
 
 <style scoped>
-/* 사이드바 슬라이드 애니메이션 */
 .slide-smooth-enter-active,
 .slide-smooth-leave-active {
   transition: transform 0.3s ease, opacity 0.3s ease;
@@ -130,7 +122,6 @@ const menuItems = [
   opacity: 0;
 }
 
-/* 배경 페이드 */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;

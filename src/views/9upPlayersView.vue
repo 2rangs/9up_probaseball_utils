@@ -221,7 +221,7 @@ async function loadCsv() {
 
 <template>
   <div class="min-h-screen pt-4 space-y-8 font-sans">
-    <div class="flex gap-4 w-[1280px] mx-auto">
+    <div class="flex gap-4 w-[1280px] mx-auto p-2">
       <button
           v-for="tab in tabs"
           :key="tab"
