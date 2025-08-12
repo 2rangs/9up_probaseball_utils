@@ -449,8 +449,8 @@ const findSynergy = (synergy: string) => {
             </div>
 
             <!-- 레이더 차트 -->
-            <div class="h-48 w-full m-auto">
-              <Radar :data="radarData" :options="radarOptions" class="w-full h-full m-auto" />
+            <div class="w-full w-min-[300px] m-auto">
+              <Radar :data="radarData" :options="radarOptions" class="w-full h-full w-min-[300px] m-auto" />
             </div>
 
             <!-- 주요 능력치 -->
