@@ -175,7 +175,54 @@ const matchSkillInfo = (skill: string, type: string, year?: string) => {
   }
   return ''
 }
+// 전체 선택 상태를 확인하는 computed 속성들
+const areAllGradesSelected = computed(() => {
+  if (!visibleGrades.value?.length) return false;
+  return visibleGrades.value.every(grade => isSelected('grade', grade));
+});
 
+const areAllTeamsSelected = computed(() => {
+  if (!props.filterOptions?.team?.length) return false;
+  return props.filterOptions.team.every(team => isSelected('team', team));
+});
+
+// 등급 전체 선택/해제 함수
+const toggleAllGrades = () => {
+  if (!visibleGrades.value?.length) return;
+
+  if (areAllGradesSelected.value) {
+    // 전체 해제
+    emit('update:filters', {
+      ...props.filters,
+      grade: []
+    });
+  } else {
+    // 전체 선택
+    emit('update:filters', {
+      ...props.filters,
+      grade: [...visibleGrades.value]
+    });
+  }
+};
+
+// 팀 전체 선택/해제 함수
+const toggleAllTeams = () => {
+  if (!props.filterOptions?.team?.length) return;
+
+  if (areAllTeamsSelected.value) {
+    // 전체 해제
+    emit('update:filters', {
+      ...props.filters,
+      team: []
+    });
+  } else {
+    // 전체 선택
+    emit('update:filters', {
+      ...props.filters,
+      team: [...props.filterOptions.team]
+    });
+  }
+};
 
 </script>
 
@@ -233,38 +280,70 @@ const matchSkillInfo = (skill: string, type: string, year?: string) => {
         </div>
 
         <!-- 등급 아이콘 -->
-        <div class="mt-4 grid grid-cols-5 gap-3">
-          <div
-              v-for="grade in visibleGrades"
-              :key="grade"
-              @click="toggleFilter('grade', grade)"
-              class="relative rounded-md cursor-pointer flex items-center justify-center border transition-[filter,box-shadow] duration-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60"
-              :class="isSelected('grade', grade)
-              ? 'border-blue-500 ring-1 ring-blue-300 shadow-sm'
-              : 'border-gray-200 dark:border-gray-700 grayscale hover:grayscale-0 hover:brightness-95'"
-              :aria-pressed="isSelected('grade', grade)"
-              :title="grade"
-          >
-            <img :src="`/assets/logos/grade/${grade}.png`" :alt="grade" class="h-auto w-24 object-contain" />
+        <div class="mt-4">
+          <!-- 등급 전체 선택 버튼 -->
+          <div class="mb-3 flex justify-end">
+            <button
+                @click="toggleAllGrades"
+                class="px-3 py-1.5 text-sm font-medium rounded-md border transition-colors duration-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60"
+                :class="areAllGradesSelected
+        ? 'border-red-300 text-red-700 bg-red-50 hover:bg-red-100 dark:border-red-600 dark:text-red-400 dark:bg-red-900/20 dark:hover:bg-red-900/30'
+        : 'border-blue-300 text-blue-700 bg-blue-50 hover:bg-blue-100 dark:border-blue-600 dark:text-blue-400 dark:bg-blue-900/20 dark:hover:bg-blue-900/30'"
+            >
+              {{ areAllGradesSelected ? '전체 해제' : '전체 선택' }}
+            </button>
+          </div>
+
+          <!-- 등급 그리드 -->
+          <div class="grid grid-cols-5 gap-3">
+            <div
+                v-for="grade in visibleGrades"
+                :key="grade"
+                @click="toggleFilter('grade', grade)"
+                class="relative rounded-md cursor-pointer flex items-center justify-center border transition-[filter,box-shadow] duration-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60"
+                :class="isSelected('grade', grade)
+        ? 'border-blue-500 ring-1 ring-blue-300 shadow-sm'
+        : 'border-gray-200 dark:border-gray-700 grayscale hover:grayscale-0 hover:brightness-95'"
+                :aria-pressed="isSelected('grade', grade)"
+                :title="grade"
+            >
+              <img :src="`/assets/logos/grade/${grade}.png`" :alt="grade" class="h-auto w-24 object-contain" />
+            </div>
           </div>
         </div>
 
         <!-- 팀 선택 -->
-        <div class="mt-4 grid grid-cols-7 gap-2.5">
-          <button
-              v-for="team in props.filterOptions.team"
-              :key="team"
-              @click="toggleFilter('team', team)"
-              :title="team.toUpperCase()"
-              class="relative p-1 rounded-md flex items-center justify-center border bg-white/95 dark:bg-gray-900/90 transition-[filter,border-color,box-shadow] duration-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60"
-              :class="[
-              isSelected('team', team)
-                ? 'border-blue-500 ring-1 ring-blue-300 shadow-sm'
-                : 'border-gray-200 dark:border-gray-700 grayscale hover:grayscale-0 hover:brightness-95'
-            ]"
-          >
-            <img :src="teamLogos[team]" :alt="team" class="w-8 h-8 object-contain drop-shadow-sm" />
-          </button>
+        <div class="mt-6">
+          <!-- 팀 전체 선택 버튼 -->
+          <div class="mb-3 flex justify-end">
+            <button
+                @click="toggleAllTeams"
+                class="px-3 py-1.5 text-sm font-medium rounded-md border transition-colors duration-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60"
+                :class="areAllTeamsSelected
+        ? 'border-red-300 text-red-700 bg-red-50 hover:bg-red-100 dark:border-red-600 dark:text-red-400 dark:bg-red-900/20 dark:hover:bg-red-900/30'
+        : 'border-blue-300 text-blue-700 bg-blue-50 hover:bg-blue-100 dark:border-blue-600 dark:text-blue-400 dark:bg-blue-900/20 dark:hover:bg-blue-900/30'"
+            >
+              {{ areAllTeamsSelected ? '전체 해제' : '전체 선택' }}
+            </button>
+          </div>
+
+          <!-- 팀 그리드 -->
+          <div class="grid grid-cols-7 gap-2.5">
+            <button
+                v-for="team in props.filterOptions.team"
+                :key="team"
+                @click="toggleFilter('team', team)"
+                :title="team.toUpperCase()"
+                class="relative p-1 rounded-md flex items-center justify-center border bg-white/95 dark:bg-gray-900/90 transition-[filter,border-color,box-shadow] duration-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60"
+                :class="[
+        isSelected('team', team)
+          ? 'border-blue-500 ring-1 ring-blue-300 shadow-sm'
+          : 'border-gray-200 dark:border-gray-700 grayscale hover:grayscale-0 hover:brightness-95'
+      ]"
+            >
+              <img :src="teamLogos[team]" :alt="team" class="w-8 h-8 object-contain drop-shadow-sm" />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -276,9 +355,9 @@ const matchSkillInfo = (skill: string, type: string, year?: string) => {
 
         <div class="grid-col-3 rounded-lg">
           <!-- Baseball Field Layout -->
-          <div class="relative w-full h-64 mx-auto">
+          <div class="relative w-full h-94 mx-auto">
             <!-- Outfield -->
-            <div class="absolute top-[8%] left-1/2 -translate-x-1/2">
+            <div class="absolute top-[15%] left-1/2 -translate-x-1/2">
               <button v-if="actualPositions.includes('CF')" @click="toggleFilter('position', 'CF')"
                       :class="[
                   'p-2 w-20 rounded-md text-sm font-bold border transition-colors duration-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60',
@@ -287,7 +366,7 @@ const matchSkillInfo = (skill: string, type: string, year?: string) => {
                     : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20'
                 ]">CF</button>
             </div>
-            <div class="absolute top-[8%] left-[10%]">
+            <div class="absolute top-[15%] left-[8%]">
               <button v-if="actualPositions.includes('LF')" @click="toggleFilter('position', 'LF')"
                       :class="[
                   'p-2 w-20 rounded-md text-sm font-bold border transition-colors duration-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60',
@@ -296,7 +375,7 @@ const matchSkillInfo = (skill: string, type: string, year?: string) => {
                     : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20'
                 ]">LF</button>
             </div>
-            <div class="absolute top-[8%] right-[10%]">
+            <div class="absolute top-[15%] right-[8%]">
               <button v-if="actualPositions.includes('RF')" @click="toggleFilter('position', 'RF')"
                       :class="[
                   'p-2 w-20 rounded-md text-sm font-bold border transition-colors duration-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60',
@@ -307,7 +386,7 @@ const matchSkillInfo = (skill: string, type: string, year?: string) => {
             </div>
 
             <!-- Infield -->
-            <div class="absolute top-[63%] left-[8%]">
+            <div class="absolute top-[60%] left-[8%]">
               <button v-if="actualPositions.includes('B3')" @click="toggleFilter('position', 'B3')"
                       :class="[
                   'p-2 w-20 rounded-md text-sm font-bold border transition-colors duration-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60',
@@ -316,7 +395,7 @@ const matchSkillInfo = (skill: string, type: string, year?: string) => {
                     : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20'
                 ]">3B</button>
             </div>
-            <div class="absolute top-[63%] right-[8%]">
+            <div class="absolute top-[60%] right-[8%]">
               <button v-if="actualPositions.includes('B1')" @click="toggleFilter('position', 'B1')"
                       :class="[
                   'p-2 w-20 rounded-md text-sm font-bold border transition-colors duration-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60',
@@ -363,7 +442,7 @@ const matchSkillInfo = (skill: string, type: string, year?: string) => {
             </div>
 
             <!-- Catcher & DH -->
-            <div class="absolute bottom-[1%] left-[39%]">
+            <div class="absolute bottom-[10%] left-[39%]">
               <button v-if="actualPositions.includes('C')" @click="toggleFilter('position', 'C')"
                       :class="[
                   'p-2 w-20 rounded-md text-sm font-bold border transition-colors duration-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60',
@@ -372,7 +451,7 @@ const matchSkillInfo = (skill: string, type: string, year?: string) => {
                     : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20'
                 ]">C</button>
             </div>
-            <div class="absolute bottom-[1%] right-[10%]">
+            <div class="absolute bottom-[10%] right-[8%]">
               <button v-if="actualPositions.includes('DH')" @click="toggleFilter('position', 'DH')"
                       :class="[
                   'p-2 w-20 rounded-md text-sm font-bold border transition-colors duration-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60',
@@ -418,7 +497,7 @@ const matchSkillInfo = (skill: string, type: string, year?: string) => {
         <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2 flex items-center gap-1">
           {{ fieldLabels['year'] }}
         </h3>
-        <div class="flex-1 overflow-y-auto max-h-82 rounded-lg border border-gray-200 dark:border-gray-700 p-2 bg-gray-50/80 dark:bg-gray-800/80">
+        <div class="flex-1 overflow-y-auto max-h-108 rounded-lg border border-gray-200 dark:border-gray-700 p-2 bg-gray-50/80 dark:bg-gray-800/80">
           <div class="grid grid-cols-4 gap-3">
             <button
                 v-for="year in yearOptions"
@@ -511,11 +590,54 @@ const matchSkillInfo = (skill: string, type: string, year?: string) => {
         </div>
       </div>
     </div>
-
     <!-- 액션 -->
     <div class="flex justify-between items-center pt-4 border-t border-gray-100 dark:border-gray-700 mb-6">
-      <!-- 액션 영역 비워둠 -->
+      <!-- 왼쪽: 필터 상태 요약 -->
+      <div class="flex items-center gap-4">
+        <div class="text-sm text-gray-600 dark:text-gray-400">
+          <span class="font-medium">활성 필터:</span>
+          <span class="ml-3 inline-flex items-center gap-2">
+        <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded text-xs font-medium border dark:border-gray-700">
+          등급 {{ Array.isArray(props.filters.grade) ? props.filters.grade.length : 0 }}
+        </span>
+        <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded text-xs font-medium border dark:border-gray-700">
+          팀 {{ Array.isArray(props.filters.team) ? props.filters.team.length : 0 }}
+        </span>
+        <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded text-xs font-medium border dark:border-gray-700">
+          포지션 {{ Array.isArray(props.filters.position) ? props.filters.position.length : 0 }}
+        </span>
+        <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded text-xs font-medium border dark:border-gray-700">
+          연도 {{ Array.isArray(props.filters.year) ? props.filters.year.length : 0 }}
+        </span>
+        <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded text-xs font-medium border dark:border-gray-700">
+          스킬 {{ Array.isArray(props.filters.skill) ? props.filters.skill.length : 0 }}
+        </span>
+      </span>
+        </div>
+      </div>
+
+      <!-- 오른쪽: 액션 버튼들 -->
+      <div class="flex items-center gap-4">
+        <!-- 선택된 필터 총합 표시 -->
+        <div class="text-sm text-gray-500 dark:text-gray-400">
+      <span class="font-medium">
+        총 {{ Object.values(props.filters).filter(v => Array.isArray(v) ? v.length > 0 : v).length }}개 필터 적용
+      </span>
+        </div>
+
+        <!-- 전체 필터 초기화 버튼 -->
+        <button
+            @click="clearAllFilters"
+            class="px-4 py-2 text-sm font-medium rounded-md border transition-colors duration-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400/60 border-red-300 text-red-700 bg-red-50 hover:bg-red-100 dark:border-red-600 dark:text-red-400 dark:bg-red-900/20 dark:hover:bg-red-900/30"
+        >
+          <svg class="w-4 h-4 mr-1.5 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+          </svg>
+          전체 초기화
+        </button>
+      </div>
     </div>
+
   </div>
 </template>
 
