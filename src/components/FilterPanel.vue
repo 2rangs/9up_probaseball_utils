@@ -441,7 +441,7 @@ const matchSkillInfo = (skill: string, type: string, year?: string) => {
       <div class="bg-white/90 dark:bg-gray-900 rounded-lg p-4 shadow-sm hover:shadow-md border border-gray-200 dark:border-gray-700 flex flex-col">
         <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">{{ fieldLabels['skill'] }}</h3>
         <div class="flex-1 overflow-scroll max-h-48 rounded-lg border border-gray-200 dark:border-gray-700 p-2 bg-gray-50/80 dark:bg-gray-800/80">
-          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-9 gap-1">
+          <div class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-9 gap-1">
             <button
                 v-for="skill in props.filterOptions.skill"
                 :key="skill"
