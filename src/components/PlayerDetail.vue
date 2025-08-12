@@ -321,34 +321,36 @@ const findSynergy = (synergy: string) => {
               </div>
 
               <!-- 레벨 선택 -->
-              <div class="flex flex-wrap gap-1">
+              <div class="grid grid-cols-6 gap-2">
                 <template v-if="player.grade === 'GG'">
                   <button
                       v-for="(effect, i) in matchSkillInfo(player.enhancedSkill, 'effects_by_year', JSON.parse(player.year)) || []"
                       :key="'btn-' + i"
                       @click="selectedEffectIndex = i"
-                      class="px-3 py-1 text-xs font-medium rounded-md transition-colors"
+                      class="px-3 py-1 text-xs font-medium rounded-md transition-colors text-center"
                       :class="selectedEffectIndex === i
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'"
+        ? 'bg-blue-500 text-white'
+        : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'"
                   >
                     {{ i === 0 ? '기본' : `Lv.${i}` }}
                   </button>
                 </template>
+
                 <template v-else>
                   <button
                       v-for="(effect, j) in matchSkillInfo(player.enhancedSkill, 'effects_by_level') || []"
                       :key="'btn-' + j"
                       @click="selectedEffectIndex = j"
-                      class="px-3 py-1 text-xs font-medium rounded-md transition-colors"
+                      class=" py-1 text-xs font-medium rounded-md transition-colors text-center"
                       :class="selectedEffectIndex === j
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'"
+        ? 'bg-blue-500 text-white'
+        : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'"
                   >
                     {{ j === 0 ? '기본' : `Lv.${j}` }}
                   </button>
                 </template>
               </div>
+
 
               <!-- 선택된 효과 -->
               <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3 border border-blue-200 dark:border-blue-800">

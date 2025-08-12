@@ -57,7 +57,6 @@ const columns = ref([
 const filterOptions = computed(() => {
   const options: Record<string, Set<string>> = {}
   const fieldsToScan = [...selectFields.value, 'team', 'grade', 'skill']
-
   fieldsToScan.forEach(field => {
     options[field] = new Set()
 
@@ -71,6 +70,10 @@ const filterOptions = computed(() => {
           if (Array.isArray(parsed)) {
             parsed.forEach(val => options[field].add(String(val)))
           }
+        } catch {}
+      }else if (field === 'enhancedSkill') {
+        try {
+          options[field].add(String(raw))
         } catch {}
       } else {
         raw.split(',').forEach(val => {

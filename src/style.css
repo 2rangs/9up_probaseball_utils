@@ -1,1 +1,2310 @@
 @import "tailwindcss";
+
+.bg-ACE_TYPE {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1330px -230px;
+}
+.bg-ACE {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1330px -378px;
+}
+.bg-AGGRESSIVE {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1330px -526px;
+}
+.bg-ALLSTAR_DREAM {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2438px -750px;
+}
+.bg-ALLSTAR {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2438px -870px;
+}
+.bg-ALLSTAR_NANUM {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2438px -990px;
+}
+.bg-ANTI_RUNNING {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1330px -674px;
+}
+.bg-ARM {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1330px -822px;
+}
+.bg-BADBALL_HITTER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1330px -970px;
+}
+.bg-BALANCE_PITCHER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1330px -1118px;
+}
+.bg-BARREL_HITTER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -10px -1330px;
+}
+.bg-BATTING_EYE {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -158px -1330px;
+}
+.bg-BATTING_STRATEGY {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -306px -1330px;
+}
+.bg-BELIFE_MAN {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -454px -1330px;
+}
+.bg-BINGGRAE1986 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2438px -1110px;
+}
+.bg-BINGGRAE1987 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2438px -1230px;
+}
+.bg-BINGGRAE1989 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2438px -1350px;
+}
+.bg-BINGGRAE1988 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2438px -1470px;
+}
+.bg-BINGGRAE1990 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2438px -1590px;
+}
+.bg-BINGGRAE1991 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2438px -1710px;
+}
+.bg-BINGGRAE1993 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2438px -1830px;
+}
+.bg-BINGGRAE1992 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2438px -1950px;
+}
+.bg-BLACKBALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -602px -1330px;
+}
+.bg-BO3 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -750px -1330px;
+}
+.bg-BO2 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -898px -1330px;
+}
+.bg-BO4 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1046px -1330px;
+}
+.bg-BO1 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1194px -1330px;
+}
+.bg-BO6 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1342px -1330px;
+}
+.bg-BO7 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1550px -10px;
+}
+.bg-BO8 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1550px -158px;
+}
+.bg-BREAKINGBALL_KILLER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1550px -306px;
+}
+.bg-CHUNGBO1985 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2438px -2070px;
+}
+.bg-BO9 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1550px -454px;
+}
+.bg-CHUNGBO1987 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2438px -2190px;
+}
+.bg-CAUGHT_STEALING {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1550px -602px;
+}
+.bg-BO5 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1550px -750px;
+}
+.bg-CLOSER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1550px -898px;
+}
+.bg-CONTACTOR {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1550px -1046px;
+}
+.bg-BUNT {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1550px -1194px;
+}
+.bg-DOOSAN1992 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2290px -2082px;
+}
+.bg-CHANGEUP {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -10px -1478px;
+}
+.bg-CHUNGBO1986 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2142px -1934px;
+}
+.bg-CLEAN_UP {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -158px -1478px;
+}
+.bg-DESIGNATED_HITTER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -306px -1478px;
+}
+.bg-DOOSAN1991 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1994px -1786px;
+}
+.bg-DGN_TYPE {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1846px -1638px;
+}
+.bg-CURVE {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -454px -1478px;
+}
+.bg-CRISIS_MANAGE {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -602px -1478px;
+}
+.bg-COMMANDER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -750px -1478px;
+}
+.bg-DOOSAN1993 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1698px -1490px;
+}
+.bg-DOOSAN1997 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1550px -1342px;
+}
+.bg-CONTROLLER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -898px -1478px;
+}
+.bg-DOOSAN1995 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -10px -2366px;
+}
+.bg-DOOSAN1998 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -130px -2366px;
+}
+.bg-DOOSAN2004 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -250px -2366px;
+}
+.bg-DOOSAN1996 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -370px -2366px;
+}
+.bg-DOOSAN2007 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -490px -2366px;
+}
+.bg-DOOSAN1994 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -610px -2366px;
+}
+.bg-DOOSAN2012 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -730px -2366px;
+}
+.bg-DOOSAN2005 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -850px -2366px;
+}
+.bg-DOOSAN2008 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -970px -2366px;
+}
+.bg-DOOSAN2003 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1090px -2366px;
+}
+.bg-DOOSAN2002 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1210px -2366px;
+}
+.bg-DOOSAN2014 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1046px -1478px;
+}
+.bg-DOOSAN2013 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1194px -1478px;
+}
+.bg-DOOSAN2001 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1330px -2366px;
+}
+.bg-DOOSAN2016 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1450px -2366px;
+}
+.bg-DOOSAN2009 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1342px -1478px;
+}
+.bg-DOOSAN2000 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1570px -2366px;
+}
+.bg-DOOSAN1999 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1690px -2366px;
+}
+.bg-DOOSAN2020 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1810px -2366px;
+}
+.bg-DOOSAN2019 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1930px -2366px;
+}
+.bg-DOOSAN2011 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1490px -1478px;
+}
+.bg-DOOSAN2017 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2050px -2366px;
+}
+.bg-DOOSAN2010 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -10px -10px;
+}
+.bg-DOOSAN2006 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2170px -2366px;
+}
+.bg-FASTBALL_KILLER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1698px -10px;
+}
+.bg-FIRE_BALLER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1698px -158px;
+}
+.bg-DOOSAN2015 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1698px -306px;
+}
+.bg-DOOSAN2018 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2290px -2366px;
+}
+.bg-DOOSAN2023 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2410px -2366px;
+}
+.bg-FLYBALL_PITCHER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1698px -454px;
+}
+.bg-DOOSAN2022 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1698px -602px;
+}
+.bg-DOOSAN2024 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -230px -10px;
+}
+.bg-FRANCHISE {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2586px -10px;
+}
+.bg-DOOSAN2021 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2586px -130px;
+}
+.bg-FOCUS_BOX {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1698px -750px;
+}
+.bg-GOLDENGLOVE_2016 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2586px -250px;
+}
+.bg-FULL_SWING {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1698px -898px;
+}
+.bg-FAIRY_PITTA {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1698px -1046px;
+}
+.bg-GOLDENGLOVE_2017 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2586px -370px;
+}
+.bg-GOLDENGLOVE1982 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2586px -490px;
+}
+.bg-FRAMING {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1698px -1194px;
+}
+.bg-GOLDENGLOVE_2018 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2586px -610px;
+}
+.bg-GOLDENGLOVE_2020 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2586px -730px;
+}
+.bg-GAP_HITTER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1698px -1342px;
+}
+.bg-GOLDENGLOVE {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2586px -850px;
+}
+.bg-GOLDENGLOVE1983 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2586px -970px;
+}
+.bg-GOLDENGLOVE_2019 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2586px -1090px;
+}
+.bg-GOLDENGLOVE_2021 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2586px -1210px;
+}
+.bg-GOLDENGLOVE1984 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2586px -1330px;
+}
+.bg-GOLDENGLOVE1987 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2586px -1450px;
+}
+.bg-GOLDENGLOVE1986 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2586px -1570px;
+}
+.bg-GOLDENGLOVE1985 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2586px -1690px;
+}
+.bg-GOLDENGLOVE1990 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2586px -1810px;
+}
+.bg-GOLDENGLOVE1991 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2586px -1930px;
+}
+.bg-GOLDENGLOVE1993 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2586px -2050px;
+}
+.bg-GOLDENGLOVE1994 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2586px -2170px;
+}
+.bg-GOLDENGLOVE1988 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2586px -2290px;
+}
+.bg-GOLDENGLOVE1989 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -10px -2486px;
+}
+.bg-GOLDENGLOVE1992 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -130px -2486px;
+}
+.bg-GOLDENGLOVE1995 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -250px -2486px;
+}
+.bg-GOLDENGLOVE1996 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -370px -2486px;
+}
+.bg-GOLDENGLOVE1997 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -490px -2486px;
+}
+.bg-GOLDENGLOVE1998 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -610px -2486px;
+}
+.bg-GOLDENGLOVE1999 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -730px -2486px;
+}
+.bg-GOLDENGLOVE2000 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -850px -2486px;
+}
+.bg-GOLDENGLOVE2001 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -970px -2486px;
+}
+.bg-GOLDENGLOVE2002 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1090px -2486px;
+}
+.bg-GOLDENGLOVE2003 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1210px -2486px;
+}
+.bg-GOLDENGLOVE2004 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1330px -2486px;
+}
+.bg-GOLDENGLOVE2005 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1450px -2486px;
+}
+.bg-GOLDENGLOVE2006 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1570px -2486px;
+}
+.bg-GOLDENGLOVE2007 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1690px -2486px;
+}
+.bg-GOLDENGLOVE2008 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1810px -2486px;
+}
+.bg-GOLDENGLOVE2009 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -10px -1626px;
+}
+.bg-GOLDENGLOVE2010 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -10px -230px;
+}
+.bg-GOLDENGLOVE2011 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -158px -1626px;
+}
+.bg-GOLDENGLOVE2012 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1930px -2486px;
+}
+.bg-GOLDENGLOVE2013 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -306px -1626px;
+}
+.bg-GOLDENGLOVE2014 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -454px -1626px;
+}
+.bg-GOLDENGLOVE2015 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -602px -1626px;
+}
+.bg-GOLDENGLOVE2016 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2050px -2486px;
+}
+.bg-GOLDENGLOVE2017 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2170px -2486px;
+}
+.bg-GOLDENGLOVE2018 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2290px -2486px;
+}
+.bg-GOLDENGLOVE2019 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2410px -2486px;
+}
+.bg-GOLDENGLOVE2020 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2530px -2486px;
+}
+.bg-GOLDENGLOVE2021 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2706px -10px;
+}
+.bg-GOLDENGLOVE2022 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -750px -1626px;
+}
+.bg-GOLDENGLOVE2023 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2706px -130px;
+}
+.bg-GOLDENGLOVE2024 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -230px -230px;
+}
+.bg-GREEN_LIGHT {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -898px -1626px;
+}
+.bg-GROUND_BALLER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1046px -1626px;
+}
+.bg-GUESS_HITTER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1194px -1626px;
+}
+.bg-HAITAI1982 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2706px -250px;
+}
+.bg-HAITAI1983 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2706px -370px;
+}
+.bg-HAITAI1984 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2706px -490px;
+}
+.bg-HAITAI1985 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2706px -610px;
+}
+.bg-HAITAI1986 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2706px -730px;
+}
+.bg-HAITAI1987 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2706px -850px;
+}
+.bg-HAITAI1988 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2706px -970px;
+}
+.bg-HAITAI1989 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2706px -1090px;
+}
+.bg-HAITAI1990 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2706px -1210px;
+}
+.bg-HAITAI1991 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2706px -1330px;
+}
+.bg-HAITAI1992 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2706px -1450px;
+}
+.bg-HAITAI1993 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2706px -1570px;
+}
+.bg-HAITAI1994 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2706px -1690px;
+}
+.bg-HAITAI1995 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2706px -1810px;
+}
+.bg-HAITAI1996 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2706px -1930px;
+}
+.bg-HAITAI1997 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2706px -2050px;
+}
+.bg-HAITAI1998 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2706px -2170px;
+}
+.bg-HAITAI1999 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2706px -2290px;
+}
+.bg-HAITAI2000 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2706px -2410px;
+}
+.bg-HANWHA1991 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -10px -2606px;
+}
+.bg-HANWHA1992 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -130px -2606px;
+}
+.bg-HANWHA1993 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -250px -2606px;
+}
+.bg-HANWHA1994 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -370px -2606px;
+}
+.bg-HANWHA1995 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -490px -2606px;
+}
+.bg-HANWHA1996 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -610px -2606px;
+}
+.bg-HANWHA1997 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -730px -2606px;
+}
+.bg-HANWHA1998 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -850px -2606px;
+}
+.bg-HANWHA1999 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -970px -2606px;
+}
+.bg-HANWHA2000 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1090px -2606px;
+}
+.bg-HANWHA2001 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1210px -2606px;
+}
+.bg-HANWHA2002 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1330px -2606px;
+}
+.bg-HANWHA2003 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1450px -2606px;
+}
+.bg-HANWHA2004 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1570px -2606px;
+}
+.bg-HANWHA2005 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1690px -2606px;
+}
+.bg-HANWHA2006 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1810px -2606px;
+}
+.bg-HANWHA2007 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1930px -2606px;
+}
+.bg-HANWHA2008 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2050px -2606px;
+}
+.bg-HANWHA2009 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1342px -1626px;
+}
+.bg-HANWHA2010 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -450px -10px;
+}
+.bg-HANWHA2011 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1490px -1626px;
+}
+.bg-HANWHA2012 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2170px -2606px;
+}
+.bg-HANWHA2013 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1638px -1626px;
+}
+.bg-HANWHA2014 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1846px -10px;
+}
+.bg-HANWHA2015 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1846px -158px;
+}
+.bg-HANWHA2016 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2290px -2606px;
+}
+.bg-HANWHA2017 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2410px -2606px;
+}
+.bg-HANWHA2018 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2530px -2606px;
+}
+.bg-HANWHA2019 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2650px -2606px;
+}
+.bg-HANWHA2020 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2826px -10px;
+}
+.bg-HANWHA2021 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2826px -130px;
+}
+.bg-HANWHA2022 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1846px -306px;
+}
+.bg-HANWHA2023 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2826px -250px;
+}
+.bg-HANWHA2024 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -450px -230px;
+}
+.bg-HEROES2008 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2826px -370px;
+}
+.bg-HEROES2009 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1846px -454px;
+}
+.bg-HEROES2010 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -10px -450px;
+}
+.bg-HEROES2011 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1846px -602px;
+}
+.bg-HEROES2012 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2826px -490px;
+}
+.bg-HEROES2013 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1846px -750px;
+}
+.bg-HEROES2014 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1846px -898px;
+}
+.bg-HEROES2015 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1846px -1046px;
+}
+.bg-HEROES2016 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2826px -610px;
+}
+.bg-HEROES2017 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2826px -730px;
+}
+.bg-HEROES2018 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2826px -850px;
+}
+.bg-HEROES2019 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2826px -970px;
+}
+.bg-HEROES2020 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2826px -1090px;
+}
+.bg-HEROES2021 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2826px -1210px;
+}
+.bg-HEROES2022 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1846px -1194px;
+}
+.bg-HEROES2023 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2826px -1330px;
+}
+.bg-HEROES2024 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -230px -450px;
+}
+.bg-HIGHBALL_HITTER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1846px -1342px;
+}
+.bg-HIT_TYPE {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2826px -1450px;
+}
+.bg-HITTING_APPROACH {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1846px -1490px;
+}
+.bg-HYUNDAI1991 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2826px -1570px;
+}
+.bg-HYUNDAI1992 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2826px -1690px;
+}
+.bg-HYUNDAI1993 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2826px -1810px;
+}
+.bg-HYUNDAI1994 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2826px -1930px;
+}
+.bg-HYUNDAI1995 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2826px -2050px;
+}
+.bg-HYUNDAI1996 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2826px -2170px;
+}
+.bg-HYUNDAI1997 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2826px -2290px;
+}
+.bg-HYUNDAI1998 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2826px -2410px;
+}
+.bg-HYUNDAI1999 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2826px -2530px;
+}
+.bg-HYUNDAI2000 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -10px -2726px;
+}
+.bg-HYUNDAI2001 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -130px -2726px;
+}
+.bg-HYUNDAI2002 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -250px -2726px;
+}
+.bg-HYUNDAI2003 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -370px -2726px;
+}
+.bg-HYUNDAI2004 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -490px -2726px;
+}
+.bg-HYUNDAI2005 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -610px -2726px;
+}
+.bg-HYUNDAI2006 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -730px -2726px;
+}
+.bg-HYUNDAI2007 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -850px -2726px;
+}
+.bg-INFIELDING {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -10px -1774px;
+}
+.bg-INNING_EATING {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -158px -1774px;
+}
+.bg-INSIDE_WORK {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -306px -1774px;
+}
+.bg-JUNK_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -454px -1774px;
+}
+.bg-KIA1991 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -970px -2726px;
+}
+.bg-KIA1992 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1090px -2726px;
+}
+.bg-KIA1993 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1210px -2726px;
+}
+.bg-KIA1994 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1330px -2726px;
+}
+.bg-KIA1995 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1450px -2726px;
+}
+.bg-KIA1996 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1570px -2726px;
+}
+.bg-KIA1997 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1690px -2726px;
+}
+.bg-KIA1998 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1810px -2726px;
+}
+.bg-KIA1999 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1930px -2726px;
+}
+.bg-KIA2001 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2050px -2726px;
+}
+.bg-KIA2002 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2170px -2726px;
+}
+.bg-KIA2003 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2290px -2726px;
+}
+.bg-KIA2004 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2410px -2726px;
+}
+.bg-KIA2005 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2530px -2726px;
+}
+.bg-KIA2006 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2650px -2726px;
+}
+.bg-KIA2007 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2770px -2726px;
+}
+.bg-KIA2008 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2946px -10px;
+}
+.bg-KIA2009 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -602px -1774px;
+}
+.bg-KIA2010 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -450px -450px;
+}
+.bg-KIA2011 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -750px -1774px;
+}
+.bg-KIA2012 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2946px -130px;
+}
+.bg-KIA2013 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -670px -10px;
+}
+.bg-KIA2014 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -898px -1774px;
+}
+.bg-KIA2015 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1046px -1774px;
+}
+.bg-KIA2016 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2946px -250px;
+}
+.bg-KIA2017 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2946px -370px;
+}
+.bg-KIA2018 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2946px -490px;
+}
+.bg-KIA2019 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2946px -610px;
+}
+.bg-KIA2020 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2946px -730px;
+}
+.bg-KIA2021 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2946px -850px;
+}
+.bg-KIA2022 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1194px -1774px;
+}
+.bg-KIA2023 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2946px -970px;
+}
+.bg-KIA2024 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -670px -230px;
+}
+.bg-KNUCKLE {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1342px -1774px;
+}
+.bg-KT2015 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1490px -1774px;
+}
+.bg-KT2016 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2946px -1090px;
+}
+.bg-KT2017 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2946px -1210px;
+}
+.bg-KT2018 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2946px -1330px;
+}
+.bg-KT2019 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2946px -1450px;
+}
+.bg-KT2020 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2946px -1570px;
+}
+.bg-KT2021 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2946px -1690px;
+}
+.bg-KT2022 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1638px -1774px;
+}
+.bg-KT2023 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2946px -1810px;
+}
+.bg-KT2024 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -670px -450px;
+}
+.bg-LG1990 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2946px -1930px;
+}
+.bg-LG1991 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2946px -2050px;
+}
+.bg-LG1992 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2946px -2170px;
+}
+.bg-LG1993 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2946px -2290px;
+}
+.bg-LG1994 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2946px -2410px;
+}
+.bg-LG1995 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2946px -2530px;
+}
+.bg-LG1996 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2946px -2650px;
+}
+.bg-LG1997 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -10px -2846px;
+}
+.bg-LG1998 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -130px -2846px;
+}
+.bg-LG1999 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -250px -2846px;
+}
+.bg-LG2000 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -370px -2846px;
+}
+.bg-LG2001 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -490px -2846px;
+}
+.bg-LG2002 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -610px -2846px;
+}
+.bg-LG2003 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -730px -2846px;
+}
+.bg-LG2004 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -850px -2846px;
+}
+.bg-LG2005 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -970px -2846px;
+}
+.bg-LG2006 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1090px -2846px;
+}
+.bg-LG2007 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1210px -2846px;
+}
+.bg-LG2008 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1330px -2846px;
+}
+.bg-LG2009 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1786px -1774px;
+}
+.bg-LG2010 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -10px -670px;
+}
+.bg-LG2011 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -230px -670px;
+}
+.bg-LG2012 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -450px -670px;
+}
+.bg-LG2013 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -670px -670px;
+}
+.bg-LG2014 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -890px -10px;
+}
+.bg-LG2015 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -890px -230px;
+}
+.bg-LG2016 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -890px -450px;
+}
+.bg-LG2017 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1450px -2846px;
+}
+.bg-LG2018 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1570px -2846px;
+}
+.bg-LG2019 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1690px -2846px;
+}
+.bg-LG2020 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1810px -2846px;
+}
+.bg-LG2021 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1930px -2846px;
+}
+.bg-LG2022 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1994px -10px;
+}
+.bg-LG2023 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2050px -2846px;
+}
+.bg-LG2024 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -890px -670px;
+}
+.bg-LOCATION {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1994px -158px;
+}
+.bg-LONGMAN {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1994px -306px;
+}
+.bg-LOTTE1982 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2170px -2846px;
+}
+.bg-LOTTE1983 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2290px -2846px;
+}
+.bg-LOTTE1984 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2410px -2846px;
+}
+.bg-LOTTE1985 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2530px -2846px;
+}
+.bg-LOTTE1986 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2650px -2846px;
+}
+.bg-LOTTE1987 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2770px -2846px;
+}
+.bg-LOTTE1988 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2890px -2846px;
+}
+.bg-LOTTE1989 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -10px;
+}
+.bg-LOTTE1990 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -130px;
+}
+.bg-LOTTE1991 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -250px;
+}
+.bg-LOTTE1992 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -370px;
+}
+.bg-LOTTE1993 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -490px;
+}
+.bg-LOTTE1994 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -610px;
+}
+.bg-LOTTE1995 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -730px;
+}
+.bg-LOTTE1996 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -850px;
+}
+.bg-LOTTE1997 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -970px;
+}
+.bg-LOTTE1998 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -1090px;
+}
+.bg-LOTTE1999 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -1210px;
+}
+.bg-LOTTE2000 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -1330px;
+}
+.bg-LOTTE2001 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -1450px;
+}
+.bg-LOTTE2002 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -1570px;
+}
+.bg-LOTTE2003 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -1690px;
+}
+.bg-LOTTE2004 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -1810px;
+}
+.bg-LOTTE2005 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -1930px;
+}
+.bg-LOTTE2006 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -2050px;
+}
+.bg-LOTTE2007 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -2170px;
+}
+.bg-LOTTE2008 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -2290px;
+}
+.bg-LOTTE2009 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1994px -454px;
+}
+.bg-LOTTE2010 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -10px -890px;
+}
+.bg-LOTTE2011 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1994px -602px;
+}
+.bg-LOTTE2012 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -2410px;
+}
+.bg-LOTTE2013 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -230px -890px;
+}
+.bg-LOTTE2014 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1994px -750px;
+}
+.bg-LOTTE2015 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1994px -898px;
+}
+.bg-LOTTE2016 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -2530px;
+}
+.bg-LOTTE2017 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -2650px;
+}
+.bg-LOTTE2018 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3066px -2770px;
+}
+.bg-LOTTE2019 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -10px -2966px;
+}
+.bg-LOTTE2020 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -130px -2966px;
+}
+.bg-LOTTE2021 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -250px -2966px;
+}
+.bg-LOTTE2022 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1994px -1046px;
+}
+.bg-LOTTE2023 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -370px -2966px;
+}
+.bg-LOTTE2024 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -450px -890px;
+}
+.bg-LOWBALL_HITTER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1994px -1194px;
+}
+.bg-MBC1982 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -490px -2966px;
+}
+.bg-MBC1983 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -610px -2966px;
+}
+.bg-MBC1984 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -730px -2966px;
+}
+.bg-MBC1985 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -850px -2966px;
+}
+.bg-MBC1986 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -970px -2966px;
+}
+.bg-MBC1987 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1090px -2966px;
+}
+.bg-MBC1988 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1210px -2966px;
+}
+.bg-MBC1989 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1330px -2966px;
+}
+.bg-MGR_DOOSAN_BAT_BIG_BALL {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -670px -890px;
+}
+.bg-MGR_DOOSAN_BAT_SMALL_BALL {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -890px -890px;
+}
+.bg-MGR_DOOSAN_PIT_BIG_BALL {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -1110px -10px;
+}
+.bg-MGR_HANWHA_BAT_BIG_BALL {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -1110px -230px;
+}
+.bg-MGR_HANWHA_BAT_SMALL_BALL {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -1110px -450px;
+}
+.bg-MGR_HANWHA_PIT_BIG_BALL {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -1110px -670px;
+}
+.bg-MGR_HEROES_BAT_BIG_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1994px -1342px;
+}
+.bg-MGR_HEROES_BAT_SMALL_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1994px -1490px;
+}
+.bg-MGR_HEROES_PIT_BIG_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1994px -1638px;
+}
+.bg-MGR_HYUNDAI_BAT_BIG_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -10px -1922px;
+}
+.bg-MGR_HYUNDAI_BAT_SMALL_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -158px -1922px;
+}
+.bg-MGR_HYUNDAI_PIT_BIG_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -306px -1922px;
+}
+.bg-MGR_KBO_BAT_BIG_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -454px -1922px;
+}
+.bg-MGR_KBO_BAT_SMALL_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -602px -1922px;
+}
+.bg-MGR_KBO_PIT_BIG_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -750px -1922px;
+}
+.bg-MGR_KIA_BAT_BIG_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -898px -1922px;
+}
+.bg-MGR_KIA_BAT_SMALL_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1046px -1922px;
+}
+.bg-MGR_KIA_PIT_BIG_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1194px -1922px;
+}
+.bg-MGR_KT_BAT_BIG_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1342px -1922px;
+}
+.bg-MGR_KT_BAT_SMALL_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1490px -1922px;
+}
+.bg-MGR_KT_PIT_BIG_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1638px -1922px;
+}
+.bg-MGR_LG_BAT_BIG_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1786px -1922px;
+}
+.bg-MGR_LG_BAT_SMALL_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1934px -1922px;
+}
+.bg-MGR_LG_PIT_BIG_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2142px -10px;
+}
+.bg-MGR_LOTTE_BAT_BIG_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2142px -158px;
+}
+.bg-MGR_LOTTE_BAT_SMALL_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2142px -306px;
+}
+.bg-MGR_LOTTE_PIT_BIG_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2142px -454px;
+}
+.bg-MGR_NC_BAT_BIG_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2142px -602px;
+}
+.bg-MGR_NC_BAT_SMALL_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2142px -750px;
+}
+.bg-MGR_NC_PIT_BIG_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2142px -898px;
+}
+.bg-MGR_SAMSUNG_BAT_BIG_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2142px -1046px;
+}
+.bg-MGR_SAMSUNG_BAT_SMALL_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2142px -1194px;
+}
+.bg-MGR_SAMSUNG_PIT_BIG_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2142px -1342px;
+}
+.bg-MGR_SBW_BAT_BIG_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2142px -1490px;
+}
+.bg-MGR_SBW_BAT_SMALL_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2142px -1638px;
+}
+.bg-MGR_SBW_PIT_BIG_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2142px -1786px;
+}
+.bg-MGR_SSG_BAT_BIG_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -10px -2070px;
+}
+.bg-MGR_SSG_BAT_SMALL_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -158px -2070px;
+}
+.bg-MGR_SSG_PIT_BIG_BALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -306px -2070px;
+}
+.bg-MMVP {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1450px -2966px;
+}
+.bg-MOVEMENT {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -454px -2070px;
+}
+.bg-NC2013 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -602px -2070px;
+}
+.bg-NC2014 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -750px -2070px;
+}
+.bg-NC2015 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -898px -2070px;
+}
+.bg-NC2016 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1570px -2966px;
+}
+.bg-NC2017 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1690px -2966px;
+}
+.bg-NC2018 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1810px -2966px;
+}
+.bg-NC2019 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1930px -2966px;
+}
+.bg-NC2020 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2050px -2966px;
+}
+.bg-NC2021 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2170px -2966px;
+}
+.bg-NC2022 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1046px -2070px;
+}
+.bg-NC2023 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2290px -2966px;
+}
+.bg-NC2024 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -1110px -890px;
+}
+.bg-OB1982 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2410px -2966px;
+}
+.bg-OB1983 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2530px -2966px;
+}
+.bg-OB1984 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2650px -2966px;
+}
+.bg-OB1985 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2770px -2966px;
+}
+.bg-OB1986 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2890px -2966px;
+}
+.bg-OB1987 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3010px -2966px;
+}
+.bg-OB1988 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -10px;
+}
+.bg-OB1989 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -130px;
+}
+.bg-OB1990 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -250px;
+}
+.bg-OB1991 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -370px;
+}
+.bg-OB1992 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -490px;
+}
+.bg-OB1993 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -610px;
+}
+.bg-OB1994 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -730px;
+}
+.bg-OB1995 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -850px;
+}
+.bg-OB1996 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -970px;
+}
+.bg-OB1997 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -1090px;
+}
+.bg-OB1998 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -1210px;
+}
+.bg-OFFENSIVE_C {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1194px -2070px;
+}
+.bg-ONE_POINTER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1342px -2070px;
+}
+.bg-ONETWO_PUNCH {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1490px -2070px;
+}
+.bg-OPS_HITTER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1638px -2070px;
+}
+.bg-OUTFIELDING {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1786px -2070px;
+}
+.bg-PACIFIC1988 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -1330px;
+}
+.bg-PACIFIC1989 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -1450px;
+}
+.bg-PACIFIC1990 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -1570px;
+}
+.bg-PACIFIC1991 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -1690px;
+}
+.bg-PACIFIC1992 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -1810px;
+}
+.bg-PACIFIC1993 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -1930px;
+}
+.bg-PACIFIC1994 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -2050px;
+}
+.bg-PACIFIC1995 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -2170px;
+}
+.bg-POSTSEASON {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -2290px;
+}
+.bg-POWER_HITTING {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1934px -2070px;
+}
+.bg-POWER_PITCHER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2082px -2070px;
+}
+.bg-PUNCH {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2290px -10px;
+}
+.bg-RANDOM_BO {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -10px -1110px;
+}
+.bg-RISING_MOVEMENT {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2290px -158px;
+}
+.bg-ROY {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -2410px;
+}
+.bg-SACRIFICE {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2290px -306px;
+}
+.bg-SAMMI1982 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -2530px;
+}
+.bg-SAMMI1983 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -2650px;
+}
+.bg-SAMMI1984 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -2770px;
+}
+.bg-SAMSUNG1982 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3186px -2890px;
+}
+.bg-SAMSUNG1983 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -10px -3086px;
+}
+.bg-SAMSUNG1984 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -130px -3086px;
+}
+.bg-SAMSUNG1985 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -250px -3086px;
+}
+.bg-SAMSUNG1986 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -370px -3086px;
+}
+.bg-SAMSUNG1987 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -490px -3086px;
+}
+.bg-SAMSUNG1988 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -610px -3086px;
+}
+.bg-SAMSUNG1989 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -730px -3086px;
+}
+.bg-SAMSUNG1990 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -850px -3086px;
+}
+.bg-SAMSUNG1991 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -970px -3086px;
+}
+.bg-SAMSUNG1992 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1090px -3086px;
+}
+.bg-SAMSUNG1993 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1210px -3086px;
+}
+.bg-SAMSUNG1994 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1330px -3086px;
+}
+.bg-SAMSUNG1995 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1450px -3086px;
+}
+.bg-SAMSUNG1996 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1570px -3086px;
+}
+.bg-SAMSUNG1997 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1690px -3086px;
+}
+.bg-SAMSUNG1998 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1810px -3086px;
+}
+.bg-SAMSUNG1999 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1930px -3086px;
+}
+.bg-SAMSUNG2000 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2050px -3086px;
+}
+.bg-SAMSUNG2001 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2170px -3086px;
+}
+.bg-SAMSUNG2002 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2290px -3086px;
+}
+.bg-SAMSUNG2003 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2410px -3086px;
+}
+.bg-SAMSUNG2004 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2530px -3086px;
+}
+.bg-SAMSUNG2005 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2650px -3086px;
+}
+.bg-SAMSUNG2006 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2770px -3086px;
+}
+.bg-SAMSUNG2007 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2890px -3086px;
+}
+.bg-SAMSUNG2008 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3010px -3086px;
+}
+.bg-SAMSUNG2009 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2290px -454px;
+}
+.bg-SAMSUNG2010 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -230px -1110px;
+}
+.bg-SAMSUNG2011 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2290px -602px;
+}
+.bg-SAMSUNG2012 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3130px -3086px;
+}
+.bg-SAMSUNG2013 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2290px -750px;
+}
+.bg-SAMSUNG2014 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2290px -898px;
+}
+.bg-SAMSUNG2015 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2290px -1046px;
+}
+.bg-SAMSUNG2016 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -10px;
+}
+.bg-SAMSUNG2017 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -130px;
+}
+.bg-SAMSUNG2018 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -250px;
+}
+.bg-SAMSUNG2019 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -370px;
+}
+.bg-SAMSUNG2020 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -490px;
+}
+.bg-SAMSUNG2021 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -610px;
+}
+.bg-SAMSUNG2022 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2290px -1194px;
+}
+.bg-SAMSUNG2023 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -730px;
+}
+.bg-SAMSUNG2024 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -450px -1110px;
+}
+.bg-SBW1991 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -850px;
+}
+.bg-SBW1992 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -970px;
+}
+.bg-SBW1993 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -1090px;
+}
+.bg-SBW1994 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -1210px;
+}
+.bg-SBW1995 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -1330px;
+}
+.bg-SBW1996 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -1450px;
+}
+.bg-SBW1997 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -1570px;
+}
+.bg-SBW1998 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -1690px;
+}
+.bg-SBW1999 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -1810px;
+}
+.bg-SET_POSITION {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2290px -1342px;
+}
+.bg-SETUP {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2290px -1490px;
+}
+.bg-SINKER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2290px -1638px;
+}
+.bg-SK2000 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -1930px;
+}
+.bg-SK2001 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -2050px;
+}
+.bg-SK2002 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -2170px;
+}
+.bg-SK2003 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -2290px;
+}
+.bg-SK2004 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -2410px;
+}
+.bg-SK2005 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -2530px;
+}
+.bg-SK2006 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -2650px;
+}
+.bg-SK2007 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -2770px;
+}
+.bg-SK2008 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -2890px;
+}
+.bg-SK2009 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2290px -1786px;
+}
+.bg-SK2010 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -670px -1110px;
+}
+.bg-SK2011 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2290px -1934px;
+}
+.bg-SK2012 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -3306px -3010px;
+}
+.bg-SK2013 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -10px -2218px;
+}
+.bg-SK2014 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -158px -2218px;
+}
+.bg-SK2015 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -306px -2218px;
+}
+.bg-SK2016 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -10px -3206px;
+}
+.bg-SK2017 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -130px -3206px;
+}
+.bg-SK2018 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -250px -3206px;
+}
+.bg-SK2019 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -370px -3206px;
+}
+.bg-SK2020 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -490px -3206px;
+}
+.bg-SLAP_HITTER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -454px -2218px;
+}
+.bg-SLIDER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -602px -2218px;
+}
+.bg-SOCIABILITY {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -750px -2218px;
+}
+.bg-SPEEDSTER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -898px -2218px;
+}
+.bg-SPLITER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1046px -2218px;
+}
+.bg-SSG2021 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -610px -3206px;
+}
+.bg-SSG2022 {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1194px -2218px;
+}
+.bg-SSG2023 {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -730px -3206px;
+}
+.bg-SSG2024 {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -890px -1110px;
+}
+.bg-STONEBALL {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1342px -2218px;
+}
+.bg-STOPPER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1490px -2218px;
+}
+.bg-SUPERIOR_B {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -850px -3206px;
+}
+.bg-SUPERIOR_P {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -970px -3206px;
+}
+.bg-TABLE_SETTER {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1638px -2218px;
+}
+.bg-TEAMPLAYER_DOOSAN {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -1110px -1110px;
+}
+.bg-TEAMPLAYER_HANWHA {
+    width: 200px; height: 200px;
+    background: url('/public/assets/images/css_sprites.png') -1330px -10px;
+}
+.bg-TEAMPLAYER_HEROES {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1090px -3206px;
+}
+.bg-TEAMPLAYER_HYUNDAI {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1210px -3206px;
+}
+.bg-TEAMPLAYER_KIA {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1330px -3206px;
+}
+.bg-TEAMPLAYER_KT {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1450px -3206px;
+}
+.bg-TEAMPLAYER_LG {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1570px -3206px;
+}
+.bg-TEAMPLAYER_LOTTE {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1690px -3206px;
+}
+.bg-TEAMPLAYER_NC {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1810px -3206px;
+}
+.bg-TEAMPLAYER_SAMSUNG {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -1930px -3206px;
+}
+.bg-TEAMPLAYER_SBW {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2050px -3206px;
+}
+.bg-TEAMPLAYER_SSG {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2170px -3206px;
+}
+.bg-TOPCLASS {
+    width: 100px; height: 100px;
+    background: url('/public/assets/images/css_sprites.png') -2290px -3206px;
+}
+.bg-TRASH_TALK {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1786px -2218px;
+}
+.bg-TWO_PITCH {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -1934px -2218px;
+}
+.bg-UNDER_LINE {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2082px -2218px;
+}
+.bg-VS_LHH {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2230px -2218px;
+}
+.bg-VS_LHP {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2438px -10px;
+}
+.bg-VS_RHH {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2438px -158px;
+}
+.bg-VS_RHP {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2438px -306px;
+}
+.bg-VS_UHP {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2438px -454px;
+}
+.bg-WILD_THING {
+    width: 128px; height: 128px;
+    background: url('/public/assets/images/css_sprites.png') -2438px -602px;
+}

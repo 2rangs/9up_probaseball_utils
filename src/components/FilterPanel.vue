@@ -466,13 +466,14 @@ const matchSkillInfo = (skill: string, type: string, year?: string) => {
       ? 'bg-white/20'
       : 'bg-gray-50 dark:bg-gray-700'"
               >
-                <img
-                    :src="`/assets/logos/skills/${matchSkillInfo(skill, 'normal')}.png`"
-                    :alt="skill"
-                    class="w-full h-full object-contain"
-                    loading="lazy"
-                    decoding="async"
-                />
+
+                                <img
+                                    :src="`/assets/logos/skills/${matchSkillInfo(skill, 'normal')}.png`"
+                                    :alt="skill"
+                                    class="w-full h-full object-contain"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
               </div>
 
               <!-- 라벨 -->
