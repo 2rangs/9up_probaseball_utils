@@ -110,159 +110,249 @@ function toggleExpanded(index: number) {
 </script>
 
 <template>
-  <div class="overflow-x-auto max-w-[1280px] m-auto">
-    <table class="min-w-full text-sm table-fixed">
-      <thead class="bg-gray-100 text-gray-700 font-semibold text-xs uppercase tracking-wide">
-      <tr>
-        <th
-            v-for="col in columns"
-            :key="col"
-            :class="[
-              'border-b border-gray-300 whitespace-nowrap text-center h-[48px]',
-              col === 'grade' ? 'w-[80px]' :
-              col === 'rarity' ? 'w-[100px]' :
-              col === 'team' ? 'w-[150px]' :
-              col === 'year' ? 'w-[80px]' :
-              col === 'position' ? 'w-[100px]' :
-              col === 'handType' ? 'w-[100px]' :
-              col === 'pitchingType' ? 'w-[120px]' :
-              col === 'synergy' ? 'w-[300px]' :
-              col === 'open' ? 'w-[80px]' :
-              'w-[120px]'
-            ]"
-        >
-          {{ head[col] }}
-        </th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr
+  <div class="max-w-[1280px] mx-auto p-2">
+    <!-- 모바일/태블릿: 카드 리스트 -->
+    <div class="grid gap-3 md:hidden">
+      <article
           v-for="(item, index) in items"
-          :key="index"
-          :class="index % 2 === 0 ? 'bg-white' : 'bg-gray-50'"
-          class="hover:bg-gray-100 transition"
+          :key="'card-' + index"
+          class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm hover:shadow-md transition-shadow"
       >
-        <td
-            v-for="col in columns"
-            :key="col"
-            :class="[
-              'border-b border-gray-200 whitespace-nowrap align-middle text-sm text-gray-800 h-[48px]',
-              col === 'synergy' ? 'text-left' : 'text-center',
-              col === 'grade' ? 'w-[80px]' :
-              col === 'rarity' ? 'w-[100px]' :
-              col === 'team' ? 'w-[150px]' :
-              col === 'year' ? 'w-[80px]' :
-              col === 'position' ? 'w-[100px]' :
-              col === 'handType' ? 'w-[100px]' :
-              col === 'pitchingType' ? 'w-[120px]' :
-              col === 'synergy' ? 'w-[300px]' :
-              col === 'open' ? 'w-[50px]' :
-              'w-[120px]'
-            ]"
-        >
-          <template v-if="col === 'grade'">
+        <div class="p-4 flex items-start gap-4">
+          <!-- 등급 배지 -->
+          <!-- 모바일 카드: 등급 배지 -->
+          <div class="shrink-0 w-16 h-16 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
             <img
-                :src="`/assets/logos/grade/${item[col]}.png`"
-                :alt="item[col]"
-                class="w-[80px]"
+                :src="`/assets/logos/grade/${item.grade}.png`"
+                :alt="item.grade"
+                class="w-16 h-16 object-contain"
             />
-          </template>
+          </div>
 
-          <template v-else-if="col === 'rarity'">
-            <div class="flex justify-center gap-0.5">
-              <Star
-                  v-for="i in Number(item[col])"
-                  :key="'filled-' + i"
-                  class="w-4 h-4 text-yellow-400"
-                  fill="currentColor"
-              />
-            </div>
-          </template>
 
-          <template v-else-if="col === 'team'">
-            <div class="grid grid-cols-[50px_1fr] items-center w-[120px]">
-              <div class="w-[50px] h-[50px] flex items-center justify-center">
-                <img
-                    :src="findTeamLogoByKey(item[col])"
-                    :alt="item[col]"
-                    class="w-[32px] h-[32px] object-contain"
+          <div class="flex-1 min-w-0">
+            <!-- 상단: 이름 + 희귀도 -->
+            <div class="flex items-start justify-between gap-3">
+              <h3 class="text-base font-bold text-gray-900 dark:text-gray-100 truncate">
+                {{ item.name }}
+              </h3>
+              <div class="flex gap-0.5 shrink-0">
+                <Star
+                    v-for="i in Number(item.rarity)"
+                    :key="'m-star-' + i"
+                    class="w-4 h-4 text-yellow-400"
+                    fill="currentColor"
                 />
               </div>
-              <span class="text-sm leading-tight text-center">
-                  {{ findTeamLogoByName(item[col]) }}
-                </span>
             </div>
-          </template>
 
-          <template v-else-if="col === 'year'">
-            <span v-if="!item[col]">해당 없음</span>
-            <span v-else>{{ item[col] }}</span>
-          </template>
+            <!-- 팀 + 연도 -->
+            <div class="mt-1 flex items-center gap-3 text-sm text-gray-600 dark:text-gray-300">
+              <div class="flex items-center gap-2">
+                <img
+                    :src="findTeamLogoByKey(item.team)"
+                    :alt="item.team"
+                    class="w-5 h-5 object-contain"
+                />
+                <span class="truncate">{{ findTeamLogoByName(item.team) }}</span>
+              </div>
+              <span class="text-gray-300">•</span>
+              <span>{{ item.year || '해당 없음' }}</span>
+            </div>
 
-          <template v-else-if="col === 'position'">
-            <span>{{ parsePosition(item[col]) }}</span>
-          </template>
-
-          <template v-else-if="col === 'handType'">
-              <span>
+            <!-- 포지션 / 투타 / 타입 -->
+            <div class="mt-2 flex flex-wrap items-center gap-2">
+              <span class="px-2 py-0.5 rounded-full text-xs bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-200 border border-blue-200 dark:border-blue-800">
+                {{ parsePosition(item.position) }}
+              </span>
+              <span class="px-2 py-0.5 rounded-full text-xs bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-800">
                 {{ translateDirection(item.throwHand) + '투' + translateDirection(item.battingHand) + '타' }}
               </span>
-          </template>
+              <span v-if="item.pitchingType" class="px-2 py-0.5 rounded-full text-xs bg-purple-50 text-purple-700 dark:bg-purple-900/30 dark:text-purple-200 border border-purple-200 dark:border-purple-800">
+                {{ translatePitchingType(item.pitchingType) }}
+              </span>
+            </div>
 
-          <template v-else-if="col === 'pitchingType'">
-            <span>{{ translatePitchingType(item[col]) }}</span>
-          </template>
-
-          <template v-else-if="col === 'synergy'">
+            <!-- 시너지 -->
             <div
-                class="w-[300px] text-left flex items-start justify-between gap-3 rounded-md bg-gray-50 px-3 py-2 border border-gray-200 hover:bg-gray-100 transition-all duration-300"
+                class="mt-3 w-full rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-3 py-2"
             >
               <p
-                  class="flex-1 text-sm text-gray-800 select-text whitespace-pre-line break-words leading-snug transition-all duration-300"
+                  class="text-sm text-gray-800 dark:text-gray-100 leading-snug whitespace-pre-line break-words"
                   :style="expandedRowIndex === index
-                    ? {}
-                    : { display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }"
+                  ? {}
+                  : { display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }"
               >
-                {{ item[col] }}
+                {{ item.synergy }}
               </p>
-
               <button
-                  v-if="item[col].length > 25"
+                  v-if="(item.synergy || '').length > 40"
                   @click="toggleExpanded(index)"
                   :aria-expanded="expandedRowIndex === index"
-                  class="text-gray-500 hover:text-blue-600 transition-colors duration-150 mt-0.5 shrink-0 cursor-pointer focus:outline-none"
-                  :title="expandedRowIndex === index ? '시너지 접기' : '시너지 전체 보기'"
+                  class="mt-2 inline-flex items-center gap-1 text-xs text-gray-600 dark:text-gray-300 hover:text-blue-600 transition"
               >
-                <component
-                    :is="expandedRowIndex === index ? ChevronUp : ChevronDown"
-                    class="w-4 h-4"
-                />
+                <component :is="expandedRowIndex === index ? ChevronUp : ChevronDown" class="w-3.5 h-3.5" />
+                <span>{{ expandedRowIndex === index ? '접기' : '더보기' }}</span>
               </button>
             </div>
-          </template>
 
-          <template v-else-if="col === 'open'">
-            <button @click="openModal(item)" class="text-blue-600 underline text-sm cursor-pointer">
-              <ExternalLink />
-            </button>
-          </template>
+            <!-- 상세 버튼 -->
+            <div class="mt-3 flex justify-end">
+              <button
+                  @click="openModal(item)"
+                  class="inline-flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-700"
+              >
+                <ExternalLink class="w-4 h-4" />
+                상세보기
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
 
-          <template v-else class="cursor-pointer">
-            {{ item[col] }}
-          </template>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+    <!-- 데스크탑: 테이블 -->
+    <div class="overflow-x-auto hidden md:block">
+      <table class="min-w-full text-sm table-fixed rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700">
+        <thead class="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 font-semibold text-xs uppercase tracking-wide">
+        <tr>
+          <th
+              v-for="col in columns"
+              :key="'th-' + col"
+              :class="[
+                'border-b border-gray-300 dark:border-gray-700 whitespace-nowrap text-center h-[48px] px-3',
+                col === 'grade' ? 'w-[80px]' :
+                col === 'rarity' ? 'w-[100px]' :
+                col === 'team' ? 'w-[180px]' :
+                col === 'year' ? 'w-[100px]' :
+                col === 'position' ? 'w-[120px]' :
+                col === 'handType' ? 'w-[120px]' :
+                col === 'pitchingType' ? 'w-[140px]' :
+                col === 'synergy' ? 'w-[360px]' :
+                col === 'open' ? 'w-[90px]' :
+                'w-[140px]'
+              ]"
+          >
+            {{ head[col] }}
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr
+            v-for="(item, index) in items"
+            :key="'row-' + index"
+            :class="index % 2 === 0 ? 'bg-white dark:bg-gray-900' : 'bg-gray-50 dark:bg-gray-800/60'"
+            class="hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+        >
+          <td
+              v-for="col in columns"
+              :key="'td-' + col + '-' + index"
+              :class="[
+                'border-b border-gray-200 dark:border-gray-700 whitespace-nowrap align-middle text-sm text-gray-800 dark:text-gray-100 h-[56px] px-3',
+                col === 'synergy' ? 'text-left' : 'text-center'
+              ]"
+          >
+            <!-- 데스크탑 테이블: 등급 -->
+            <template v-if="col === 'grade'">
+              <img
+                  :src="`/assets/logos/grade/${item[col]}.png`"
+                  :alt="item[col]"
+                  class="w-[90px] mx-auto"
+              />
+            </template>
+
+
+            <template v-else-if="col === 'rarity'">
+              <div class="flex justify-center gap-0.5">
+                <Star
+                    v-for="i in Number(item[col])"
+                    :key="'d-star-' + i"
+                    class="w-4 h-4 text-yellow-400"
+                    fill="currentColor"
+                />
+              </div>
+            </template>
+
+            <template v-else-if="col === 'team'">
+              <div class="grid grid-cols-[50px_1fr] items-center w-[160px] mx-auto">
+                <div class="w-[50px] h-[50px] flex items-center justify-center">
+                  <img
+                      :src="findTeamLogoByKey(item[col])"
+                      :alt="item[col]"
+                      class="w-[32px] h-[32px] object-contain"
+                  />
+                </div>
+                <span class="text-sm leading-tight text-center">
+                    {{ findTeamLogoByName(item[col]) }}
+                  </span>
+              </div>
+            </template>
+
+            <template v-else-if="col === 'year'">
+              <span>{{ item[col] || '해당 없음' }}</span>
+            </template>
+
+            <template v-else-if="col === 'position'">
+              <span>{{ parsePosition(item[col]) }}</span>
+            </template>
+
+            <template v-else-if="col === 'handType'">
+              <span>{{ translateDirection(item.throwHand) + '투' + translateDirection(item.battingHand) + '타' }}</span>
+            </template>
+
+            <template v-else-if="col === 'pitchingType'">
+              <span>{{ translatePitchingType(item[col]) }}</span>
+            </template>
+
+            <template v-else-if="col === 'synergy'">
+              <div
+                  class="w-full text-left flex items-start justify-between gap-3 rounded-md bg-gray-50 dark:bg-gray-800 px-3 py-2 border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800/80 transition-all duration-300"
+              >
+                <p
+                    class="flex-1 text-sm text-gray-800 dark:text-gray-100 select-text whitespace-pre-line break-words leading-snug transition-all duration-300"
+                    :style="expandedRowIndex === index
+                      ? {}
+                      : { display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }"
+                >
+                  {{ item[col] }}
+                </p>
+
+                <button
+                    v-if="(item[col] || '').length > 25"
+                    @click="toggleExpanded(index)"
+                    :aria-expanded="expandedRowIndex === index"
+                    class="text-gray-500 hover:text-blue-600 transition-colors duration-150 mt-0.5 shrink-0 cursor-pointer focus:outline-none"
+                    :title="expandedRowIndex === index ? '시너지 접기' : '시너지 전체 보기'"
+                >
+                  <component :is="expandedRowIndex === index ? ChevronUp : ChevronDown" class="w-4 h-4" />
+                </button>
+              </div>
+            </template>
+
+            <template v-else-if="col === 'open'">
+              <button @click="openModal(item)" class="inline-flex items-center gap-1 text-blue-600 hover:text-blue-700 text-sm">
+                <ExternalLink class="w-4 h-4" />
+                열기
+              </button>
+            </template>
+
+            <template v-else>
+              {{ item[col] }}
+            </template>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 사이드 모달 -->
+    <SideModal
+        v-if="selectedItem"
+        :show="showModal"
+        :player="selectedItem"
+        @update:show="val => showModal = val"
+    >
+      <PlayerDetail :player="selectedItem" />
+    </SideModal>
   </div>
-
-  <SideModal
-      v-if="selectedItem"
-      :show="showModal"
-      :player="selectedItem"
-      @update:show="val => showModal = val"
-  >
-    <PlayerDetail :player="selectedItem" />
-  </SideModal>
 </template>
-
