@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-import { Menu, X } from 'lucide-vue-next'
+import { Menu, X, Sun, Moon } from 'lucide-vue-next'
 import { useRoute, useRouter } from 'vue-router'
 
 const isSidebarOpen = ref(false)
@@ -8,6 +8,37 @@ const sidebarRef = ref<HTMLElement | null>(null)
 const route = useRoute()
 const router = useRouter()
 const title = ref("9up 프로야구 유틸리티")
+
+// 다크모드 상태 관리
+const isDark = ref(false)
+
+// 다크모드 초기화 및 로컬스토리지에서 설정 불러오기
+const initDarkMode = () => {
+  const savedTheme = localStorage.getItem('theme')
+  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+
+  if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+    isDark.value = true
+    document.documentElement.classList.add('dark')
+  } else {
+    isDark.value = false
+    document.documentElement.classList.remove('dark')
+  }
+}
+
+// 다크모드 토글 함수
+const toggleDarkMode = () => {
+  isDark.value = !isDark.value
+
+  if (isDark.value) {
+    document.documentElement.classList.add('dark')
+    localStorage.setItem('theme', 'dark')
+  } else {
+    document.documentElement.classList.remove('dark')
+    localStorage.setItem('theme', 'light')
+  }
+}
+
 const handleClickOutside = (event: MouseEvent) => {
   const sidebar = sidebarRef.value
   if (isSidebarOpen.value && sidebar && !sidebar.contains(event.target as Node)) {
@@ -22,6 +53,7 @@ const handleEscKey = (event: KeyboardEvent) => {
 }
 
 onMounted(() => {
+  initDarkMode()
   window.addEventListener('mousedown', handleClickOutside)
   window.addEventListener('keydown', handleEscKey)
 })
@@ -55,7 +87,15 @@ const navigate = (item: { path: string; disabled?: boolean }) => {
         <component :is="isSidebarOpen ? X : Menu" class="w-6 h-6 transition-transform duration-300 cursor-pointer" />
       </button>
       <h1 class="text-lg font-bold">{{ title }}</h1>
-      <div class="w-6 h-6"></div>
+
+      <!-- 다크모드 토글 버튼 -->
+      <button
+          @click="toggleDarkMode"
+          class="p-2 rounded-lg text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+          :title="isDark ? '라이트 모드로 전환' : '다크 모드로 전환'"
+      >
+        <component :is="isDark ? Sun : Moon" class="w-5 h-5" />
+      </button>
     </header>
 
     <!-- 오버레이 -->

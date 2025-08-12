@@ -171,6 +171,7 @@ const totalPower = computed(() => {
   const excluded = excludedAbilities.value.reduce((sum, stat) => sum + Number(stat.value || 0), 0)
   return included + excluded
 })
+const isDark = computed(() => document.documentElement.classList.contains('dark'))
 
 const radarData = computed(() => ({
   labels: abilities.value.map(a => a.label),
@@ -188,18 +189,28 @@ const radarOptions = {
   scales: {
     r: {
       suggestedMin: 0,
-      suggestedMax: 1000,
-      ticks: { stepSize: 200, color: 'none', backdropColor: 'transparent' },
-      pointLabels: {
-        color: '#444',
-        font: { size: 13 },
-        callback: (_: any, i: number) => `${abilities.value[i]?.label ?? ''}\n${abilities.value[i]?.value ?? ''}`
+      suggestedMax: 999,
+      angleLines: {
+        color: isDark.value ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)'
       },
-      grid: { color: '#ddd' }
+      grid: {
+        color: isDark.value ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.05)'
+      },
+      pointLabels: {
+        color: isDark.value ? '#f3f4f6' : '#374151',
+        font: { size: 12 },
+        callback: function (label, index) {
+          // abilities.value[index].value 사용해서 값 표시
+          const value = abilities.value?.[index]?.value ?? ''
+          return `${label}\n${value}` // 줄바꿈으로 아래 표시
+        }
+      },
+
+      ticks : {display : false}
     }
   },
   plugins: {
-    legend: { display: false }
+    legend: { display: false },
   }
 }
 
@@ -443,20 +454,20 @@ const findSynergy = (synergy: string) => {
           </div>
 
           <!-- 능력치 카드 -->
-          <div class="rounded-2xl bg-white dark:bg-gray-800 p-4 border border-gray-200 dark:border-gray-700">
+          <div class="rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
 
-            <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center justify-between px-4 mt-4">
               <h3 class="text-base font-semibold text-gray-900 dark:text-white">종합 능력</h3>
               <span class="text-lg font-bold text-blue-600 dark:text-blue-400">{{ totalPower }}</span>
             </div>
 
             <!-- 레이더 차트 -->
-            <div class="w-full w-min-[300px] m-auto">
-              <Radar :data="radarData" :options="radarOptions" class="w-full h-full w-min-[300px] m-auto" />
+            <div class="w-full w-min-[280px] m-auto">
+              <Radar :data="radarData" :options="radarOptions" class="w-full h-full w-min-[280px] m-auto" />
             </div>
 
             <!-- 주요 능력치 -->
-            <div class="grid grid-cols-2 gap-2 mb-3">
+            <div class="grid grid-cols-2 gap-2 mb-3 px-4">
               <div v-for="(a, i) in abilities" :key="i"
                    class="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-700 rounded-lg">
                 <span class="text-xs font-medium text-gray-700 dark:text-gray-300">{{ a.label }}</span>
@@ -465,7 +476,7 @@ const findSynergy = (synergy: string) => {
             </div>
 
             <!-- 기타 능력치 -->
-            <div class="border-t dark:border-gray-700 pt-3">
+            <div class="dark:border-gray-700 px-3 mb-4">
               <div class="grid grid-cols-3 gap-2">
                 <div
                     v-for="(a, i) in excludedAbilities"

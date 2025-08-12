@@ -223,7 +223,7 @@ async function loadCsv() {
 </script>
 
 <template>
-  <div class="flex gap-4 w-[1280px] mx-auto p-2">
+  <div class="flex gap-4 w-[1280px] mx-auto pt-4">
     <button
         v-for="tab in tabs"
         :key="tab"
@@ -232,13 +232,13 @@ async function loadCsv() {
         'px-5 py-2 rounded-lg font-semibold transition-transform cursor-pointer',
         selectedTab === tab
           ? 'bg-blue-500 text-white hover:bg-blue-600'
-          : 'bg-white text-black border border-blue-400 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20'
+          : 'text-black border border-blue-400 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20'
       ]"
     >
       {{ tabLabels[tab] }}
     </button>
   </div>
-  <div class="min-h-screen pt-4 space-y-8 font-sans">
+  <div class="min-h-screen space-y-8 font-sans">
 
     <!-- Filters -->
     <FilterPanel
