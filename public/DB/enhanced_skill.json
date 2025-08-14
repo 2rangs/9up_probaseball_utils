@@ -701,8 +701,8 @@
   },
   {
     "enhanced_skill": "1986 청보 핀토스",
-    "image": "CUNGBO1986",
-    "team": "CUNGBO",
+    "image": "CHUNGBO1986",
+    "team": "CHUNGBO",
     "year": "1986",
     "effects_by_level": [
       "경기 총 수익 +10% 상승\n1986년 상대 시 자신의 파워 +27 상승",
@@ -826,8 +826,8 @@
   },
   {
     "enhanced_skill": "1987 삼성 라이온즈",
-    "image": "SAMMI1987",
-    "team": "SAMMI",
+    "image": "SAMSUNG1987",
+    "team": "SAMSUNG",
     "year": "1987",
     "effects_by_level": [
       "경기 총 수익 +10% 상승\n1987년 상대 시 자신의 파워 +27 상승",
@@ -926,8 +926,8 @@
   },
   {
     "enhanced_skill": "1988 롯데 자이언츠",
-    "image": "SAMMI1988",
-    "team": "SAMMI",
+    "image": "LOTTE1988",
+    "team": "LOTTE",
     "year": "1988",
     "effects_by_level": [
       "경기 총 수익 +10% 상승\n1988년 상대 시 자신의 파워 +27 상승",
@@ -2751,7 +2751,7 @@
   },
   {
     "enhanced_skill": "BIG BALL",
-    "image": "",
+    "image": "BIGBALL",
     "team": "",
     "year": "",
     "effects_by_level": [
@@ -2968,7 +2968,7 @@
   },
   {
     "enhanced_skill": "DETERRENCE",
-    "image": "",
+    "image": "DETERRENCE",
     "team": "",
     "year": "",
     "effects_by_level": [
@@ -4460,7 +4460,7 @@
   },
   {
     "enhanced_skill": "SMALL BALL",
-    "image": "",
+    "image": "SMALLBALL",
     "team": "",
     "year": "",
     "effects_by_level": [

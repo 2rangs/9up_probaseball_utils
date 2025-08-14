@@ -241,6 +241,23 @@ const findSynergy = (synergy: string) => {
   return synergyData.value.find(item => item.synergy === synergy)
 }
 
+const matchAllstarTeam = (team: string) => {
+  const asgdTeams = [
+    'DOOSAN','KT','LOTTE','OB','SAMSUNG','SBW','SK','SSG'
+  ]
+  const asgnTeams = [
+    'BINGGRAE','CHUNGBO','HAITAI','HANWHA','HYUNDAI','KIA','KIWOOM','NEXEN',
+    'LG','MBC','NC','OB','PACIFIC','SAMMI'
+  ]
+
+  if (asgdTeams.includes(team)) {
+    return 'ASGD'
+  }else if (asgnTeams.includes(team)) {
+    return 'ASGN'
+  }
+}
+
+
 </script>
 
 <template>
@@ -257,8 +274,21 @@ const findSynergy = (synergy: string) => {
           <!-- 메인 이미지 카드 -->
           <div class="relative rounded-2xl overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
             <div class="aspect-[3/4] w-full bg-gray-100 dark:bg-gray-700">
-              <img
-                  src="https://placehold.co/600x800?text=Player+Image"
+             <!-- 아래는 임시 이미지 -->
+              <img v-if="player.grade === 'ASG'"
+                  :src="`/assets/playercards/commonCard_${matchAllstarTeam(player.team.toUpperCase())}_${player.team.toUpperCase()}.png`"
+                  class="w-full h-full object-cover"
+                  alt="player image"
+                  loading="lazy"
+              />
+              <img v-if="player.grade === 'DGN'"
+                   :src="`/assets/playercards/DGN/${player.team.toUpperCase()}/${player.id}.png`"
+                   class="w-full h-full object-cover"
+                   alt="player image"
+                   loading="lazy"
+              />
+              <img v-else
+                  :src="`/assets/playercards/commonCard_${player.grade}_${player.team.toUpperCase() === 'NEXEN' ? 'KIWOOM' : player.team.toUpperCase()}.png`"
                   class="w-full h-full object-cover"
                   alt="player image"
                   loading="lazy"
@@ -281,17 +311,12 @@ const findSynergy = (synergy: string) => {
                     />
                   </div>
                 </div>
-                <img
-                    :src="`/assets/logos/grade/${player.grade}.png`"
-                    :alt="player.grade"
-                    class="w-16 sm:w-20 h-auto"
-                />
               </div>
             </div>
 
             <!-- 등급 배지 -->
-            <div class="absolute top-3 right-3 px-2 py-1 bg-black/60 backdrop-blur rounded-lg">
-              <span class="text-xs font-semibold text-white uppercase">{{ player.grade }}</span>
+            <div v-if="player.grade === 'MMVP'" class="absolute top-3 right-3 p-1 bg-black/90 backdrop-blur rounded-lg">
+              <span class="text-xs font-semibold text-white">{{JSON.parse(player.year)[0]}}년 {{player.month}}월</span>
             </div>
           </div>
 
@@ -338,7 +363,7 @@ const findSynergy = (synergy: string) => {
                       v-for="(effect, i) in matchSkillInfo(player.enhancedSkill, 'effects_by_year', JSON.parse(player.year)) || []"
                       :key="'btn-' + i"
                       @click="selectedEffectIndex = i"
-                      class="px-3 py-1 text-xs font-medium rounded-md transition-colors text-center"
+                      class="px-1 py-1 text-xs font-medium rounded-md transition-colors text-center"
                       :class="selectedEffectIndex === i
         ? 'bg-blue-500 text-white'
         : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'"
@@ -383,18 +408,19 @@ const findSynergy = (synergy: string) => {
           <div class="rounded-2xl bg-white dark:bg-gray-800 p-4 border border-gray-200 dark:border-gray-700">
 
             <!-- 헤더 -->
-            <div class="flex items-center gap-3 mb-4">
+            <div class="flex items-center gap-3 mb-2">
               <img
                   :src="`/assets/logos/grade/${player.grade}.png`"
                   :alt="player.grade"
-                  class="w-10 h-auto object-contain"
+                  class="w-18 h-auto object-contain"
               />
               <div>
                 <h2 class="text-xl font-bold text-gray-900 dark:text-white">
                   {{ player.name }}
                 </h2>
-                <span class="inline-block px-2 py-0.5 text-xs font-semibold bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded uppercase">
-                  {{ player.grade }}
+                <span v-if="player.grade === 'MMVP'" class="inline-block px-2 py-0.5 text-xs font-semibold bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded uppercase">{{JSON.parse(player.year)[0]}}년 {{player.month}}월 {{ player.grade }}</span>
+                <span v-else-if="player.year" class="inline-block px-2 py-0.5 text-xs font-semibold bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded uppercase">
+                  {{JSON.parse(player?.year)}}
                 </span>
               </div>
             </div>

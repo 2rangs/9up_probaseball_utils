@@ -4,6 +4,11 @@ import { createRouter, createWebHistory } from 'vue-router'
         path: '/',
         redirect: '/players',
     },
+     {
+         path: '/skills',
+         name: 'Skills',
+         component: () => import('@/views/9upSkillListView.vue'),
+     },
     {
         path: '/lineups',
         name: 'Lineups',
