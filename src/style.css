@@ -1,2 +1,2311 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
+
+.bg-ACE_TYPE {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -10px -10px;
+}
+.bg-ALLSTAR {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -78px -10px;
+}
+.bg-ALLSTAR_DREAM {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -10px -78px;
+}
+.bg-ALLSTAR_NANUM {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -78px -78px;
+}
+.bg-BINGGRAE1986 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -146px -10px;
+}
+.bg-BINGGRAE1987 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -146px -78px;
+}
+.bg-BINGGRAE1988 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -10px -146px;
+}
+.bg-BINGGRAE1989 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -78px -146px;
+}
+.bg-BINGGRAE1990 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -146px -146px;
+}
+.bg-BINGGRAE1992 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -214px -10px;
+}
+.bg-BINGGRAE1991 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -214px -78px;
+}
+.bg-CHUNGBO1985 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -214px -146px;
+}
+.bg-BINGGRAE1993 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -10px -214px;
+}
+.bg-DGN_TYPE {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -78px -214px;
+}
+.bg-CHUNGBO1986 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -146px -214px;
+}
+.bg-CHUNGBO1987 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -214px -214px;
+}
+.bg-DOOSAN1991 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -282px -10px;
+}
+.bg-DOOSAN1993 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -282px -78px;
+}
+.bg-DOOSAN1992 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -282px -146px;
+}
+.bg-DOOSAN1995 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -282px -214px;
+}
+.bg-DOOSAN1994 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -10px -282px;
+}
+.bg-DOOSAN1996 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -78px -282px;
+}
+.bg-DOOSAN2000 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -146px -282px;
+}
+.bg-DOOSAN1998 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -214px -282px;
+}
+.bg-DOOSAN1999 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -282px -282px;
+}
+.bg-DOOSAN1997 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -350px -10px;
+}
+.bg-DOOSAN2001 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -350px -78px;
+}
+.bg-DOOSAN2003 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -350px -146px;
+}
+.bg-DOOSAN2004 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -350px -214px;
+}
+.bg-DOOSAN2002 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -350px -282px;
+}
+.bg-DOOSAN2006 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -10px -350px;
+}
+.bg-DOOSAN2007 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -78px -350px;
+}
+.bg-DOOSAN2005 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -146px -350px;
+}
+.bg-DOOSAN2008 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -214px -350px;
+}
+.bg-DOOSAN2009 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -282px -350px;
+}
+.bg-DOOSAN2010 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -350px -350px;
+}
+.bg-DOOSAN2011 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -418px -10px;
+}
+.bg-DOOSAN2012 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -418px -78px;
+}
+.bg-DOOSAN2015 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -418px -146px;
+}
+.bg-DOOSAN2017 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -418px -214px;
+}
+.bg-DOOSAN2014 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -418px -282px;
+}
+.bg-DOOSAN2013 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -418px -350px;
+}
+.bg-DOOSAN2016 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -10px -418px;
+}
+.bg-DOOSAN2019 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -78px -418px;
+}
+.bg-DOOSAN2023 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -146px -418px;
+}
+.bg-DOOSAN2020 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -214px -418px;
+}
+.bg-DOOSAN2018 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -282px -418px;
+}
+.bg-DOOSAN2021 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -350px -418px;
+}
+.bg-GOLDENGLOVE {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -418px -418px;
+}
+.bg-DOOSAN2022 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -486px -10px;
+}
+.bg-DOOSAN2024 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -486px -78px;
+}
+.bg-FRANCHISE {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -486px -146px;
+}
+.bg-GOLDENGLOVE_2016 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -486px -214px;
+}
+.bg-GOLDENGLOVE_2017 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -486px -282px;
+}
+.bg-GOLDENGLOVE_2019 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -486px -350px;
+}
+.bg-GOLDENGLOVE_2021 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -486px -418px;
+}
+.bg-GOLDENGLOVE1982 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -10px -486px;
+}
+.bg-GOLDENGLOVE_2020 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -78px -486px;
+}
+.bg-GOLDENGLOVE_2018 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -146px -486px;
+}
+.bg-GOLDENGLOVE1983 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -214px -486px;
+}
+.bg-GOLDENGLOVE1986 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -282px -486px;
+}
+.bg-GOLDENGLOVE1985 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -350px -486px;
+}
+.bg-GOLDENGLOVE1984 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -418px -486px;
+}
+.bg-GOLDENGLOVE1992 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -486px -486px;
+}
+.bg-GOLDENGLOVE1990 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -554px -10px;
+}
+.bg-GOLDENGLOVE1988 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -554px -78px;
+}
+.bg-GOLDENGLOVE1991 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -554px -146px;
+}
+.bg-GOLDENGLOVE1987 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -554px -214px;
+}
+.bg-GOLDENGLOVE1989 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -554px -282px;
+}
+.bg-GOLDENGLOVE1993 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -554px -350px;
+}
+.bg-GOLDENGLOVE1995 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -554px -418px;
+}
+.bg-GOLDENGLOVE1999 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -554px -486px;
+}
+.bg-GOLDENGLOVE1994 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -10px -554px;
+}
+.bg-GOLDENGLOVE1998 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -78px -554px;
+}
+.bg-GOLDENGLOVE2003 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -146px -554px;
+}
+.bg-GOLDENGLOVE1996 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -214px -554px;
+}
+.bg-GOLDENGLOVE1997 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -282px -554px;
+}
+.bg-GOLDENGLOVE2006 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -350px -554px;
+}
+.bg-GOLDENGLOVE2000 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -418px -554px;
+}
+.bg-GOLDENGLOVE2004 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -486px -554px;
+}
+.bg-GOLDENGLOVE2002 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -554px -554px;
+}
+.bg-GOLDENGLOVE2005 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -622px -10px;
+}
+.bg-GOLDENGLOVE2001 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -622px -78px;
+}
+.bg-GOLDENGLOVE2007 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -622px -146px;
+}
+.bg-GOLDENGLOVE2008 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -622px -214px;
+}
+.bg-GOLDENGLOVE2009 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -622px -282px;
+}
+.bg-GOLDENGLOVE2011 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -622px -350px;
+}
+.bg-GOLDENGLOVE2010 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -622px -418px;
+}
+.bg-GOLDENGLOVE2012 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -622px -486px;
+}
+.bg-GOLDENGLOVE2013 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -622px -554px;
+}
+.bg-GOLDENGLOVE2019 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -10px -622px;
+}
+.bg-GOLDENGLOVE2016 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -78px -622px;
+}
+.bg-GOLDENGLOVE2017 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -146px -622px;
+}
+.bg-GOLDENGLOVE2015 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -214px -622px;
+}
+.bg-GOLDENGLOVE2018 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -282px -622px;
+}
+.bg-GOLDENGLOVE2023 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -350px -622px;
+}
+.bg-GOLDENGLOVE2021 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -418px -622px;
+}
+.bg-GOLDENGLOVE2022 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -486px -622px;
+}
+.bg-GOLDENGLOVE2014 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -554px -622px;
+}
+.bg-GOLDENGLOVE2020 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -622px -622px;
+}
+.bg-GOLDENGLOVE2024 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -690px -10px;
+}
+.bg-HAITAI1982 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -690px -78px;
+}
+.bg-HAITAI1983 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -690px -146px;
+}
+.bg-HAITAI1984 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -690px -214px;
+}
+.bg-HAITAI1985 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -690px -282px;
+}
+.bg-HAITAI1986 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -690px -350px;
+}
+.bg-HAITAI1987 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -690px -418px;
+}
+.bg-HAITAI1988 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -690px -486px;
+}
+.bg-HAITAI1989 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -690px -554px;
+}
+.bg-HAITAI1990 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -690px -622px;
+}
+.bg-HAITAI1991 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -10px -690px;
+}
+.bg-HAITAI1992 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -78px -690px;
+}
+.bg-HAITAI1993 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -146px -690px;
+}
+.bg-HAITAI1994 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -214px -690px;
+}
+.bg-HAITAI1995 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -282px -690px;
+}
+.bg-HAITAI1996 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -350px -690px;
+}
+.bg-HAITAI1997 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -418px -690px;
+}
+.bg-HAITAI1998 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -486px -690px;
+}
+.bg-HAITAI1999 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -554px -690px;
+}
+.bg-HAITAI2000 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -622px -690px;
+}
+.bg-HANWHA1991 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -690px -690px;
+}
+.bg-HANWHA1992 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -758px -10px;
+}
+.bg-HANWHA1993 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -758px -78px;
+}
+.bg-HANWHA1994 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -758px -146px;
+}
+.bg-HANWHA1995 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -758px -214px;
+}
+.bg-HANWHA1996 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -758px -282px;
+}
+.bg-HANWHA1997 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -758px -350px;
+}
+.bg-HANWHA1998 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -758px -418px;
+}
+.bg-HANWHA1999 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -758px -486px;
+}
+.bg-HANWHA2000 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -758px -554px;
+}
+.bg-HANWHA2001 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -758px -622px;
+}
+.bg-HANWHA2002 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -758px -690px;
+}
+.bg-HANWHA2003 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -10px -758px;
+}
+.bg-HANWHA2004 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -78px -758px;
+}
+.bg-HANWHA2005 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -146px -758px;
+}
+.bg-HANWHA2006 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -214px -758px;
+}
+.bg-HANWHA2007 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -282px -758px;
+}
+.bg-HANWHA2008 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -350px -758px;
+}
+.bg-HANWHA2009 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -418px -758px;
+}
+.bg-HANWHA2010 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -486px -758px;
+}
+.bg-HANWHA2012 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -554px -758px;
+}
+.bg-HANWHA2011 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -622px -758px;
+}
+.bg-HANWHA2013 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -690px -758px;
+}
+.bg-HANWHA2014 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -758px -758px;
+}
+.bg-HANWHA2015 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -826px -10px;
+}
+.bg-HANWHA2016 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -826px -78px;
+}
+.bg-HANWHA2017 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -826px -146px;
+}
+.bg-HANWHA2018 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -826px -214px;
+}
+.bg-HANWHA2019 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -826px -282px;
+}
+.bg-HANWHA2020 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -826px -350px;
+}
+.bg-HANWHA2021 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -826px -418px;
+}
+.bg-HANWHA2022 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -826px -486px;
+}
+.bg-HANWHA2023 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -826px -554px;
+}
+.bg-HANWHA2024 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -826px -622px;
+}
+.bg-HEROES2008 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -826px -690px;
+}
+.bg-HEROES2009 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -826px -758px;
+}
+.bg-HEROES2010 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -10px -826px;
+}
+.bg-HEROES2011 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -78px -826px;
+}
+.bg-HEROES2012 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -146px -826px;
+}
+.bg-HEROES2013 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -214px -826px;
+}
+.bg-HEROES2014 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -282px -826px;
+}
+.bg-HEROES2015 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -350px -826px;
+}
+.bg-HEROES2016 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -418px -826px;
+}
+.bg-HEROES2017 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -486px -826px;
+}
+.bg-HEROES2018 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -554px -826px;
+}
+.bg-HEROES2019 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -622px -826px;
+}
+.bg-HEROES2020 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -690px -826px;
+}
+.bg-HEROES2021 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -758px -826px;
+}
+.bg-HEROES2022 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -826px -826px;
+}
+.bg-HEROES2023 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -894px -10px;
+}
+.bg-HEROES2024 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -894px -78px;
+}
+.bg-HIT_TYPE {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -894px -146px;
+}
+.bg-HYUNDAI1991 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -894px -214px;
+}
+.bg-HYUNDAI1992 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -894px -282px;
+}
+.bg-HYUNDAI1993 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -894px -350px;
+}
+.bg-HYUNDAI1994 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -894px -418px;
+}
+.bg-HYUNDAI1995 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -894px -486px;
+}
+.bg-HYUNDAI1996 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -894px -554px;
+}
+.bg-HYUNDAI1997 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -894px -622px;
+}
+.bg-HYUNDAI1998 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -894px -690px;
+}
+.bg-HYUNDAI1999 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -894px -758px;
+}
+.bg-HYUNDAI2000 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -894px -826px;
+}
+.bg-HYUNDAI2002 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -10px -894px;
+}
+.bg-HYUNDAI2001 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -78px -894px;
+}
+.bg-HYUNDAI2003 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -146px -894px;
+}
+.bg-HYUNDAI2004 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -214px -894px;
+}
+.bg-HYUNDAI2005 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -282px -894px;
+}
+.bg-HYUNDAI2006 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -350px -894px;
+}
+.bg-HYUNDAI2007 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -418px -894px;
+}
+.bg-KIA1991 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -486px -894px;
+}
+.bg-KIA1992 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -554px -894px;
+}
+.bg-KIA1993 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -622px -894px;
+}
+.bg-KIA1995 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -690px -894px;
+}
+.bg-KIA1996 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -758px -894px;
+}
+.bg-KIA1994 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -826px -894px;
+}
+.bg-KIA1997 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -894px -894px;
+}
+.bg-KIA1998 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -962px -10px;
+}
+.bg-KIA1999 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -962px -78px;
+}
+.bg-KIA2001 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -962px -146px;
+}
+.bg-KIA2002 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -962px -214px;
+}
+.bg-KIA2003 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -962px -282px;
+}
+.bg-KIA2004 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -962px -350px;
+}
+.bg-KIA2005 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -962px -418px;
+}
+.bg-KIA2006 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -962px -486px;
+}
+.bg-KIA2007 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -962px -554px;
+}
+.bg-KIA2008 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -962px -622px;
+}
+.bg-KIA2009 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -962px -690px;
+}
+.bg-KIA2010 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -962px -758px;
+}
+.bg-KIA2011 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -962px -826px;
+}
+.bg-KIA2013 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -962px -894px;
+}
+.bg-KIA2012 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -10px -962px;
+}
+.bg-KIA2014 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -78px -962px;
+}
+.bg-KIA2015 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -146px -962px;
+}
+.bg-KIA2016 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -214px -962px;
+}
+.bg-KIA2017 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -282px -962px;
+}
+.bg-KIA2018 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -350px -962px;
+}
+.bg-KIA2019 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -418px -962px;
+}
+.bg-KIA2020 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -486px -962px;
+}
+.bg-KIA2021 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -554px -962px;
+}
+.bg-KIA2022 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -622px -962px;
+}
+.bg-KIA2023 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -690px -962px;
+}
+.bg-KIA2024 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -758px -962px;
+}
+.bg-KT2015 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -826px -962px;
+}
+.bg-KT2016 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -894px -962px;
+}
+.bg-KT2017 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -962px -962px;
+}
+.bg-KT2018 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1030px -10px;
+}
+.bg-KT2019 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1030px -78px;
+}
+.bg-KT2020 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1030px -146px;
+}
+.bg-KT2021 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1030px -214px;
+}
+.bg-KT2022 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1030px -282px;
+}
+.bg-KT2023 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1030px -350px;
+}
+.bg-KT2024 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1030px -418px;
+}
+.bg-LG1990 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1030px -486px;
+}
+.bg-LG1991 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1030px -554px;
+}
+.bg-LG1992 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1030px -622px;
+}
+.bg-LG1993 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1030px -690px;
+}
+.bg-LG1994 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1030px -758px;
+}
+.bg-LG1996 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1030px -826px;
+}
+.bg-LG1995 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1030px -894px;
+}
+.bg-LG1997 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1030px -962px;
+}
+.bg-LG1999 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -10px -1030px;
+}
+.bg-LG1998 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -78px -1030px;
+}
+.bg-LG2000 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -146px -1030px;
+}
+.bg-LG2002 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -214px -1030px;
+}
+.bg-LG2001 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -282px -1030px;
+}
+.bg-LG2003 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -350px -1030px;
+}
+.bg-LG2004 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -418px -1030px;
+}
+.bg-LG2005 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -486px -1030px;
+}
+.bg-LG2007 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -554px -1030px;
+}
+.bg-LG2006 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -622px -1030px;
+}
+.bg-LG2008 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -690px -1030px;
+}
+.bg-LG2009 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -758px -1030px;
+}
+.bg-LG2010 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -826px -1030px;
+}
+.bg-LG2011 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -894px -1030px;
+}
+.bg-LG2012 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -962px -1030px;
+}
+.bg-LG2013 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1030px -1030px;
+}
+.bg-LG2015 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1098px -10px;
+}
+.bg-LG2016 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1098px -78px;
+}
+.bg-LG2014 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1098px -146px;
+}
+.bg-LG2017 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1098px -214px;
+}
+.bg-LG2019 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1098px -282px;
+}
+.bg-LG2018 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1098px -350px;
+}
+.bg-LG2020 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1098px -418px;
+}
+.bg-LG2021 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1098px -486px;
+}
+.bg-LG2022 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1098px -554px;
+}
+.bg-LG2024 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1098px -622px;
+}
+.bg-LG2023 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1098px -690px;
+}
+.bg-LOTTE1982 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1098px -758px;
+}
+.bg-LOTTE1983 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1098px -826px;
+}
+.bg-LOTTE1984 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1098px -894px;
+}
+.bg-LOTTE1985 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1098px -962px;
+}
+.bg-LOTTE1986 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1098px -1030px;
+}
+.bg-LOTTE1987 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -10px -1098px;
+}
+.bg-LOTTE1988 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -78px -1098px;
+}
+.bg-LOTTE1989 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -146px -1098px;
+}
+.bg-LOTTE1990 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -214px -1098px;
+}
+.bg-LOTTE1991 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -282px -1098px;
+}
+.bg-LOTTE1993 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -350px -1098px;
+}
+.bg-LOTTE1992 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -418px -1098px;
+}
+.bg-LOTTE1994 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -486px -1098px;
+}
+.bg-LOTTE1995 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -554px -1098px;
+}
+.bg-LOTTE1996 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -622px -1098px;
+}
+.bg-LOTTE1997 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -690px -1098px;
+}
+.bg-LOTTE1998 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -758px -1098px;
+}
+.bg-LOTTE1999 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -826px -1098px;
+}
+.bg-LOTTE2000 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -894px -1098px;
+}
+.bg-LOTTE2001 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -962px -1098px;
+}
+.bg-LOTTE2002 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1030px -1098px;
+}
+.bg-LOTTE2003 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1098px -1098px;
+}
+.bg-LOTTE2004 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1166px -10px;
+}
+.bg-LOTTE2005 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1166px -78px;
+}
+.bg-LOTTE2006 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1166px -146px;
+}
+.bg-LOTTE2007 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1166px -214px;
+}
+.bg-LOTTE2010 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1166px -282px;
+}
+.bg-LOTTE2008 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1166px -350px;
+}
+.bg-LOTTE2009 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1166px -418px;
+}
+.bg-LOTTE2011 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1166px -486px;
+}
+.bg-LOTTE2012 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1166px -554px;
+}
+.bg-LOTTE2013 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1166px -622px;
+}
+.bg-LOTTE2014 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1166px -690px;
+}
+.bg-LOTTE2015 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1166px -758px;
+}
+.bg-LOTTE2016 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1166px -826px;
+}
+.bg-LOTTE2017 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1166px -894px;
+}
+.bg-LOTTE2018 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1166px -962px;
+}
+.bg-LOTTE2019 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1166px -1030px;
+}
+.bg-LOTTE2020 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1166px -1098px;
+}
+.bg-LOTTE2022 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -10px -1166px;
+}
+.bg-LOTTE2023 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -78px -1166px;
+}
+.bg-LOTTE2021 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -146px -1166px;
+}
+.bg-LOTTE2024 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -214px -1166px;
+}
+.bg-MBC1982 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -282px -1166px;
+}
+.bg-MBC1983 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -350px -1166px;
+}
+.bg-MBC1985 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -418px -1166px;
+}
+.bg-MBC1984 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -486px -1166px;
+}
+.bg-MBC1986 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -554px -1166px;
+}
+.bg-MBC1987 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -622px -1166px;
+}
+.bg-MBC1988 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -690px -1166px;
+}
+.bg-MBC1989 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -758px -1166px;
+}
+.bg-MGR_DOOSAN_BAT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -826px -1166px;
+}
+.bg-MGR_DOOSAN_BAT_SMALL_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -894px -1166px;
+}
+.bg-MGR_DOOSAN_PIT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -962px -1166px;
+}
+.bg-MGR_HANWHA_BAT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1030px -1166px;
+}
+.bg-MGR_HANWHA_BAT_SMALL_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1098px -1166px;
+}
+.bg-MGR_HANWHA_PIT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1166px -1166px;
+}
+.bg-MGR_HEROES_BAT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1234px -10px;
+}
+.bg-MGR_HEROES_BAT_SMALL_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1234px -78px;
+}
+.bg-MGR_HEROES_PIT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1234px -146px;
+}
+.bg-MGR_HYUNDAI_BAT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1234px -214px;
+}
+.bg-MGR_HYUNDAI_BAT_SMALL_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1234px -282px;
+}
+.bg-MGR_HYUNDAI_PIT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1234px -350px;
+}
+.bg-MGR_KBO_BAT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1234px -418px;
+}
+.bg-MGR_KBO_BAT_SMALL_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1234px -486px;
+}
+.bg-MGR_KBO_PIT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1234px -554px;
+}
+.bg-MGR_KIA_BAT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1234px -622px;
+}
+.bg-MGR_KIA_BAT_SMALL_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1234px -690px;
+}
+.bg-MGR_KIA_PIT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1234px -758px;
+}
+.bg-MGR_KT_BAT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1234px -826px;
+}
+.bg-MGR_KT_BAT_SMALL_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1234px -894px;
+}
+.bg-MGR_KT_PIT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1234px -962px;
+}
+.bg-MGR_LG_BAT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1234px -1030px;
+}
+.bg-MGR_LG_BAT_SMALL_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1234px -1098px;
+}
+.bg-MGR_LG_PIT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1234px -1166px;
+}
+.bg-MGR_LOTTE_BAT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -10px -1234px;
+}
+.bg-MGR_LOTTE_BAT_SMALL_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -78px -1234px;
+}
+.bg-MGR_LOTTE_PIT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -146px -1234px;
+}
+.bg-MGR_NC_BAT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -214px -1234px;
+}
+.bg-MGR_NC_BAT_SMALL_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -282px -1234px;
+}
+.bg-MGR_NC_PIT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -350px -1234px;
+}
+.bg-MGR_SAMSUNG_BAT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -418px -1234px;
+}
+.bg-MGR_SAMSUNG_PIT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -486px -1234px;
+}
+.bg-MGR_SAMSUNG_BAT_SMALL_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -554px -1234px;
+}
+.bg-MGR_SBW_BAT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -622px -1234px;
+}
+.bg-MGR_SBW_BAT_SMALL_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -690px -1234px;
+}
+.bg-MGR_SSG_BAT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -758px -1234px;
+}
+.bg-MGR_SBW_PIT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -826px -1234px;
+}
+.bg-MGR_SSG_BAT_SMALL_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -894px -1234px;
+}
+.bg-MGR_SSG_PIT_BIG_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -962px -1234px;
+}
+.bg-MMVP {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1030px -1234px;
+}
+.bg-NC2013 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1098px -1234px;
+}
+.bg-NC2014 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1166px -1234px;
+}
+.bg-NC2015 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1234px -1234px;
+}
+.bg-NC2016 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1302px -10px;
+}
+.bg-NC2017 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1302px -78px;
+}
+.bg-NC2018 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1302px -146px;
+}
+.bg-NC2019 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1302px -214px;
+}
+.bg-NC2021 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1302px -282px;
+}
+.bg-NC2020 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1302px -350px;
+}
+.bg-NC2022 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1302px -418px;
+}
+.bg-NC2023 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1302px -486px;
+}
+.bg-NC2024 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1302px -554px;
+}
+.bg-OB1982 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1302px -622px;
+}
+.bg-OB1984 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1302px -690px;
+}
+.bg-OB1983 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1302px -758px;
+}
+.bg-OB1985 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1302px -826px;
+}
+.bg-OB1986 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1302px -894px;
+}
+.bg-OB1987 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1302px -962px;
+}
+.bg-OB1989 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1302px -1030px;
+}
+.bg-OB1988 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1302px -1098px;
+}
+.bg-OB1990 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1302px -1166px;
+}
+.bg-OB1991 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1302px -1234px;
+}
+.bg-OB1992 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -10px -1302px;
+}
+.bg-OB1993 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -78px -1302px;
+}
+.bg-OB1994 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -146px -1302px;
+}
+.bg-OB1995 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -214px -1302px;
+}
+.bg-OB1996 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -282px -1302px;
+}
+.bg-OB1997 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -350px -1302px;
+}
+.bg-OB1998 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -418px -1302px;
+}
+.bg-PACIFIC1988 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -486px -1302px;
+}
+.bg-PACIFIC1989 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -554px -1302px;
+}
+.bg-PACIFIC1990 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -622px -1302px;
+}
+.bg-PACIFIC1991 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -690px -1302px;
+}
+.bg-PACIFIC1992 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -758px -1302px;
+}
+.bg-PACIFIC1993 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -826px -1302px;
+}
+.bg-PACIFIC1994 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -894px -1302px;
+}
+.bg-PACIFIC1995 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -962px -1302px;
+}
+.bg-POSTSEASON {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1030px -1302px;
+}
+.bg-SAMMI1982 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1098px -1302px;
+}
+.bg-ROY {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1166px -1302px;
+}
+.bg-SAMMI1983 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1234px -1302px;
+}
+.bg-SAMMI1984 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1302px -1302px;
+}
+.bg-SAMSUNG1982 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1370px -10px;
+}
+.bg-SAMSUNG1983 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1370px -78px;
+}
+.bg-SAMSUNG1985 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1370px -146px;
+}
+.bg-SAMSUNG1984 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1370px -214px;
+}
+.bg-SAMSUNG1986 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1370px -282px;
+}
+.bg-SAMSUNG1988 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1370px -350px;
+}
+.bg-SAMSUNG1987 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1370px -418px;
+}
+.bg-SAMSUNG1989 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1370px -486px;
+}
+.bg-SAMSUNG1990 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1370px -554px;
+}
+.bg-SAMSUNG1991 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1370px -622px;
+}
+.bg-SAMSUNG1992 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1370px -690px;
+}
+.bg-SAMSUNG1993 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1370px -758px;
+}
+.bg-SAMSUNG1994 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1370px -826px;
+}
+.bg-SAMSUNG1995 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1370px -894px;
+}
+.bg-SAMSUNG1996 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1370px -962px;
+}
+.bg-SAMSUNG1997 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1370px -1030px;
+}
+.bg-SAMSUNG1999 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1370px -1098px;
+}
+.bg-SAMSUNG1998 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1370px -1166px;
+}
+.bg-SAMSUNG2000 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1370px -1234px;
+}
+.bg-SAMSUNG2001 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1370px -1302px;
+}
+.bg-SAMSUNG2002 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -10px -1370px;
+}
+.bg-SAMSUNG2003 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -78px -1370px;
+}
+.bg-SAMSUNG2004 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -146px -1370px;
+}
+.bg-SAMSUNG2005 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -214px -1370px;
+}
+.bg-SAMSUNG2006 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -282px -1370px;
+}
+.bg-SAMSUNG2007 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -350px -1370px;
+}
+.bg-SAMSUNG2008 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -418px -1370px;
+}
+.bg-SAMSUNG2009 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -486px -1370px;
+}
+.bg-SAMSUNG2010 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -554px -1370px;
+}
+.bg-SAMSUNG2011 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -622px -1370px;
+}
+.bg-SAMSUNG2012 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -690px -1370px;
+}
+.bg-SAMSUNG2013 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -758px -1370px;
+}
+.bg-SAMSUNG2014 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -826px -1370px;
+}
+.bg-SAMSUNG2015 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -894px -1370px;
+}
+.bg-SAMSUNG2016 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -962px -1370px;
+}
+.bg-SAMSUNG2017 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1030px -1370px;
+}
+.bg-SAMSUNG2018 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1098px -1370px;
+}
+.bg-SAMSUNG2019 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1166px -1370px;
+}
+.bg-SAMSUNG2020 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1234px -1370px;
+}
+.bg-SAMSUNG2021 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1302px -1370px;
+}
+.bg-SAMSUNG2022 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1370px -1370px;
+}
+.bg-SAMSUNG2023 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1438px -10px;
+}
+.bg-SAMSUNG2024 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1438px -78px;
+}
+.bg-SBW1991 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1438px -146px;
+}
+.bg-SBW1992 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1438px -214px;
+}
+.bg-SBW1993 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1438px -282px;
+}
+.bg-SBW1994 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1438px -350px;
+}
+.bg-SBW1995 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1438px -418px;
+}
+.bg-SBW1996 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1438px -486px;
+}
+.bg-SBW1997 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1438px -554px;
+}
+.bg-SBW1998 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1438px -622px;
+}
+.bg-SBW1999 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1438px -690px;
+}
+.bg-SK2000 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1438px -758px;
+}
+.bg-SK2001 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1438px -826px;
+}
+.bg-SK2002 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1438px -894px;
+}
+.bg-SK2003 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1438px -962px;
+}
+.bg-SK2004 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1438px -1030px;
+}
+.bg-SK2005 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1438px -1098px;
+}
+.bg-SK2006 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1438px -1166px;
+}
+.bg-SK2007 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1438px -1234px;
+}
+.bg-SK2008 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1438px -1302px;
+}
+.bg-SK2009 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1438px -1370px;
+}
+.bg-SK2010 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -10px -1438px;
+}
+.bg-SK2011 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -78px -1438px;
+}
+.bg-SK2012 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -146px -1438px;
+}
+.bg-SK2013 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -214px -1438px;
+}
+.bg-SK2014 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -282px -1438px;
+}
+.bg-SK2015 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -350px -1438px;
+}
+.bg-SK2016 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -418px -1438px;
+}
+.bg-SK2017 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -486px -1438px;
+}
+.bg-SK2018 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -554px -1438px;
+}
+.bg-SK2019 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -622px -1438px;
+}
+.bg-SK2020 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -690px -1438px;
+}
+.bg-SSG2021 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -758px -1438px;
+}
+.bg-SSG2022 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -826px -1438px;
+}
+.bg-SSG2023 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -894px -1438px;
+}
+.bg-SSG2024 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -962px -1438px;
+}
+.bg-SUPERIOR_B {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1030px -1438px;
+}
+.bg-SUPERIOR_P {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1098px -1438px;
+}
+.bg-TEAMPLAYER_DOOSAN {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1166px -1438px;
+}
+.bg-TEAMPLAYER_HANWHA {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1234px -1438px;
+}
+.bg-TEAMPLAYER_HEROES {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1302px -1438px;
+}
+.bg-TEAMPLAYER_HYUNDAI {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1370px -1438px;
+}
+.bg-TEAMPLAYER_KIA {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1438px -1438px;
+}
+.bg-TEAMPLAYER_LG {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1506px -10px;
+}
+.bg-TEAMPLAYER_KT {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1506px -78px;
+}
+.bg-TEAMPLAYER_LOTTE {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1506px -146px;
+}
+.bg-TEAMPLAYER_NC {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1506px -214px;
+}
+.bg-TEAMPLAYER_SAMSUNG {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1506px -282px;
+}
+.bg-TEAMPLAYER_SBW {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1506px -350px;
+}
+.bg-TEAMPLAYER_SSG {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1506px -418px;
+}
+.bg-TOPCLASS {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/enhance_skill_sprite.png') -1506px -486px;
+}
+.bg-ACE {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -10px -10px;
+}
+.bg-AGGRESSIVE {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -78px -10px;
+}
+.bg-ANTI_RUNNING {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -10px -78px;
+}
+.bg-ARM {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -78px -78px;
+}
+.bg-BADBALL_HITTER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -146px -10px;
+}
+.bg-BALANCE_PITCHER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -146px -78px;
+}
+.bg-BATTING_EYE {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -10px -146px;
+}
+.bg-BATTING_STRATEGY {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -78px -146px;
+}
+.bg-BARREL_HITTER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -146px -146px;
+}
+.bg-BELIFE_MAN {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -214px -10px;
+}
+.bg-BO1 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -214px -78px;
+}
+.bg-BLACKBALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -214px -146px;
+}
+.bg-BO2 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -10px -214px;
+}
+.bg-BO4 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -78px -214px;
+}
+.bg-BO3 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -146px -214px;
+}
+.bg-BO5 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -214px -214px;
+}
+.bg-BO7 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -282px -10px;
+}
+.bg-BO6 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -282px -78px;
+}
+.bg-BO8 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -282px -146px;
+}
+.bg-BO9 {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -282px -214px;
+}
+.bg-BREAKINGBALL_KILLER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -10px -282px;
+}
+.bg-BUNT {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -78px -282px;
+}
+.bg-CAUGHT_STEALING {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -146px -282px;
+}
+.bg-CHANGEUP {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -214px -282px;
+}
+.bg-CLEAN_UP {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -282px -282px;
+}
+.bg-CLOSER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -350px -10px;
+}
+.bg-CONTACTOR {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -350px -78px;
+}
+.bg-COMMANDER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -350px -146px;
+}
+.bg-CURVE {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -350px -214px;
+}
+.bg-CONTROLLER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -350px -282px;
+}
+.bg-CRISIS_MANAGE {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -10px -350px;
+}
+.bg-DESIGNATED_HITTER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -78px -350px;
+}
+.bg-FAIRY_PITTA {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -146px -350px;
+}
+.bg-FASTBALL_KILLER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -214px -350px;
+}
+.bg-FLYBALL_PITCHER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -282px -350px;
+}
+.bg-FIRE_BALLER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -350px -350px;
+}
+.bg-FOCUS_BOX {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -418px -10px;
+}
+.bg-GAP_HITTER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -418px -78px;
+}
+.bg-FRAMING {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -418px -146px;
+}
+.bg-FULL_SWING {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -418px -214px;
+}
+.bg-GREEN_LIGHT {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -418px -282px;
+}
+.bg-GUESS_HITTER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -418px -350px;
+}
+.bg-HITTING_APPROACH {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -10px -418px;
+}
+.bg-GROUND_BALLER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -78px -418px;
+}
+.bg-INNING_EATING {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -146px -418px;
+}
+.bg-INFIELDING {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -214px -418px;
+}
+.bg-HIGHBALL_HITTER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -282px -418px;
+}
+.bg-INSIDE_WORK {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -350px -418px;
+}
+.bg-JUNK_BALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -418px -418px;
+}
+.bg-LONGMAN {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -486px -10px;
+}
+.bg-KNUCKLE {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -486px -78px;
+}
+.bg-LOCATION {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -486px -146px;
+}
+.bg-LOWBALL_HITTER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -486px -214px;
+}
+.bg-ONE_POINTER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -486px -282px;
+}
+.bg-OPS_HITTER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -486px -350px;
+}
+.bg-MOVEMENT {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -486px -418px;
+}
+.bg-OFFENSIVE_C {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -10px -486px;
+}
+.bg-ONETWO_PUNCH {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -78px -486px;
+}
+.bg-OUTFIELDING {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -146px -486px;
+}
+.bg-POWER_HITTING {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -214px -486px;
+}
+.bg-RANDOM_BO {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -282px -486px;
+}
+.bg-PUNCH {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -350px -486px;
+}
+.bg-RISING_MOVEMENT {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -418px -486px;
+}
+.bg-SACRIFICE {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -486px -486px;
+}
+.bg-SET_POSITION {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -554px -10px;
+}
+.bg-SETUP {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -554px -78px;
+}
+.bg-POWER_PITCHER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -554px -146px;
+}
+.bg-SLIDER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -554px -214px;
+}
+.bg-SINKER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -554px -282px;
+}
+.bg-SLAP_HITTER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -554px -350px;
+}
+.bg-SPEEDSTER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -554px -418px;
+}
+.bg-SOCIABILITY {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -554px -486px;
+}
+.bg-SPLITER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -10px -554px;
+}
+.bg-STONEBALL {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -78px -554px;
+}
+.bg-STOPPER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -146px -554px;
+}
+.bg-TRASH_TALK {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -214px -554px;
+}
+.bg-TABLE_SETTER {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -282px -554px;
+}
+.bg-UNDER_LINE {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -350px -554px;
+}
+.bg-VS_LHH {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -418px -554px;
+}
+.bg-TWO_PITCH {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -486px -554px;
+}
+.bg-VS_LHP {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -554px -554px;
+}
+.bg-VS_RHH {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -622px -10px;
+}
+.bg-VS_RHP {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -622px -78px;
+}
+.bg-VS_UHP {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -622px -146px;
+}
+.bg-WILD_THING {
+    width: 48px; height: 48px;
+    background: url('/public/assets/images/normal_skill_sprite.png') -622px -214px;
+}

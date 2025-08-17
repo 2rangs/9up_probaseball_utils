@@ -281,7 +281,7 @@ const matchAllstarTeam = (team: string) => {
                   alt="player image"
                   loading="lazy"
               />
-              <img v-if="player.grade === 'DGN'"
+              <img v-else-if="player.grade === 'DGN'"
                    :src="`/assets/playercards/DGN/${player.team.toUpperCase()}/${player.id}.png`"
                    class="w-full h-full object-cover"
                    alt="player image"
@@ -332,17 +332,13 @@ const matchAllstarTeam = (team: string) => {
             <div class="space-y-3">
               <div class="flex items-start gap-3">
                 <!-- 스킬 이미지 -->
-                <img
+                <div
                     v-if="player.grade === 'GG'"
-                    :src="`/assets/logos/skills/${matchSkillInfo(player.enhancedSkill, 'enhanced:GG', JSON.parse(player.year)?.[0])}${JSON.parse(player.year)[0]}.png`"
-                    alt="강화 스킬"
-                    class="w-12 h-12 rounded-lg object-contain bg-gray-50 dark:bg-gray-700 p-1"
+                    :class="`bg-${matchSkillInfo(player.enhancedSkill, 'enhanced:GG', JSON.parse(player.year)?.[0])}${JSON.parse(player.year)[0]} rounded-lg object-contain bg-gray-50 dark:bg-gray-700 p-1`"
                 />
-                <img
+                <div
                     v-else
-                    :src="`/assets/logos/skills/${matchSkillInfo(player.enhancedSkill, 'enhanced')}.png`"
-                    alt="강화 스킬"
-                    class="w-12 h-12 rounded-lg object-contain bg-gray-50 dark:bg-gray-700 p-1"
+                    :class="`bg-${matchSkillInfo(player.enhancedSkill, 'enhanced')} w-12 h-12 rounded-lg object-contain bg-gray-50 dark:bg-gray-700 p-1`"
                 />
 
                 <!-- 스킬 텍스트 -->
@@ -549,13 +545,7 @@ const matchAllstarTeam = (team: string) => {
                   </div>
                 </div>
 
-                <div class="w-12 h-12 bg-white dark:bg-gray-800 rounded-lg p-1 mb-1">
-                  <img
-                      :src="`/assets/logos/skills/${matchSkillInfo(skill, 'normal')}.png`"
-                      alt="스킬"
-                      class="w-full h-full object-contain"
-                      loading="lazy"
-                  />
+                <div :class="`bg-${matchSkillInfo(skill, 'normal')} w-12 h-12 bg-white dark:bg-gray-800 rounded-lg`">
                 </div>
                 <span class="text-xs font-medium text-gray-800 dark:text-gray-200 leading-tight">{{ skill }}</span>
               </div>

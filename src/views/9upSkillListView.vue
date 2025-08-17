@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref, computed, watch, onBeforeUnmount } from 'vue'
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-vue-next'
 
 type Kind = 'normal' | 'enhanced'
 interface NormalSkill {
@@ -13,7 +14,7 @@ interface EnhancedSkill {
   description?: string
   image?: string
   effects_by_level?: any[] | Record<string, any>
-  effects_by_year?: Record<string, any[] | any>
+  effects_by_year?: Record<string, any[] | any> // 연도별: 배열(레벨별) 또는 기타 구조
 }
 interface SkillCardVM {
   kind: Kind
@@ -24,6 +25,9 @@ interface SkillCardVM {
   effectsByLevel?: any[] | Record<string, any>
 }
 
+/* =========================
+   State
+========================= */
 const normalSkillData = ref<NormalSkill[]>([])
 const enhancedSkillData = ref<EnhancedSkill[]>([])
 
@@ -32,12 +36,22 @@ const error = ref<string | null>(null)
 
 const q = ref('')
 const debouncedQ = ref('')
-const type = ref<'all' | 'normal' | 'enhanced'>('normal')
-const year = ref<string>('')
-const yearsOptions = ref<string[]>([])
+const type = ref<'normal' | 'enhanced'>('normal')
+
+// 카드별 연도 선택 상태 (존재감 전용 사용)
+const selectedYearByName = ref<Record<string, string>>({})
+
+// 전역 레벨(강화 탭)
 const level = ref<number>(1)
 
-// --- debounce(검색) ----------------------------------------------------------
+// 페이지네이션
+const page = ref(1)
+const pageSize = ref(18)
+const pageSizeOptions = [12, 18, 24, 36, 48]
+
+/* =========================
+   Debounce Search
+========================= */
 let qTimer: number | null = null
 watch(q, (val) => {
   if (qTimer) window.clearTimeout(qTimer)
@@ -45,11 +59,11 @@ watch(q, (val) => {
     debouncedQ.value = val.trim().toLowerCase()
   }, 150)
 })
-onBeforeUnmount(() => {
-  if (qTimer) window.clearTimeout(qTimer)
-})
+onBeforeUnmount(() => { if (qTimer) window.clearTimeout(qTimer) })
 
-// --- 인메모리 맵(빠른 조회) --------------------------------------------------
+/* =========================
+   Fast lookup maps
+========================= */
 const normalMap = ref<Record<string, NormalSkill>>({})
 const enhancedMap = ref<Record<string, EnhancedSkill>>({})
 
@@ -71,16 +85,8 @@ onMounted(async () => {
     enhancedSkillData.value.forEach(s => { if (s.enhanced_skill) emp[s.enhanced_skill] = s })
     enhancedMap.value = emp
 
-    // yearsOptions 구성 (enhanced only)
-    const yearSet = new Set<string>()
-    enhancedSkillData.value.forEach((s) => {
-      const byYear = s?.effects_by_year
-      if (byYear && typeof byYear === 'object') {
-        Object.keys(byYear).forEach((y) => yearSet.add(y))
-      }
-    })
-    yearsOptions.value = Array.from(yearSet).sort().reverse()
-    if (!year.value && yearsOptions.value.length) year.value = yearsOptions.value[0]
+    // 존재감 기본 연도(최신) 초기화
+    initDefaultYear('존재감')
   } catch (e: any) {
     error.value = e?.message || '스킬 데이터를 불러오지 못했습니다.'
   } finally {
@@ -88,10 +94,36 @@ onMounted(async () => {
   }
 })
 
-// --- helpers (맵 기반) --------------------------------------------------------
-const getNormal = (name: string) => normalMap.value[name]
-const getEnhanced = (name: string) => enhancedMap.value[name]
+/* =========================
+   Year helpers
+========================= */
+function yearOptionsFor(name: string): string[] {
+  const byYear = enhancedMap.value[name]?.effects_by_year
+  if (!byYear || typeof byYear !== 'object') return []
+  return Object.keys(byYear).sort().reverse()
+}
+function initDefaultYear(name: string) {
+  const opts = yearOptionsFor(name)
+  if (opts.length && !selectedYearByName.value[name]) {
+    selectedYearByName.value[name] = opts[0]
+  }
+}
 
+/* =========================
+   Sprite helper
+   (존재감만 bg-${imageKey}${year})
+========================= */
+function spriteBgClass(card: SkillCardVM) {
+  if (card.kind === 'enhanced' && card.name === '존재감') {
+    const y = selectedYearByName.value[card.name]
+    return y ? `bg-${(card.imageKey || '')}${y}` : `bg-${card.imageKey}`
+  }
+  return `bg-${card.imageKey}`
+}
+
+/* =========================
+   Render helpers
+========================= */
 function renderEffectItem(e: any): string {
   if (e == null) return ''
   if (typeof e === 'string') return e
@@ -102,191 +134,357 @@ function renderEffectItem(e: any): string {
   return parts.join(' / ')
 }
 
-function levelEffects(card: SkillCardVM, lvl: number) {
-  const byLevel = card?.effectsByLevel
-  if (!byLevel) return []
+/**
+ * 레벨 효과 리졸버
+ * - 연도 노드가 "배열"이면 => 그 배열을 해당 연도의 레벨 테이블로 간주 (존재감)
+ * - 연도 노드가 "객체"이고 내부에 by_level/effects_by_level 등이 있으면 그걸 사용
+ * - 아니면 전역 effects_by_level 사용
+ */
+function resolveLevelEffects(card: SkillCardVM, lvl: number) {
+  if (card.kind !== 'enhanced') return []
+  const meta = enhancedMap.value[card.name]
+  if (!meta) return []
+
+  const y = selectedYearByName.value[card.name]
+  const yearNode = y ? meta.effects_by_year?.[y] : undefined
+
+  // 1) 존재감 케이스: 연도별 배열 = 레벨 테이블
+  if (Array.isArray(yearNode)) {
+    const idx = Math.min(Math.max(lvl, 1), yearNode.length) - 1
+    const item = yearNode[idx]
+    return Array.isArray(item) ? item : [item]
+  }
+
+  // 2) 연도 아래에 레벨 테이블이 중첩된 경우(객체)
+  if (yearNode && typeof yearNode === 'object') {
+    const byL =
+      (yearNode as any).effects_by_level ??
+      (yearNode as any).by_level ??
+      (yearNode as any).levels
+    if (Array.isArray(byL)) {
+      const idx = Math.min(Math.max(lvl, 1), byL.length) - 1
+      const arr = byL[idx] ?? []
+      return Array.isArray(arr) ? arr : [arr]
+    }
+    if (byL && typeof byL === 'object') {
+      const arr = byL[String(lvl)] ?? []
+      return Array.isArray(arr) ? arr : [arr]
+    }
+  }
+
+  // 3) 전역 레벨 테이블
+  const byLevel = meta.effects_by_level
   if (Array.isArray(byLevel)) {
     const idx = Math.min(Math.max(lvl, 1), byLevel.length) - 1
     const arr = byLevel[idx] ?? []
     return Array.isArray(arr) ? arr : [arr]
   }
-  if (typeof byLevel === 'object') {
+  if (byLevel && typeof byLevel === 'object') {
     const arr = (byLevel as Record<string, any>)[String(lvl)] ?? []
     return Array.isArray(arr) ? arr : [arr]
   }
+
   return []
 }
+const levelEffects = (card: SkillCardVM, lvl: number) => resolveLevelEffects(card, lvl)
 
+/**
+ * 연도 효과:
+ * - 연도 노드가 "배열(레벨별)"이면 레벨 효과로 이미 처리되므로 여기선 빈 배열 반환
+ * - 그 외(문자열/배열 고정효과)만 노출
+ */
 function yearEffects(card: SkillCardVM, y?: string) {
   if (!y || card.kind !== 'enhanced') return []
-  const raw = enhancedMap.value[card.name]?.effects_by_year?.[y]
-  if (!raw) return []
-  return Array.isArray(raw) ? raw : [raw]
+  const node = enhancedMap.value[card.name]?.effects_by_year?.[y]
+  if (Array.isArray(node)) return [] // 존재감: 레벨로 처리함
+  if (!node) return []
+  return Array.isArray(node) ? node : [node]
 }
 
-// --- filtered source(한 번만 필터) -------------------------------------------
+/* =========================
+   Filtered list (name only)
+========================= */
 const listToRender = computed<SkillCardVM[]>(() => {
-  // 검색어 준비
   const needle = debouncedQ.value
   const hasNeedle = needle.length > 0
 
-  // 소스 선택 + 검색 (케이스 인식 최소화)
-  const passNormal = (s: NormalSkill) => {
-    if (!hasNeedle) return true
-    const name = (s.skill ?? '').toLowerCase()
-    const desc = (s.description ?? '').toLowerCase()
-    return name.includes(needle) || desc.includes(needle)
-  }
-  const passEnhanced = (s: EnhancedSkill) => {
-    if (!hasNeedle) return true
-    const name = (s.enhanced_skill ?? '').toLowerCase()
-    const desc = (s.description ?? '').toLowerCase()
-    return name.includes(needle) || desc.includes(needle)
-  }
+  const passNormal = (s: NormalSkill) =>
+    !hasNeedle || (s.skill ?? '').toLowerCase().includes(needle)
 
-  const normals = (type.value === 'normal' || type.value === 'all')
-      ? normalSkillData.value.filter(passNormal).map<SkillCardVM>((s) => ({
+  const passEnhanced = (s: EnhancedSkill) =>
+    !hasNeedle || (s.enhanced_skill ?? '').toLowerCase().includes(needle)
+
+  if (type.value === 'normal') {
+    return normalSkillData.value
+      .filter(passNormal)
+      .map<SkillCardVM>((s) => ({
         kind: 'normal',
         name: s.skill,
         imageKey: s.image || '',
         description: s.description ?? '',
         effectsNormal: s.effects ?? []
       }))
-      : []
+      .sort((a, b) => a.name.localeCompare(b.name, 'ko'))
+  }
 
-  const enhanceds = (type.value === 'enhanced' || type.value === 'all')
-      ? enhancedSkillData.value.filter(passEnhanced).map<SkillCardVM>((s) => ({
-        kind: 'enhanced',
-        name: s.enhanced_skill,
-        imageKey: s.image || '',
-        description: s.description ?? '',
-        effectsByLevel: s.effects_by_level ?? []
-      }))
-      : []
-
-  if (type.value === 'normal') return normals
-  if (type.value === 'enhanced') return enhanceds
-  // all: 이름순(한글 로케일)
-  return [...normals, ...enhanceds].sort((a, b) => a.name.localeCompare(b.name, 'ko'))
+  return enhancedSkillData.value
+    .filter(passEnhanced)
+    .map<SkillCardVM>((s) => ({
+      kind: 'enhanced',
+      name: s.enhanced_skill,
+      imageKey: s.image || '',
+      description: s.description ?? '',
+      effectsByLevel: s.effects_by_level ?? []
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name, 'ko'))
 })
 
-// --- 이미지 오류 처리 ---------------------------------------------------------
-function onImgError(e: Event) {
-  const el = e.target as HTMLImageElement
-  el.style.display = 'none'
-  // fallback 블록이 나타나도록
+/* =========================
+   Pagination derived
+========================= */
+const totalCount = computed(() => listToRender.value.length)
+const totalPages = computed(() => Math.max(1, Math.ceil(totalCount.value / pageSize.value)))
+const pageStartIndex = computed(() => (page.value - 1) * pageSize.value)
+const pageEndIndex = computed(() => Math.min(pageStartIndex.value + pageSize.value, totalCount.value))
+const pagedList = computed(() => listToRender.value.slice(pageStartIndex.value, pageEndIndex.value))
+
+watch([debouncedQ, type, pageSize], () => { page.value = 1 })
+function goToPage(p: number) {
+  page.value = Math.min(Math.max(1, p), totalPages.value)
 }
 </script>
 
 <template>
-  <div class="max-w-7xl mx-auto px-6 py-8">
-    <!-- 헤더 -->
-    <div class="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-      <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">스킬 목록</h1>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
+    <!-- Header -->
+    <div class="mb-6 lg:mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <h1 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
+        스킬 목록
+      </h1>
 
-      <div class="flex flex-col sm:flex-row gap-2 w-full lg:w-auto">
-        <!-- 탭 -->
-        <div class="flex border border-gray-300 dark:border-gray-600 rounded-md overflow-hidden">
+      <div class="w-full lg:w-auto flex flex-col sm:flex-row gap-3 sm:items-center">
+        <!-- Tabs -->
+        <div role="tablist"
+             class="inline-flex w-full sm:w-auto rounded-md border border-gray-300 dark:border-gray-600 overflow-hidden shadow-sm">
           <button
-              class="px-4 py-2 text-sm"
-              :class="type==='normal' ? 'bg-gray-200 dark:bg-gray-700 font-semibold' : ''"
-              @click="type='normal'">일반</button>
+            role="tab"
+            :aria-selected="type==='normal'"
+            class="flex-1 sm:flex-none px-4 py-2 text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+            :class="type==='normal'
+              ? 'bg-gray-200 dark:bg-gray-700 font-semibold text-gray-900 dark:text-gray-100'
+              : 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'"
+            @click="type='normal'">
+            일반
+          </button>
           <button
-              class="px-4 py-2 text-sm"
-              :class="type==='enhanced' ? 'bg-gray-200 dark:bg-gray-700 font-semibold' : ''"
-              @click="type='enhanced'">강화</button>
-          <button
-              class="px-4 py-2 text-sm"
-              :class="type==='all' ? 'bg-gray-200 dark:bg-gray-700 font-semibold' : ''"
-              @click="type='all'">전체</button>
+            role="tab"
+            :aria-selected="type==='enhanced'"
+            class="flex-1 sm:flex-none px-4 py-2 text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 border-l border-gray-300 dark:border-gray-600"
+            :class="type==='enhanced'
+              ? 'bg-gray-200 dark:bg-gray-700 font-semibold text-gray-900 dark:text-gray-100'
+              : 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'"
+            @click="type='enhanced'">
+            강화
+          </button>
         </div>
 
-        <!-- 검색 -->
-        <input
+        <!-- Search -->
+        <div class="relative w-full sm:w-72">
+          <input
             v-model="q"
             type="text"
-            placeholder="스킬명/설명 검색..."
-            class="w-full sm:w-64 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
-        />
+            placeholder="스킬명 검색..."
+            class="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 pr-10 text-sm text-gray-900 dark:text-gray-100
+                   placeholder-gray-400 dark:placeholder-gray-500 shadow-sm focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+            aria-label="스킬 검색"
+          />
+          <button
+            v-if="q"
+            @click="q=''"
+            class="absolute inset-y-0 right-0 px-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none"
+            aria-label="검색어 지우기">
+            ✕
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- 강화 옵션 -->
-    <div v-if="type !== 'normal'" class="mb-6 flex flex-wrap gap-4">
-      <div class="flex items-center gap-2">
-        <span class="text-sm">레벨</span>
-        <input type="range" min="1" max="10" v-model.number="level" class="w-28" />
-        <span class="text-sm font-semibold">{{ level }}</span>
+    <!-- Top toolbar: result summary + page size -->
+    <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div class="text-sm text-gray-600 dark:text-gray-300">
+        총 <span class="font-semibold">{{ totalCount }}</span>개
+        <template v-if="totalCount">
+          · <span class="font-semibold">{{ pageStartIndex + 1 }}</span>–<span class="font-semibold">{{ pageEndIndex }}</span> 표시
+        </template>
       </div>
-      <div v-if="yearsOptions.length" class="flex items-center gap-2">
-        <span class="text-sm">년도</span>
-        <select v-model="year" class="border border-gray-300 dark:border-gray-600 rounded px-2 py-1 text-sm">
-          <option v-for="y in yearsOptions" :key="y" :value="y">{{ y }}</option>
+      <div class="flex items-center gap-2">
+        <label class="text-sm text-gray-600 dark:text-gray-300">페이지당</label>
+        <select
+          v-model.number="pageSize"
+          class="rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-2 py-1 text-sm text-gray-900 dark:text-gray-100
+                 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10">
+          <option v-for="n in pageSizeOptions" :key="n" :value="n">{{ n }}</option>
         </select>
       </div>
     </div>
 
-    <!-- 로딩 -->
-    <div v-if="loading" class="text-center py-10 text-gray-500">불러오는 중...</div>
-
-    <!-- 에러 -->
-    <div v-else-if="error" class="text-center py-10 text-red-500">{{ error }}</div>
-
-    <!-- 카드 리스트 -->
-    <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-      <div
-          v-for="card in listToRender"
-          :key="card.kind + ':' + card.name"
-          class="border border-gray-300 dark:border-gray-700 rounded-md p-4 bg-white dark:bg-gray-900"
-      >
-        <!-- 제목 -->
-        <div class="flex items-center gap-3 mb-3">
-          <img
-              v-if="card.imageKey"
-              :src="`/assets/logos/skills/${card.imageKey}.png`"
-              :alt="card.name"
-              class="w-12 h-12 object-contain"
-          />
-          <div>
-            <h3 class="font-semibold text-gray-900 dark:text-gray-100">{{ card.name }}</h3>
-            <span v-if="type==='all'" class="text-xs text-gray-500">
-              {{ card.kind === 'normal' ? '일반' : '강화' }}
-            </span>
-          </div>
-        </div>
-
-        <!-- 효과 -->
-        <div v-if="card.kind === 'normal'" class=" text-sm">
-         <pre>
-           {{card.effectsNormal}}
-         </pre>
-        </div>
-
-        <div v-else-if="card.kind === 'enhanced'" class="space-y-1 text-sm">
-          <div v-for="(e, i) in levelEffects(card, level)" :key="'l'+i" class="text-gray-800 dark:text-gray-200">
-            • {{ renderEffectItem(e) }}
-          </div>
-          <div v-for="(e, i) in yearEffects(card, year)" :key="'y'+i" class="text-gray-800 dark:text-gray-200">
-            • {{ renderEffectItem(e) }}
-          </div>
-        </div>
-
-        <!-- 설명 -->
-        <p v-if="card.description" class="mt-3 text-xs text-gray-600 dark:text-gray-400">
-          {{ card.description }}
-        </p>
+    <!-- Enhanced-only Options (level slider) -->
+    <div v-if="type === 'enhanced'" class="mb-6 flex flex-wrap items-center gap-4">
+      <div class="flex items-center gap-3">
+        <span class="text-sm text-gray-700 dark:text-gray-300">레벨</span>
+        <!-- 존재감은 16레벨까지 커버. 다른 스킬은 클램프됨 -->
+        <input type="range" min="1" max="16" v-model.number="level" class="slider w-36 accent-blue-600" />
+        <span class="inline-flex items-center rounded-full border border-blue-200 dark:border-blue-800 px-2 py-0.5 text-xs font-semibold
+                      text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-900/30">
+          {{ level }}
+        </span>
       </div>
     </div>
 
-    <!-- 빈 상태 -->
-    <div v-if="!loading && !error && !listToRender.length" class="text-center py-10 text-gray-500">
-      조건에 맞는 스킬이 없습니다
+    <!-- Loading -->
+    <div v-if="loading" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+      <div v-for="i in 6" :key="i" class="rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 animate-pulse">
+        <div class="h-6 w-40 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
+        <div class="space-y-2">
+          <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded"></div>
+          <div class="h-3 w-11/12 bg-gray-200 dark:bg-gray-700 rounded"></div>
+          <div class="h-3 w-9/12 bg-gray-200 dark:bg-gray-700 rounded"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error -->
+    <div v-else-if="error" class="text-center py-10">
+      <p class="inline-flex items-center gap-2 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600
+                 dark:border-red-900/40 dark:bg-red-900/20 dark:text-red-300">
+        {{ error }}
+      </p>
+    </div>
+
+    <!-- Cards -->
+    <div v-else>
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div
+          v-for="card in pagedList"
+          :key="card.kind + ':' + card.name"
+          class="group rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 shadow-sm hover:shadow-md transition-shadow"
+        >
+          <!-- Header -->
+          <div class="flex items-start justify-between mb-3">
+            <div class="flex items-center gap-3">
+              <div :class="spriteBgClass(card)"
+                   class="h-10 w-10 rounded-md ring-1 ring-gray-200 dark:ring-gray-700 shrink-0"></div>
+              <h3 class="font-semibold text-gray-900 dark:text-gray-100 leading-tight">
+                {{ card.name }}
+              </h3>
+            </div>
+          </div>
+
+          <!-- Effects -->
+          <div v-if="card.kind === 'normal'" class="text-sm text-gray-800 dark:text-gray-200">
+            <pre class="whitespace-pre-wrap leading-relaxed font-mono text-[13px] bg-gray-50 dark:bg-gray-800/60 rounded p-3 border border-gray-100 dark:border-gray-800">
+{{ card.effectsNormal }}
+            </pre>
+          </div>
+
+          <div v-else class="space-y-2">
+            <!-- 존재감 전용: 카드 내부 '년도' 셀렉터 -->
+            <div
+              v-if="card.name === '존재감' && yearOptionsFor(card.name).length"
+              class="flex items-center gap-3 mb-1"
+            >
+              <span class="text-xs text-gray-600 dark:text-gray-300">년도</span>
+              <select
+                v-model="selectedYearByName[card.name]"
+                class="rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-2 py-1 text-xs
+                       text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+              >
+                <option v-for="y in yearOptionsFor(card.name)" :key="y" :value="y">{{ y }}</option>
+              </select>
+            </div>
+
+            <!-- 레벨 효과 -->
+            <ul v-if="levelEffects(card, level)?.length" class="list-disc pl-5 text-sm text-gray-800 dark:text-gray-200">
+              <li v-for="(e, i) in levelEffects(card, level)" :key="'l'+i">
+                {{ renderEffectItem(e) }}
+              </li>
+            </ul>
+
+            <!-- (필요 시) 연도 고정 효과 -->
+            <ul
+              v-if="yearEffects(card, selectedYearByName[card.name])?.length"
+              class="list-disc pl-5 text-sm text-gray-800 dark:text-gray-200"
+            >
+              <li v-for="(e, i) in yearEffects(card, selectedYearByName[card.name])" :key="'y'+i">
+                {{ renderEffectItem(e) }}
+              </li>
+            </ul>
+          </div>
+
+          <!-- Description -->
+          <p v-if="card.description" class="mt-3 text-xs leading-relaxed text-gray-600 dark:text-gray-400">
+            {{ card.description }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div v-if="totalPages > 1" class="mt-6 flex flex-col items-center gap-3">
+        <nav class="inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+          <button
+            class="px-3 py-2 text-sm border border-gray-300 dark:border-gray-700 rounded-l-md
+                   bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50"
+            :disabled="page === 1"
+            @click="goToPage(1)"
+            aria-label="첫 페이지">
+            <ChevronsLeft class="w-4 h-4" />
+          </button>
+          <button
+            class="px-3 py-2 text-sm border border-gray-300 dark:border-gray-700
+                   bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50"
+            :disabled="page === 1"
+            @click="goToPage(page - 1)"
+            aria-label="이전">
+            <ChevronLeft class="w-4 h-4" />
+          </button>
+          <span class="px-4 py-2 text-sm border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200">
+            {{ page }} / {{ totalPages }}
+          </span>
+          <button
+            class="px-3 py-2 text-sm border border-gray-300 dark:border-gray-700
+                   bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50"
+            :disabled="page === totalPages"
+            @click="goToPage(page + 1)"
+            aria-label="다음">
+            <ChevronRight class="w-4 h-4" />
+          </button>
+          <button
+            class="px-3 py-2 text-sm border border-gray-300 dark:border-gray-700 rounded-r-md
+                   bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50"
+            :disabled="page === totalPages"
+            @click="goToPage(totalPages)"
+            aria-label="마지막 페이지">
+            <ChevronsRight class="w-4 h-4" />
+          </button>
+        </nav>
+
+        <div class="text-xs text-gray-500 dark:text-gray-400">
+          {{ pageStartIndex + 1 }}–{{ pageEndIndex }} / {{ totalCount }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty -->
+    <div v-if="!loading && !error && !totalCount" class="text-center py-12">
+      <div class="inline-flex items-center rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-3">
+        <span class="text-sm text-gray-500 dark:text-gray-400">조건에 맞는 스킬이 없습니다</span>
+      </div>
     </div>
   </div>
 </template>
 
 <style>
-/* range input */
+/* range input custom look */
 .slider::-webkit-slider-thumb {
   appearance: none;
   height: 18px; width: 18px; border-radius: 50%;
@@ -300,10 +498,5 @@ function onImgError(e: Event) {
   height: 18px; width: 18px; border-radius: 50%;
   background: linear-gradient(45deg, #6366f1, #8b5cf6);
   cursor: pointer; border: none; box-shadow: 0 4px 12px rgba(99,102,241,.3);
-}
-
-/* 두 줄 말줄임 */
-.line-clamp-2 {
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
 </style>
