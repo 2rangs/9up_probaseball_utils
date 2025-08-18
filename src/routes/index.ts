@@ -1,8 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
  const routes = [
-    {
+        {
         path: '/',
-        redirect: '/players',
+        redirect: '/notice',
+    },
+    {
+        path: '/notice',
+        name: 'Notice',
+        component: () => import('@/views/9upNoticeView.vue')
     },
      {
          path: '/skills',
