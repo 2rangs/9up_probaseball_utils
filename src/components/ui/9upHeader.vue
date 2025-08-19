@@ -68,8 +68,7 @@ const menuItems = [
     { name: '공지 사항', path: '/notice', disabled: false },
   { name: '선수 검색', path: '/players', disabled: false },
   { name: '스킬 목록', path: '/skills', disabled: false },
-  { name: '라인업 생성', path: '/lineups', disabled: true },
-  { name: '사용 가이드', path: '/tips', disabled: true },
+  { name: '라인업 생성', path: '/lineups', disabled: false }
 ]
 
 const navigate = (item: { path: string; disabled?: boolean }) => {
