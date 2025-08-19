@@ -260,12 +260,12 @@ const onAccordionKeydown = (e: KeyboardEvent, id: number) => {
           </div>
         </header>
 
-        <div class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white/90 dark:bg-gray-900/90 shadow-sm p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center gap-3">
-          <div class="relative flex-1">
-            <Search class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <input v-model="q" type="search" placeholder="태그/제목/본문 검색" class="w-full pl-9 pr-3 py-2 rounded-xl border bg-white/95 dark:bg-gray-900/80 text-sm text-gray-800 dark:text-gray-100 border-gray-200 dark:border-gray-700 outline-none focus:ring-2 focus:ring-blue-400/40" />
-          </div>
-        </div>
+<!--        <div class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white/90 dark:bg-gray-900/90 shadow-sm p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center gap-3">-->
+<!--          <div class="relative flex-1">-->
+<!--            <Search class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />-->
+<!--            <input v-model="q" type="search" placeholder="태그/제목/본문 검색" class="w-full pl-9 pr-3 py-2 rounded-xl border bg-white/95 dark:bg-gray-900/80 text-sm text-gray-800 dark:text-gray-100 border-gray-200 dark:border-gray-700 outline-none focus:ring-2 focus:ring-blue-400/40" />-->
+<!--          </div>-->
+<!--        </div>-->
 
         <div v-if="error" class="rounded-2xl border bg-red-50 text-red-700 border-red-200 dark:bg-red-900/20 dark:text-red-200 dark:border-red-800/40 p-3 sm:p-4 flex items-start justify-between gap-3">
           <span class="text-sm">{{ error }}</span>
