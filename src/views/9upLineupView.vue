@@ -107,7 +107,8 @@ const searchQuery = reactive({
   position: [] as string[],
   team: [] as string[],
   synergy: [] as string[],
-  rarity: null as number | null
+  rarity: null as number | null,
+  grade: [] as string[]
 })
 
 const advancedFilterOpen = ref(false)
@@ -122,6 +123,8 @@ const lineup = ref({
   BENCH1: null, BENCH2: null, BENCH3: null, BENCH4: null,
   BENCH5: null, BENCH6: null, BENCH7: null, BENCH8: null
 } as Record<string, Raw | null>)
+
+const synergyViewMode = ref('by-synergy')
 
 /* =========================
    로딩
@@ -221,12 +224,20 @@ const preparedPlayers = computed<PreparedPlayer[]>(() =>
 )
 
 const searchOptions = computed(() => {
-  const o: Record<string, Set<string>> = { team: new Set(), position: new Set() }
+  const o: Record<string, Set<string>> = { team: new Set(), position: new Set(), grade: new Set() }
   for (const p of players.value) {
     toArray(p.team).forEach(v => o.team.add(v))
     toArray(p.position).forEach(v => o.position.add(v))
+    if (p.grade) o.grade.add(String(p.grade))
   }
-  return { team: [...o.team].sort(), position: [...o.position].sort() }
+  return {
+    team: [...o.team].sort(),
+    position: [...o.position].sort(),
+    grade: [...o.grade].sort((a, b) => {
+      const gradeOrder = ['SS', 'S', 'A', 'B', 'C', 'D']
+      return gradeOrder.indexOf(a) - gradeOrder.indexOf(b)
+    })
+  }
 })
 
 const filteredPlayers = computed(() => {
@@ -235,10 +246,12 @@ const filteredPlayers = computed(() => {
       : []
   return preparedPlayers.value
       .filter(({ raw: p, nameNormalized, teamLowerCase, positionLowerCase, yearsNumeric, synergyNormalizedSet }) => {
+        // OR 검색: 하나라도 매치되면 통과
         if (searchQuery.team.length && !searchQuery.team.some(t => teamLowerCase.includes(toLowerCase(t)))) return false
         if (searchQuery.rarity != null && Number(p.rarity) !== Number(searchQuery.rarity)) return false
-        if (searchQuery.position.length && !searchQuery.position.every(v => positionLowerCase.includes(toLowerCase(v)))) return false
-        if (searchQuery.synergy.length && !searchQuery.synergy.map(normalizeText).every(t => synergyNormalizedSet.has(t))) return false
+        if (searchQuery.grade.length && !searchQuery.grade.includes(String(p.grade || ''))) return false
+        if (searchQuery.position.length && !searchQuery.position.some(v => positionLowerCase.includes(toLowerCase(v)))) return false
+        if (searchQuery.synergy.length && !searchQuery.synergy.map(normalizeText).some(t => synergyNormalizedSet.has(t))) return false
         if (tokens.length) {
           const hay = new Set<string>([
             nameNormalized, ...teamLowerCase, ...positionLowerCase,
@@ -257,7 +270,14 @@ const totalPlayers = computed(() => filteredPlayers.value.length)
 const totalPages = computed(() => Math.max(1, Math.ceil(totalPlayers.value / pageSize)))
 const paginatedPlayers = computed(() => filteredPlayers.value.slice((currentPage.value-1)*pageSize, (currentPage.value)*pageSize))
 const goToPage = (page:number) => { if (page>=1 && page<=totalPages.value) currentPage.value = page }
-const resetFilters = () => { searchQuery.search=''; searchQuery.team=[]; searchQuery.position=[]; searchQuery.synergy=[]; searchQuery.rarity=null }
+const resetFilters = () => {
+  searchQuery.search='';
+  searchQuery.team=[];
+  searchQuery.position=[];
+  searchQuery.synergy=[];
+  searchQuery.rarity=null;
+  searchQuery.grade=[]
+}
 
 /* =========================
    라인업 관리
@@ -585,6 +605,79 @@ const getPlayerSynergyInfo = (player: Raw) => {
   return info
 }
 
+const playerSynergyList = computed(() => {
+  const lineupPlayers = Object.values(lineup.value).filter(Boolean) as Raw[]
+  const playerList: Array<{
+    playerName: string
+    position: string
+    activeSynergies: Array<{
+      name: string
+      description: string
+      activeCondition: JsonCond
+    }>
+    inactiveSynergies: Array<{
+      name: string
+      remainingCount: number
+      nextEffectDescription: string
+    }>
+  }> = []
+
+  for (const player of lineupPlayers) {
+    if (!player?.synergy) continue
+
+    const playerSynergies = toArray(player.synergy).map(s => s.trim())
+    const activeSynergies: Array<{name: string; description: string; activeCondition: JsonCond}> = []
+    const inactiveSynergies: Array<{name: string; remainingCount: number; nextEffectDescription: string}> = []
+
+    for (const synergyName of playerSynergies) {
+      const rec = synergyIndex.value.get(synergyName)
+      if (!rec) continue
+
+      if (rec.activated.length > 0 && rec.topCondition) {
+        // 활성 시너지
+        activeSynergies.push({
+          name: synergyName,
+          description: rec.synergy.description || '',
+          activeCondition: rec.topCondition
+        })
+      } else if (rec.nextCondition) {
+        // 비활성 시너지 (조건 부족)
+        const remainingCount = Math.max(0, rec.nextCondition.required - rec.count)
+        const stat = rec.nextCondition.condition.stat
+        const bonus = rec.nextCondition.condition.bonus
+        const effectDescription = `${STAT_LABELS[stat] || stat} +${bonus.value}${bonus.unit==='percent'?'%':''}`
+
+        inactiveSynergies.push({
+          name: synergyName,
+          remainingCount,
+          nextEffectDescription: effectDescription
+        })
+      }
+    }
+
+    // 라인업에서 선수의 포지션 찾기
+    let playerPosition = ''
+    for (const [pos, p] of Object.entries(lineup.value)) {
+      if (p && p.id === player.id) {
+        playerPosition = pos
+        break
+      }
+    }
+
+    playerList.push({
+      playerName: String(player.name || ''),
+      position: playerPosition,
+      activeSynergies,
+      inactiveSynergies
+    })
+  }
+
+  return playerList.sort((a, b) => {
+    // 활성 시너지가 많은 순으로 정렬
+    return b.activeSynergies.length - a.activeSynergies.length
+  })
+})
+
 /* =========================
    라이프사이클
 ========================= */
@@ -613,38 +706,151 @@ const LineupSlot = defineComponent({
   emits: ['clear'],
   setup(props, { emit }) {
     return () => {
-      const rootCls = 'rounded-xl border border-neutral-200 p-3'
+      const rootCls = 'group relative rounded-lg border border-neutral-200 bg-white p-3 transition-colors hover:border-neutral-300'
+
       if (!props.p) {
-        return h('div', { class: rootCls }, [
-          h('div', { class: 'mb-2 text-xs font-medium text-neutral-700' }, props.pos),
-          h('div', { class: 'text-sm italic text-neutral-400' }, '비어있음')
+        return h('div', { class: `${rootCls} min-h-[120px] flex flex-col items-center justify-center` }, [
+          h('div', { class: 'text-xs font-medium text-neutral-400 uppercase tracking-wide' }, props.pos),
+          h('div', { class: 'text-xs text-neutral-300 mt-1' }, '비어있음')
         ])
       }
+
       const p = props.p as Raw
-      const infos = (props.getInfo(p) || []).filter((s:any)=>s.isActive).slice(0,1)
+      const infos = (props.getInfo(p) || []).filter((s:any)=>s.isActive)
+
+      // 스탯별 보너스 분리 계산 (percent vs fixed)
+      const statBonuses = new Map<string, { percent: number, fixed: number, details: Array<{name: string, value: number, unit: string}> }>()
+
+      infos.forEach((info: any) => {
+        const rec = synergyIndex.value.get(info.name)
+        if (rec?.topCondition) {
+          const stat = rec.topCondition.stat
+          const bonus = rec.topCondition.bonus.value
+          const unit = rec.topCondition.bonus.unit
+
+          if (!statBonuses.has(stat)) {
+            statBonuses.set(stat, { percent: 0, fixed: 0, details: [] })
+          }
+
+          const current = statBonuses.get(stat)!
+          if (unit === 'percent') {
+            current.percent += bonus
+          } else {
+            current.fixed += bonus
+          }
+          current.details.push({ name: info.name, value: bonus, unit })
+        }
+      })
+
       return h('div', { class: rootCls }, [
-        h('div', { class: 'mb-2 text-xs font-medium text-neutral-700' }, props.pos),
-        h('div', { class: 'text-sm font-semibold text-neutral-900 truncate' }, p.name),
-        h('div', { class: 'mb-2 text-xs text-neutral-500' }, `${p.team}${p.year ? ` (${p.year})` : ''}`),
-        ...infos.map((s:any)=> h('div', {
-          key: s.name,
-          class: 'mb-2 inline-block rounded-md bg-neutral-100 px-2 py-1 text-[11px] text-neutral-800'
-        }, s.effectText)),
+        // 헤더 (포지션 + 등급)
+        h('div', { class: 'flex items-center justify-between mb-3' }, [
+          h('div', { class: 'text-xs font-medium text-neutral-500 uppercase tracking-wide' }, props.pos),
+          h('img', {
+            src: `/assets/logos/grade/${p.grade || 'C'}.png`,
+            alt: p.grade || 'C',
+            class: 'w-6 h-6 rounded object-contain'
+          })
+        ]),
+
+        // 선수 정보
+        h('div', { class: 'mb-3' }, [
+          h('h3', { class: 'text-sm font-semibold text-neutral-900 truncate mb-1' }, p.name),
+          h('div', { class: 'flex items-center justify-between text-xs text-neutral-500' }, [
+            h('span', { class: 'truncate flex-1' }, `${findTeamName(p.team)} (${p.year || 'N/A'})`),
+            p.rarity ? h('div', { class: 'flex ml-2' },
+                Array.from({ length: Number(p.rarity) }, (_, i) =>
+                    h('div', {
+                      key: i,
+                      class: 'w-2 h-2 bg-blue-500 rounded-full'
+                    })
+                )
+            ) : null
+          ])
+        ]),
+
+        // 파워 스탯
+        p.power ? h('div', { class: 'mb-3' }, [
+          h('div', { class: 'inline-flex items-center px-2 py-1 rounded bg-neutral-100 text-neutral-700 text-xs font-medium' }, [
+            h('span', { class: 'mr-1' }, '💪'),
+            h('span', {}, p.power)
+          ])
+        ]) : null,
+
+        // 시너지 칩들
+        infos.length > 0 ? h('div', { class: 'mb-3' }, [
+          h('div', { class: 'flex flex-wrap gap-1' },
+              infos.map((info: any) =>
+                  h('div', {
+                    key: info.name,
+                    class: 'px-2 py-0.5 bg-blue-50 text-blue-700 text-[10px] font-medium rounded-full border border-blue-200'
+                  }, info.name)
+              )
+          )
+        ]) : null,
+
+        // 스탯 합산 표시
+        statBonuses.size > 0 ? h('div', { class: 'space-y-1' },
+            Array.from(statBonuses.entries()).map(([stat, bonuses]) => {
+              const hasPercent = bonuses.percent > 0
+              const hasFixed = bonuses.fixed > 0
+
+              if (!hasPercent && !hasFixed) return null
+
+              return h('div', {
+                key: stat,
+                class: 'relative group/tooltip'
+              }, [
+                h('div', { class: 'flex items-center justify-between py-1 px-2 bg-neutral-50 rounded text-xs' }, [
+                  h('span', { class: 'font-medium text-neutral-600' }, STAT_LABELS[stat] || stat),
+                  h('div', { class: 'flex gap-2' }, [
+                    hasFixed ? h('span', { class: 'font-semibold text-neutral-900' }, `+${bonuses.fixed}`) : null,
+                    hasPercent ? h('span', { class: 'font-semibold text-blue-600' }, `+${bonuses.percent}%`) : null
+                  ])
+                ]),
+
+                // 툴팁
+                h('div', {
+                  class: 'absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-neutral-900 text-white text-xs rounded-lg opacity-0 group-hover/tooltip:opacity-100 transition-opacity pointer-events-none z-10 whitespace-nowrap'
+                }, [
+                  h('div', { class: 'space-y-1' },
+                      bonuses.details.map((detail, i) =>
+                          h('div', { key: i }, `${detail.name}: +${detail.value}${detail.unit === 'percent' ? '%' : ''}`)
+                      )
+                  ),
+                  // 화살표
+                  h('div', {
+                    class: 'absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-neutral-900'
+                  })
+                ])
+              ])
+            }).filter(Boolean)
+        ) : null,
+
+        // 제거 버튼
         h('button', {
-          class: 'text-[11px] text-red-600 underline underline-offset-2',
-          onClick: () => emit('clear')
-        }, '제거')
+          class: 'absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity w-5 h-5 rounded-full bg-neutral-100 hover:bg-red-100 flex items-center justify-center text-neutral-400 hover:text-red-500',
+          onClick: () => emit('clear'),
+          title: '제거'
+        }, [
+          h('svg', { class: 'w-3 h-3', viewBox: '0 0 20 20', fill: 'currentColor' }, [
+            h('path', {
+              'fill-rule': 'evenodd',
+              d: 'M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z',
+              'clip-rule': 'evenodd'
+            })
+          ])
+        ])
       ])
     }
   }
 })
 </script>
-
 <template>
-  <div class=" bg-neutral-50">
-    <div class="mx-auto max-w-[1400px] px-6 py-8">
+  <div class="bg-neutral-50 min-h-screen">
+    <div class="mx-auto px-4 py-6 h-screen flex flex-col">
       <!-- 로딩 -->
-      <div v-if="isLoading" class="flex h-[60vh] items-center justify-center">
+      <div v-if="isLoading" class="flex h-full items-center justify-center">
         <div class="text-center">
           <div class="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-2 border-neutral-300 border-t-neutral-900"></div>
           <p class="text-sm text-neutral-500">데이터를 불러오는 중…</p>
@@ -652,17 +858,17 @@ const LineupSlot = defineComponent({
       </div>
 
       <!-- 메인 -->
-      <div v-else class="grid grid-cols-12 gap-6">
+      <div v-else class="grid grid-cols-12 gap-6 flex-1 min-h-0">
         <!-- 좌측: 검색 -->
-        <section class="col-span-4 flex max-h-full flex-col rounded-2xl bg-white ring-1 ring-neutral-200/70">
-          <header class="px-5 py-4 border-b border-neutral-100">
+        <section class="col-span-2 flex flex-col rounded-2xl bg-white ring-1 ring-neutral-200/70 min-h-0">
+          <header class="px-5 py-4 border-b border-neutral-100 flex-shrink-0">
             <div class="flex items-center justify-between">
               <h1 class="text-base font-semibold tracking-tight text-neutral-900">선수 검색</h1>
               <span class="text-xs text-neutral-500">{{ totalPlayers.toLocaleString() }}명</span>
             </div>
           </header>
 
-          <div class="border-b border-neutral-100 p-4">
+          <div class="border-b border-neutral-100 p-4 flex-shrink-0">
             <div class="relative">
               <input
                   v-model.trim="searchQuery.search"
@@ -683,37 +889,76 @@ const LineupSlot = defineComponent({
               </span>
               <span class="inline-flex items-center gap-2">
                 <span class="rounded-full bg-neutral-100 px-2 py-0.5 text-[11px] text-neutral-700">
-                  {{ [searchQuery.position.length, searchQuery.team.length, searchQuery.synergy.length, searchQuery.rarity ? 1 : 0].reduce((a,b)=>a+b,0) }}
+                  {{ [searchQuery.position.length, searchQuery.team.length, searchQuery.synergy.length, searchQuery.grade.length, searchQuery.rarity ? 1 : 0].reduce((a,b)=>a+b,0) }}
                 </span>
                 <ChevronRightIcon :class="advancedFilterOpen ? 'rotate-90' : ''" class="h-4 w-4 transition-transform" />
               </span>
             </button>
 
-            <div v-if="advancedFilterOpen" class="mt-3 grid grid-cols-2 gap-3">
-              <div class="col-span-1">
-                <label class="mb-1 block text-xs font-medium text-neutral-500">포지션</label>
-                <select v-model="searchQuery.position" multiple class="h-24 w-full rounded-lg border border-neutral-200 bg-white px-2 py-2 text-sm focus:border-neutral-300 focus:ring-0">
-                  <option v-for="p in searchOptions.position" :key="p" :value="p">{{ p }}</option>
-                </select>
+            <div v-if="advancedFilterOpen" class="mt-3 space-y-4">
+              <!-- 등급 필터 -->
+              <div>
+                <label class="mb-2 block text-xs font-medium text-neutral-500">등급</label>
+                <div class="flex flex-wrap gap-2">
+                  <button
+                      v-for="grade in searchOptions.grade"
+                      :key="grade"
+                      @click="searchQuery.grade.includes(grade) ? searchQuery.grade = searchQuery.grade.filter(g => g !== grade) : searchQuery.grade.push(grade)"
+                      :class="searchQuery.grade.includes(grade) ? 'bg-blue-100 text-blue-800 border-blue-300' : 'bg-white text-neutral-700 border-neutral-200'"
+                      class="px-3 py-1.5 rounded-lg border text-xs font-medium transition-colors hover:bg-blue-50"
+                  >
+                    {{ grade }}
+                  </button>
+                </div>
               </div>
-              <div class="col-span-1">
-                <label class="mb-1 block text-xs font-medium text-neutral-500">팀</label>
-                <select v-model="searchQuery.team" multiple class="h-24 w-full rounded-lg border border-neutral-200 bg-white px-2 py-2 text-sm focus:border-neutral-300 focus:ring-0">
-                  <option v-for="t in searchOptions.team" :key="t" :value="t">{{ t }}</option>
-                </select>
+
+              <!-- 포지션 필터 -->
+              <div>
+                <label class="mb-2 block text-xs font-medium text-neutral-500">포지션</label>
+                <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
+                  <button
+                      v-for="pos in searchOptions.position"
+                      :key="pos"
+                      @click="searchQuery.position.includes(pos) ? searchQuery.position = searchQuery.position.filter(p => p !== pos) : searchQuery.position.push(pos)"
+                      :class="searchQuery.position.includes(pos) ? 'bg-green-100 text-green-800 border-green-300' : 'bg-white text-neutral-700 border-neutral-200'"
+                      class="px-2 py-1.5 rounded-lg border text-xs font-medium transition-colors hover:bg-green-50"
+                  >
+                    {{ pos }}
+                  </button>
+                </div>
               </div>
-              <div class="col-span-2">
-                <label class="mb-1 block text-xs font-medium text-neutral-500">시너지</label>
+
+              <!-- 팀 필터 -->
+              <div>
+                <label class="mb-2 block text-xs font-medium text-neutral-500">팀</label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 max-h-32 overflow-y-auto">
+                  <button
+                      v-for="team in searchOptions.team"
+                      :key="team"
+                      @click="searchQuery.team.includes(team) ? searchQuery.team = searchQuery.team.filter(t => t !== team) : searchQuery.team.push(team)"
+                      :class="searchQuery.team.includes(team) ? 'bg-purple-100 text-purple-800 border-purple-300' : 'bg-white text-neutral-700 border-neutral-200'"
+                      class="px-2 py-1.5 rounded-lg border text-xs font-medium transition-colors hover:bg-purple-50 truncate"
+                  >
+                    {{ findTeamName(team) }}
+                  </button>
+                </div>
+              </div>
+
+              <!-- 시너지 필터 -->
+              <div>
+                <label class="mb-2 block text-xs font-medium text-neutral-500">시너지</label>
                 <select v-model="searchQuery.synergy" multiple class="h-24 w-full rounded-lg border border-neutral-200 bg-white px-2 py-2 text-sm focus:border-neutral-300 focus:ring-0">
                   <option v-for="s in synergyOptions" :key="s" :value="s">{{ s }}</option>
                 </select>
               </div>
-              <div class="col-span-2 grid grid-cols-4 items-end gap-3">
-                <div class="col-span-2">
+
+              <!-- 레어도 필터 -->
+              <div class="grid grid-cols-2 items-end gap-3">
+                <div>
                   <label class="mb-1 block text-xs font-medium text-neutral-500">레어도</label>
                   <input v-model.number="searchQuery.rarity" type="number" min="0" max="6" class="w-full rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm focus:border-neutral-300 focus:ring-0">
                 </div>
-                <div class="col-span-2 text-right">
+                <div class="text-right">
                   <button @click="resetFilters" class="inline-flex items-center justify-center rounded-lg border border-neutral-200 px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-50">
                     필터 초기화
                   </button>
@@ -722,7 +967,7 @@ const LineupSlot = defineComponent({
             </div>
           </div>
 
-          <div class="flex items-center justify-between border-b border-neutral-100 px-4 py-3 text-xs text-neutral-500">
+          <div class="flex items-center justify-between border-b border-neutral-100 px-4 py-3 text-xs text-neutral-500 flex-shrink-0">
             <span>{{ currentPage }} / {{ totalPages }} 페이지</span>
             <div class="inline-flex gap-1">
               <button @click="goToPage(currentPage-1)" :disabled="currentPage<=1" class="rounded-lg border border-neutral-200 px-2 py-1 disabled:opacity-40">이전</button>
@@ -730,50 +975,50 @@ const LineupSlot = defineComponent({
             </div>
           </div>
 
-          <div class="flex-1 overflow-auto">
+          <div class="flex-1 overflow-y-auto min-h-0">
             <div
                 v-for="(player, i) in paginatedPlayers"
                 :key="i"
                 @click="autoAssignPlayer(player)"
-                class="group cursor-pointer border-b border-neutral-100 px-4 py-3 transition-colors hover:bg-neutral-50"
+                class="group cursor-pointer border-b border-neutral-100 px-4 py-4 transition-colors hover:bg-neutral-50"
             >
-              <div class="flex items-start gap-3">
-                <img :src="`/assets/logos/grade/${player.grade}.png`" :alt="player.grade" class="h-8 w-8 rounded-md object-contain ring-1 ring-neutral-200" />
+              <div class="flex items-start gap-4">
+                <img :src="`/assets/logos/grade/${player.grade}.png`" :alt="player.grade" class="h-10 w-10 rounded-md object-contain ring-1 ring-neutral-200 flex-shrink-0" />
                 <div class="min-w-0 flex-1">
-                  <div class="mb-0.5 flex items-center gap-2">
-                    <h3 class="truncate text-sm font-semibold text-neutral-900">{{ player.name }}</h3>
+                  <div class="mb-1 flex items-center gap-2">
+                    <h3 class="truncate text-base font-semibold text-neutral-900">{{ player.name }}</h3>
                     <div class="flex">
-                      <Star v-for="k in Number(player.rarity)" :key="k" class="h-3.5 w-3.5 text-amber-400" fill="currentColor" />
+                      <Star v-for="k in Number(player.rarity)" :key="k" class="h-4 w-4 text-amber-400" fill="currentColor" />
                     </div>
                   </div>
-                  <div class="mb-2 flex items-center gap-2 text-xs text-neutral-500">
-                    <img :src="getTeamLogoUrl(player.team)" :alt="player.team" class="h-4 w-4" />
-                    <span>{{ findTeamName(player.team) }}</span>
+                  <div class="mb-3 flex items-center gap-2 text-sm text-neutral-500">
+                    <img :src="getTeamLogoUrl(player.team)" :alt="player.team" class="h-4 w-4 flex-shrink-0" />
+                    <span class="truncate">{{ findTeamName(player.team) }}</span>
                     <span>·</span>
                     <span>{{ player.year }}</span>
                   </div>
-                  <div class="mb-2 flex flex-wrap gap-1">
+                  <div class="mb-3 flex flex-wrap gap-1.5">
                     <span
                         v-for="pos in Array.from(new Set(toArray(player.position).map(normalizePosition))).filter(Boolean)"
                         :key="pos"
-                        class="rounded-full bg-neutral-100 px-2 py-0.5 text-[11px] text-neutral-700"
+                        class="rounded-full bg-neutral-100 px-2.5 py-1 text-xs text-neutral-700"
                     >{{ pos }}</span>
                   </div>
-                  <div class="flex flex-wrap gap-1">
+                  <div class="flex flex-wrap gap-1.5">
                     <button
                         v-for="pos in Array.from(new Set(toArray(player.position).map(normalizePosition))).filter(Boolean)"
                         :key="pos"
                         @click.stop="assignPlayerToSlot(pos, player)"
-                        class="rounded-lg border border-neutral-200 px-2.5 py-1 text-[11px] text-neutral-700 hover:bg-neutral-50"
+                        class="rounded-lg border border-neutral-200 px-3 py-1.5 text-xs text-neutral-700 hover:bg-neutral-50"
                     >{{ pos }}</button>
                     <button
                         v-if="!isPitcher(player)"
                         @click.stop="assignPlayerToSlot('DH', player)"
-                        class="rounded-lg border border-neutral-200 px-2.5 py-1 text-[11px] text-neutral-700 hover:bg-neutral-50"
+                        class="rounded-lg border border-neutral-200 px-3 py-1.5 text-xs text-neutral-700 hover:bg-neutral-50"
                     >DH</button>
                     <button
                         @click.stop="assignToBench(player)"
-                        class="rounded-lg border border-neutral-200 px-2.5 py-1 text-[11px] text-neutral-700 hover:bg-neutral-50"
+                        class="rounded-lg border border-neutral-200 px-3 py-1.5 text-xs text-neutral-700 hover:bg-neutral-50"
                     >벤치</button>
                   </div>
                 </div>
@@ -788,124 +1033,208 @@ const LineupSlot = defineComponent({
         </section>
 
         <!-- 중앙: 라인업 -->
-        <section class="col-span-5 flex max-h/full flex-col rounded-2xl bg-white ring-1 ring-neutral-200/70">
-          <header class="flex items-center justify-between border-b border-neutral-100 px-5 py-4">
+        <section class="col-span-7 flex flex-col rounded-2xl bg-white ring-1 ring-neutral-200/70 min-h-0">
+          <header class="flex items-center justify-between border-b border-neutral-100 px-5 py-4 flex-shrink-0">
             <h2 class="text-base font-semibold tracking-tight text-neutral-900">라인업</h2>
             <span class="text-xs text-neutral-500">{{ Object.values(lineup).filter(Boolean).length }}/28</span>
           </header>
 
-          <div class="grid flex-1 grid-rows-[auto_auto_1fr] gap-6 overflow-auto p-5">
-            <section>
-              <h3 class="mb-3 text-xs font-medium uppercase tracking-wider text-neutral-500">타자진</h3>
-              <div class="mb-4">
-                <div class="mb-2 text-xs text-neutral-500">외야</div>
-                <div class="grid grid-cols-3 gap-3">
-                  <LineupSlot v-for="pos in ['LF','CF','RF']" :key="pos" :pos="pos" :p="lineup[pos]" @clear="clearLineupSlot(pos)" :get-info="getPlayerSynergyInfo" />
+          <div class="flex-1 overflow-y-auto min-h-0 p-5">
+            <div class="space-y-8">
+              <section>
+                <h3 class="mb-4 text-xs font-medium uppercase tracking-wider text-neutral-500">타자진</h3>
+                <div class="space-y-6">
+                  <div>
+                    <div class="mb-3 text-xs text-neutral-500">외야</div>
+                    <div class="grid grid-cols-3 gap-4">
+                      <LineupSlot v-for="pos in ['LF','CF','RF']" :key="pos" :pos="pos" :p="lineup[pos]" @clear="clearLineupSlot(pos)" :get-info="getPlayerSynergyInfo" />
+                    </div>
+                  </div>
+                  <div>
+                    <div class="mb-3 text-xs text-neutral-500">내야</div>
+                    <div class="grid grid-cols-5 gap-4">
+                      <LineupSlot v-for="pos in ['C','1B','2B','3B','SS']" :key="pos" :pos="pos" :p="lineup[pos]" @clear="clearLineupSlot(pos)" :get-info="getPlayerSynergyInfo" />
+                    </div>
+                  </div>
+                  <div class="max-w-xs">
+                    <div class="mb-3 text-xs text-neutral-500">지명타자</div>
+                    <LineupSlot pos="DH" :p="lineup.DH" @clear="clearLineupSlot('DH')" :get-info="getPlayerSynergyInfo" />
+                  </div>
                 </div>
-              </div>
-              <div class="mb-4">
-                <div class="mb-2 text-xs text-neutral-500">내야</div>
-                <div class="grid grid-cols-5 gap-3">
-                  <LineupSlot v-for="pos in ['C','1B','2B','3B','SS']" :key="pos" :pos="pos" :p="lineup[pos]" @clear="clearLineupSlot(pos)" :get-info="getPlayerSynergyInfo" />
-                </div>
-              </div>
-              <div class="max-w-xs">
-                <div class="mb-2 text-xs text-neutral-500">지명타자</div>
-                <LineupSlot pos="DH" :p="lineup.DH" @clear="clearLineupSlot('DH')" :get-info="getPlayerSynergyInfo" />
-              </div>
-            </section>
+              </section>
 
-            <section>
-              <h3 class="mb-3 text-xs font-medium uppercase tracking-wider text-neutral-500">투수진</h3>
-              <div class="mb-4">
-                <div class="mb-2 text-xs text-neutral-500">선발</div>
-                <div class="grid grid-cols-5 gap-3">
-                  <LineupSlot v-for="i in 5" :key="'SP'+i" :pos="'SP'+i" :p="lineup['SP'+i]" @clear="clearLineupSlot('SP'+i)" :get-info="getPlayerSynergyInfo" />
+              <section>
+                <h3 class="mb-4 text-xs font-medium uppercase tracking-wider text-neutral-500">투수진</h3>
+                <div class="space-y-6">
+                  <div>
+                    <div class="mb-3 text-xs text-neutral-500">선발</div>
+                    <div class="grid grid-cols-5 gap-4">
+                      <LineupSlot v-for="i in 5" :key="'SP'+i" :pos="'SP'+i" :p="lineup['SP'+i]" @clear="clearLineupSlot('SP'+i)" :get-info="getPlayerSynergyInfo" />
+                    </div>
+                  </div>
+                  <div>
+                    <div class="mb-3 text-xs text-neutral-500">중계 & 마무리</div>
+                    <div class="grid grid-cols-6 gap-4">
+                      <LineupSlot v-for="i in 6" :key="'RP'+i" :pos="'RP'+i" :p="lineup['RP'+i]" @clear="clearLineupSlot('RP'+i)" :get-info="getPlayerSynergyInfo" />
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div>
-                <div class="mb-2 text-xs text-neutral-500">중계 & 마무리</div>
-                <div class="grid grid-cols-6 gap-3">
-                  <LineupSlot v-for="i in 6" :key="'RP'+i" :pos="'RP'+i" :p="lineup['RP'+i]" @clear="clearLineupSlot('RP'+i)" :get-info="getPlayerSynergyInfo" />
-                </div>
-              </div>
-            </section>
+              </section>
 
-            <section>
-              <h3 class="mb-3 text-xs font-medium uppercase tracking-wider text-neutral-500">벤치 (8)</h3>
-              <div class="grid grid-cols-4 gap-3">
-                <LineupSlot v-for="i in 8" :key="'BENCH'+i" :pos="'BENCH'+i" :p="lineup['BENCH'+i]" @clear="clearLineupSlot('BENCH'+i)" :get-info="getPlayerSynergyInfo" />
-              </div>
-            </section>
+              <section>
+                <h3 class="mb-4 text-xs font-medium uppercase tracking-wider text-neutral-500">벤치 (8)</h3>
+                <div class="grid grid-cols-4 gap-4">
+                  <LineupSlot v-for="i in 8" :key="'BENCH'+i" :pos="'BENCH'+i" :p="lineup['BENCH'+i]" @clear="clearLineupSlot('BENCH'+i)" :get-info="getPlayerSynergyInfo" />
+                </div>
+              </section>
+            </div>
           </div>
         </section>
 
         <!-- 우측: 시너지 -->
-        <section class="col-span-3 flex max-h-full flex-col rounded-2xl bg-white ring-1 ring-neutral-200/70">
-          <header class="flex items-center justify-between border-b border-neutral-100 px-5 py-4">
-            <h2 class="text-base font-semibold tracking-tight text-neutral-900">시너지</h2>
-            <div class="text-xs text-neutral-500">
-              활성 {{ activeSynergyList.filter(s=>s.activeCondition).length }} · 대기 {{ inactiveSynergyList.length }}
+        <section class="col-span-3 flex flex-col rounded-2xl bg-white ring-1 ring-neutral-200/70 min-h-0">
+          <header class="border-b border-neutral-100 px-5 py-4 flex-shrink-0">
+            <div class="flex items-center justify-between mb-3">
+              <h2 class="text-base font-semibold tracking-tight text-neutral-900">시너지</h2>
+              <div class="text-xs text-neutral-500">
+                활성 {{ activeSynergyList.filter(s=>s.activeCondition).length }} · 대기 {{ inactiveSynergyList.length }}
+              </div>
+            </div>
+
+            <!-- 탭 버튼 -->
+            <div class="flex rounded-lg bg-neutral-100 p-1">
+              <button
+                  @click="synergyViewMode = 'by-synergy'"
+                  :class="synergyViewMode === 'by-synergy' ? 'bg-white text-neutral-900 shadow-sm' : 'text-neutral-600 hover:text-neutral-900'"
+                  class="flex-1 rounded-md px-3 py-1.5 text-xs font-medium transition-all"
+              >
+                시너지별
+              </button>
+              <button
+                  @click="synergyViewMode = 'by-player'"
+                  :class="synergyViewMode === 'by-player' ? 'bg-white text-neutral-900 shadow-sm' : 'text-neutral-600 hover:text-neutral-900'"
+                  class="flex-1 rounded-md px-3 py-1.5 text-xs font-medium transition-all"
+              >
+                선수별
+              </button>
             </div>
           </header>
 
-          <div class="flex-1 overflow-auto p-5">
-            <h3 class="mb-3 text-xs font-medium uppercase tracking-wider text-neutral-500">활성</h3>
-            <div v-if="!activeSynergyList.filter(s=>s.activeCondition).length" class="mb-6 rounded-xl bg-neutral-50 p-6 text-center text-sm text-neutral-500">
-              발동된 시너지가 없습니다
-            </div>
+          <div class="flex-1 overflow-y-auto min-h-0 p-5">
+            <!-- 시너지별 보기 -->
+            <div v-if="synergyViewMode === 'by-synergy'" class="space-y-6">
+              <div>
+                <h3 class="mb-4 text-xs font-medium uppercase tracking-wider text-neutral-500">활성</h3>
+                <div v-if="!activeSynergyList.filter(s=>s.activeCondition).length" class="rounded-xl bg-neutral-50 p-6 text-center text-sm text-neutral-500">
+                  발동된 시너지가 없습니다
+                </div>
 
-            <div class="space-y-3">
-              <div
-                  v-for="sy in activeSynergyList.filter(s=>s.activeCondition)"
-                  :key="sy.name + '-active'"
-                  class="rounded-xl border border-neutral-200 p-4"
-              >
-                <div class="mb-2 flex items-start justify-between">
-                  <div class="min-w-0">
-                    <div class="truncate text-[15px] font-semibold text-neutral-900">{{ sy.name }}</div>
-                    <div class="truncate text-xs text-neutral-500">{{ sy.synergy.description }}</div>
+                <div class="space-y-4">
+                  <div
+                      v-for="sy in activeSynergyList.filter(s=>s.activeCondition)"
+                      :key="sy.name + '-active'"
+                      class="rounded-xl border border-neutral-200 p-4"
+                  >
+                    <div class="mb-3 flex items-start justify-between">
+                      <div class="min-w-0 flex-1 pr-3">
+                        <div class="text-[15px] font-semibold text-neutral-900 mb-1">{{ sy.name }}</div>
+                        <div class="text-xs text-neutral-500 leading-relaxed">{{ sy.synergy.description }}</div>
+                      </div>
+                      <div class="rounded-full bg-neutral-100 px-2 py-0.5 text-xs text-neutral-600 flex-shrink-0">{{ sy.count }}명</div>
+                    </div>
+
+                    <div class="mb-4 rounded-lg bg-neutral-50 px-3 py-2 text-[13px] font-semibold text-neutral-900">
+                      {{ STAT_LABELS[sy.activeCondition!.stat] || sy.activeCondition!.stat }}
+                      +{{ sy.activeCondition!.bonus.value }}{{ sy.activeCondition!.bonus.unit==='percent' ? '%' : '' }}
+                    </div>
+
+                    <div class="flex flex-wrap gap-1.5 mb-3">
+                      <span v-for="nm in sy.appliedPlayers" :key="nm" class="rounded-md bg-neutral-100 px-2 py-0.5 text-[11px] text-neutral-700">{{ nm }}</span>
+                    </div>
+
+                    <div v-if="sy.impliedChildren?.length" class="border-t border-neutral-100 pt-3">
+                      <div class="mb-2 text-[11px] font-medium text-neutral-500">하위/상위 시너지 (표시)</div>
+                      <div class="flex flex-wrap gap-1.5">
+                        <span v-for="child in sy.impliedChildren" :key="child.name" class="rounded-full bg-white px-2 py-0.5 text-[11px] text-neutral-600 ring-1 ring-neutral-200">
+                          {{ child.name }} · {{ child.count }}명
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <div class="rounded-full bg-neutral-100 px-2 py-0.5 text-xs text-neutral-600">{{ sy.count }}명</div>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="mb-4 text-xs font-medium uppercase tracking-wider text-neutral-500">조건 부족</h3>
+                <div v-if="!inactiveSynergyList.length" class="rounded-xl bg-neutral-50 p-6 text-center text-sm text-neutral-500">
+                  조건 부족 시너지가 없습니다
                 </div>
 
-                <div class="mb-3 rounded-lg bg-neutral-50 px-3 py-2 text-[13px] font-semibold text-neutral-900">
-                  {{ STAT_LABELS[sy.activeCondition!.stat] || sy.activeCondition!.stat }}
-                  +{{ sy.activeCondition!.bonus.value }}{{ sy.activeCondition!.bonus.unit==='percent' ? '%' : '' }}
-                </div>
-
-                <div class="flex flex-wrap gap-1.5">
-                  <span v-for="nm in sy.appliedPlayers" :key="nm" class="rounded-md bg-neutral-100 px-2 py-0.5 text-[11px] text-neutral-700">{{ nm }}</span>
-                </div>
-
-                <div v-if="sy.impliedChildren?.length" class="mt-3 border-t border-neutral-100 pt-3">
-                  <div class="mb-1 text-[11px] font-medium text-neutral-500">하위 시너지 (표시)</div>
-                  <div class="flex flex-wrap gap-1.5">
-                    <span v-for="child in sy.impliedChildren" :key="child.name" class="rounded-full bg-white px-2 py-0.5 text-[11px] text-neutral-600 ring-1 ring-neutral-200">
-                      {{ child.name }} · {{ child.count }}명
-                    </span>
+                <div class="space-y-4">
+                  <div v-for="sy in inactiveSynergyList" :key="sy.name + '-inactive'" class="rounded-xl border border-neutral-200 p-4">
+                    <div class="mb-3 flex items-center justify-between">
+                      <div class="truncate text-[15px] font-semibold text-neutral-900 flex-1 pr-3">{{ sy.name }}</div>
+                      <div class="rounded-full bg-neutral-100 px-2 py-0.5 text-xs text-neutral-600 flex-shrink-0">{{ sy.count }}명</div>
+                    </div>
+                    <div class="mb-2 text-[13px] text-neutral-800 leading-relaxed">{{ sy.nextEffectDescription }}</div>
+                    <div class="mb-3 text-xs font-medium text-red-600">{{ sy.remainingCount }}명 더 필요</div>
+                    <div class="h-2 w-full overflow-hidden rounded-full bg-neutral-200 mb-2">
+                      <div class="h-2 rounded-full bg-neutral-900 transition-[width] duration-500" :style="{ width: sy.progress + '%' }"></div>
+                    </div>
+                    <div class="text-center text-[11px] text-neutral-500">{{ sy.progress }}% 진행</div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <h3 class="mt-8 mb-3 text-xs font-medium uppercase tracking-wider text-neutral-500">조건 부족</h3>
-            <div v-if="!inactiveSynergyList.length" class="rounded-xl bg-neutral-50 p-6 text-center text-sm text-neutral-500">
-              조건 부족 시너지가 없습니다
-            </div>
+            <!-- 선수별 보기 -->
+            <div v-else class="space-y-4">
+              <div v-if="!playerSynergyList.length" class="rounded-xl bg-neutral-50 p-6 text-center text-sm text-neutral-500">
+                라인업에 선수가 없습니다
+              </div>
 
-            <div class="space-y-3">
-              <div v-for="sy in inactiveSynergyList" :key="sy.name + '-inactive'" class="rounded-xl border border-neutral-200 p-4">
-                <div class="mb-2 flex items-center justify-between">
-                  <div class="truncate text-[15px] font-semibold text-neutral-900">{{ sy.name }}</div>
-                  <div class="rounded-full bg-neutral-100 px-2 py-0.5 text-xs text-neutral-600">{{ sy.count }}명</div>
+              <div v-for="playerSynergy in playerSynergyList" :key="playerSynergy.playerName" class="rounded-xl border border-neutral-200 p-4">
+                <div class="mb-3 flex items-start justify-between">
+                  <div class="min-w-0 flex-1 pr-3">
+                    <div class="text-[15px] font-semibold text-neutral-900 mb-1">{{ playerSynergy.playerName }}</div>
+                    <div class="text-xs text-neutral-500">{{ playerSynergy.position }}</div>
+                  </div>
+                  <div class="rounded-full bg-neutral-100 px-2 py-0.5 text-xs text-neutral-600 flex-shrink-0">
+                    {{ playerSynergy.activeSynergies.length }}개 활성
+                  </div>
                 </div>
-                <div class="mb-1 text-[13px] text-neutral-800">{{ sy.nextEffectDescription }}</div>
-                <div class="mb-3 text-xs font-medium text-red-600">{{ sy.remainingCount }}명 더 필요</div>
-                <div class="h-2 w-full overflow-hidden rounded-full bg-neutral-200">
-                  <div class="h-2 rounded-full bg-neutral-900 transition-[width] duration-500" :style="{ width: sy.progress + '%' }"></div>
+
+                <!-- 활성 시너지들 -->
+                <div v-if="playerSynergy.activeSynergies.length" class="space-y-3">
+                  <div v-for="synergy in playerSynergy.activeSynergies" :key="synergy.name" class="rounded-lg bg-green-50 border border-green-200 p-3">
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="text-sm font-medium text-green-900">{{ synergy.name }}</div>
+                      <div class="text-xs text-green-700 bg-green-100 px-2 py-0.5 rounded-full">활성</div>
+                    </div>
+                    <div class="text-xs text-green-800 mb-2">{{ synergy.description }}</div>
+                    <div class="text-sm font-semibold text-green-900 bg-green-100 px-2 py-1 rounded">
+                      {{ STAT_LABELS[synergy.activeCondition.stat] || synergy.activeCondition.stat }}
+                      +{{ synergy.activeCondition.bonus.value }}{{ synergy.activeCondition.bonus.unit==='percent' ? '%' : '' }}
+                    </div>
+                  </div>
                 </div>
-                <div class="mt-1 text-center text-[11px] text-neutral-500">{{ sy.progress }}% 진행</div>
+
+                <!-- 비활성 시너지들 -->
+                <div v-if="playerSynergy.inactiveSynergies.length" class="mt-3 space-y-2">
+                  <div class="text-xs font-medium text-neutral-500 border-t border-neutral-100 pt-3">잠재 시너지</div>
+                  <div v-for="synergy in playerSynergy.inactiveSynergies" :key="synergy.name" class="rounded-lg bg-neutral-50 border border-neutral-200 p-2">
+                    <div class="flex items-center justify-between mb-1">
+                      <div class="text-xs font-medium text-neutral-900">{{ synergy.name }}</div>
+                      <div class="text-xs text-neutral-600">{{ synergy.remainingCount }}명 더 필요</div>
+                    </div>
+                    <div class="text-xs text-neutral-600">{{ synergy.nextEffectDescription }}</div>
+                  </div>
+                </div>
+
+                <!-- 시너지가 없는 경우 -->
+                <div v-if="!playerSynergy.activeSynergies.length && !playerSynergy.inactiveSynergies.length" class="text-xs text-neutral-500 italic">
+                  적용 가능한 시너지가 없습니다
+                </div>
               </div>
             </div>
           </div>
