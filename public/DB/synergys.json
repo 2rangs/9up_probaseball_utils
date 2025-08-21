@@ -3527,14 +3527,14 @@
   {
     "id": 119,
     "synergy": "신인왕",
-    "synergy_effect": "- 라인업에 2명 이상 기용 시 파워 +11% ",
+    "synergy_effect": "- 라인업에 6명 이하 기용 시 파워 +11% ",
     "description": "당해년도 신인왕을 수상한 선수들입니다.",
     "stackable": false,
     "conditions": [
       {
         "count": {
-          "op": ">=",
-          "value": 2
+          "op": "<=",
+          "value": 6
         },
         "stat": "power",
         "bonus": {
