@@ -3719,8 +3719,9 @@
     "conditions": [
       {
         "count": {
-          "op": "<=",
-          "value": 6
+          "op": "between",
+          "min": 1,
+          "max": 6
         },
         "stat": "power",
         "bonus": {

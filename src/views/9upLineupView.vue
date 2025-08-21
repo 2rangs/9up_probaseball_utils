@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, defineComponent, h, nextTick, watch, reactive } from 'vue'
 import Papa from 'papaparse'
-import { Star, Search, Filter, ChevronLeft, ChevronRight, Users, ChevronRight as ChevronRightIcon } from 'lucide-vue-next'
+import { Star, Search, Filter, ChevronLeft, ChevronRight, Users, ChevronRight as ChevronRightIcon, Moon, Sun, ChevronDown, ChevronUp, Menu, X } from 'lucide-vue-next'
+import SideModal from "@/components/SideModal.vue";
+import PlayerDetail from "@/components/PlayerDetail.vue";
 
 /* =========================
    타입 정의
@@ -58,6 +60,32 @@ const POSITION_ALIASES: Record<string, string> = {
   'dh': 'DH', '지타': 'DH',
 }
 const CSV_SPLIT = /[,\u3001;、]+/
+const lineupViewMode = ref('batter')
+
+/* =========================
+   다크모드 & UI 상태
+========================= */
+const expandedSynergies = ref<Set<string>>(new Set())
+const showModal = ref(false)
+
+const toggleSynergy = (synergyName: string) => {
+  const newExpanded = new Set(expandedSynergies.value)
+  if (newExpanded.has(synergyName)) {
+    newExpanded.delete(synergyName)
+  } else {
+    newExpanded.add(synergyName)
+  }
+  expandedSynergies.value = newExpanded
+}
+
+const expandAllSynergies = () => {
+  const allActive = activeSynergyList.value.map(s => s.name)
+  expandedSynergies.value = new Set(allActive)
+}
+
+const collapseAllSynergies = () => {
+  expandedSynergies.value = new Set()
+}
 
 /* =========================
    유틸
@@ -706,189 +734,215 @@ const LineupSlot = defineComponent({
   emits: ['clear'],
   setup(props, { emit }) {
     return () => {
-      const rootCls = 'group relative rounded-lg border border-neutral-200 bg-white p-3 transition-colors hover:border-neutral-300'
+      const rootCls =
+          'group relative rounded-lg border transition-colors text-center ' +
+          'border-neutral-200 bg-white hover:border-neutral-300 ' +
+          'dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-neutral-600'
 
+      // 빈 슬롯
       if (!props.p) {
         return h('div', { class: `${rootCls} min-h-[120px] flex flex-col items-center justify-center` }, [
-          h('div', { class: 'text-xs font-medium text-neutral-400 uppercase tracking-wide' }, props.pos),
-          h('div', { class: 'text-xs text-neutral-300 mt-1' }, '비어있음')
+          h('div', { class: 'text-xs font-medium text-neutral-400 dark:text-neutral-500 uppercase tracking-wide' }, props.pos),
+          h('div', { class: 'text-xs text-neutral-300 dark:text-neutral-600 mt-1' }, '비어있음')
         ])
       }
 
       const p = props.p as Raw
-      const infos = (props.getInfo(p) || []).filter((s:any)=>s.isActive)
+      const infos = (props.getInfo(p) || []).filter((s: any) => s?.isActive)
 
-      // 스탯별 보너스 분리 계산 (percent vs fixed)
-      const statBonuses = new Map<string, { percent: number, fixed: number, details: Array<{name: string, value: number, unit: string}> }>()
+      // 스탯별 보너스 합산 (percent/fixed)
+      const statBonuses = new Map<
+          string,
+          { percent: number; fixed: number; details: Array<{ name: string; value: number; unit: 'percent' | 'fixed' }> }
+      >()
 
       infos.forEach((info: any) => {
-        const rec = synergyIndex.value.get(info.name)
-        if (rec?.topCondition) {
-          const stat = rec.topCondition.stat
-          const bonus = rec.topCondition.bonus.value
-          const unit = rec.topCondition.bonus.unit
+        const rec = synergyIndex.value?.get?.(info.name)
+        const top = rec?.topCondition
+        if (!top) return
+        const stat: string = top.stat
+        const unit: 'percent' | 'fixed' = top.bonus?.unit
+        const bonus: number = top.bonus?.value ?? 0
 
-          if (!statBonuses.has(stat)) {
-            statBonuses.set(stat, { percent: 0, fixed: 0, details: [] })
-          }
-
-          const current = statBonuses.get(stat)!
-          if (unit === 'percent') {
-            current.percent += bonus
-          } else {
-            current.fixed += bonus
-          }
-          current.details.push({ name: info.name, value: bonus, unit })
+        if (!statBonuses.has(stat)) {
+          statBonuses.set(stat, { percent: 0, fixed: 0, details: [] })
         }
+        const cur = statBonuses.get(stat)!
+        if (unit === 'percent') cur.percent += bonus
+        else cur.fixed += bonus
+        cur.details.push({ name: info.name, value: bonus, unit })
       })
 
-      return h('div', { class: rootCls }, [
-        // 헤더 (포지션 + 등급)
-        h('div', { class: 'flex items-center justify-between mb-3' }, [
-          h('div', { class: 'text-xs font-medium text-neutral-500 uppercase tracking-wide' }, props.pos),
-          h('img', {
-            src: `/assets/logos/grade/${p.grade || 'C'}.png`,
-            alt: p.grade || 'C',
-            class: 'w-6 h-6 rounded object-contain'
-          })
-        ]),
-
-        // 선수 정보
-        h('div', { class: 'mb-3' }, [
-          h('h3', { class: 'text-sm font-semibold text-neutral-900 truncate mb-1' }, p.name),
-          h('div', { class: 'flex items-center justify-between text-xs text-neutral-500' }, [
-            h('span', { class: 'truncate flex-1' }, `${findTeamName(p.team)} (${p.year || 'N/A'})`),
-            p.rarity ? h('div', { class: 'flex ml-2' },
-                Array.from({ length: Number(p.rarity) }, (_, i) =>
-                    h('div', {
-                      key: i,
-                      class: 'w-2 h-2 bg-blue-500 rounded-full'
-                    })
-                )
-            ) : null
-          ])
-        ]),
-
-        // 파워 스탯
-        p.power ? h('div', { class: 'mb-3' }, [
-          h('div', { class: 'inline-flex items-center px-2 py-1 rounded bg-neutral-100 text-neutral-700 text-xs font-medium' }, [
-            h('span', { class: 'mr-1' }, '💪'),
-            h('span', {}, p.power)
-          ])
-        ]) : null,
-
-        // 시너지 칩들
-        infos.length > 0 ? h('div', { class: 'mb-3' }, [
-          h('div', { class: 'flex flex-wrap gap-1' },
-              infos.map((info: any) =>
-                  h('div', {
-                    key: info.name,
-                    class: 'px-2 py-0.5 bg-blue-50 text-blue-700 text-[10px] font-medium rounded-full border border-blue-200'
-                  }, info.name)
-              )
-          )
-        ]) : null,
-
-        // 스탯 합산 표시
-        statBonuses.size > 0 ? h('div', { class: 'space-y-1' },
-            Array.from(statBonuses.entries()).map(([stat, bonuses]) => {
-              const hasPercent = bonuses.percent > 0
-              const hasFixed = bonuses.fixed > 0
-
-              if (!hasPercent && !hasFixed) return null
-
-              return h('div', {
-                key: stat,
-                class: 'relative group/tooltip'
-              }, [
-                h('div', { class: 'flex items-center justify-between py-1 px-2 bg-neutral-50 rounded text-xs' }, [
-                  h('span', { class: 'font-medium text-neutral-600' }, STAT_LABELS[stat] || stat),
-                  h('div', { class: 'flex gap-2' }, [
-                    hasFixed ? h('span', { class: 'font-semibold text-neutral-900' }, `+${bonuses.fixed}`) : null,
-                    hasPercent ? h('span', { class: 'font-semibold text-blue-600' }, `+${bonuses.percent}%`) : null
-                  ])
-                ]),
-
-                // 툴팁
+      // 공통 툴팁 렌더러
+      const renderTooltip = (children: any[]) =>
+          h(
+              'div',
+              {
+                class:
+                    'absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 rounded-lg ' +
+                    'bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900 text-xs ' +
+                    'opacity-0 group-hover/tooltip:opacity-100 transition-opacity pointer-events-none z-10 whitespace-nowrap'
+              },
+              [
+                ...children,
                 h('div', {
-                  class: 'absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-neutral-900 text-white text-xs rounded-lg opacity-0 group-hover/tooltip:opacity-100 transition-opacity pointer-events-none z-10 whitespace-nowrap'
-                }, [
-                  h('div', { class: 'space-y-1' },
-                      bonuses.details.map((detail, i) =>
-                          h('div', { key: i }, `${detail.name}: +${detail.value}${detail.unit === 'percent' ? '%' : ''}`)
-                      )
-                  ),
-                  // 화살표
-                  h('div', {
-                    class: 'absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-neutral-900'
-                  })
-                ])
-              ])
-            }).filter(Boolean)
-        ) : null,
+                  class:
+                      'absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 ' +
+                      'border-l-4 border-r-4 border-t-4 border-transparent ' +
+                      'border-t-neutral-900 dark:border-t-neutral-100'
+                })
+              ]
+          )
 
-        // 제거 버튼
-        h('button', {
-          class: 'absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity w-5 h-5 rounded-full bg-neutral-100 hover:bg-red-100 flex items-center justify-center text-neutral-400 hover:text-red-500',
-          onClick: () => emit('clear'),
-          title: '제거'
-        }, [
-          h('svg', { class: 'w-3 h-3', viewBox: '0 0 20 20', fill: 'currentColor' }, [
-            h('path', {
-              'fill-rule': 'evenodd',
-              d: 'M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z',
-              'clip-rule': 'evenodd'
-            })
-          ])
-        ])
+      return h('div', { class: `${rootCls} flex flex-col items-center p-3` }, [
+        // 헤더 (포지션 + 등급)
+        h(
+            'div',
+            { class: 'w-full flex items-center justify-between mb-3' },
+            [
+              h('div', { class: 'text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wide' }, props.pos),
+              h('img', {
+                src: `/assets/logos/grade/${p.grade || 'C'}.png`,
+                alt: p.grade || 'C',
+                class: 'w-6 h-6 rounded object-contain'
+              })
+            ]
+        ),
+
+        // 선수 이름/팀/연도/레어도 (가운데 정렬)
+        h('div', { class: 'mb-3 w-full flex flex-col items-center' }, [
+          h('h3', { class: 'text-sm font-semibold text-neutral-900 dark:text-neutral-100 truncate mb-1 max-w-full' }, p.name),
+          h(
+              'div',
+              { class: 'flex items-center justify-center text-xs text-neutral-500 dark:text-neutral-400 gap-2' },
+              [
+                p.rarity
+                    ? h(
+                        'div',
+                        { class: 'flex ml-2 gap-1' },
+                        Array.from({ length: Number(p.rarity) }, (_, i) =>
+                            h('div', { key: i, class: 'w-2 h-2 bg-blue-500 rounded-full' })
+                        )
+                    )
+                    : null
+              ].filter(Boolean)
+          )
+        ]),
+
+        // 스탯 합산 표시 (중앙 정렬 + hover 상세)
+        statBonuses.size > 0
+            ? h(
+                'div',
+                { class: 'w-full flex flex-col items-center gap-1' },
+                Array.from(statBonuses.entries())
+                    .map(([stat, bonuses]) => {
+                      const hasPercent = bonuses.percent > 0
+                      const hasFixed = bonuses.fixed > 0
+                      if (!hasPercent && !hasFixed) return null
+                      return h('div', { key: stat, class: 'relative group/tooltip' }, [
+                        h(
+                            'div',
+                            { class: 'inline-flex items-center justify-between gap-2 py-1 px-2 rounded text-xs ' +
+                                  'bg-neutral-50 dark:bg-neutral-700' },
+                            [
+                              h('div', { class: 'flex gap-2' }, [
+                                hasFixed ? h('span', { class: 'font-semibold text-neutral-900 dark:text-neutral-100' }, `+${bonuses.fixed}`) : null,
+                                hasPercent ? h('span', { class: 'font-semibold text-blue-600 dark:text-blue-400' }, `+${bonuses.percent}%`) : null,
+                                !hasPercent && !hasFixed ? h('span', { class: 'font-semibold text-gray-400 dark:text-gray-500' }, `효과 없음`) : null,
+                              ])
+                            ]
+                        ),
+                        renderTooltip([
+                          h(
+                              'div',
+                              { class: 'text-left space-y-1' },
+                              bonuses.details.map((d, i) =>
+                                  h('div', { key: i }, `${d.name}: +${d.value}${d.unit === 'percent' ? '%' : ''}`)
+                              )
+                          )
+                        ])
+                      ])
+                    })
+                    .filter(Boolean) as any[]
+            )
+            : null,
+
+        // 제거 버튼 (우상단)
+        h(
+            'button',
+            {
+              class:
+                  'absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity w-5 h-5 rounded-full ' +
+                  'bg-neutral-100 hover:bg-red-100 dark:bg-neutral-700 dark:hover:bg-red-900 ' +
+                  'flex items-center justify-center text-neutral-400 hover:text-red-500 dark:text-neutral-500 dark:hover:text-red-400',
+              onClick: () => emit('clear'),
+              title: '제거'
+            },
+            [
+              h('svg', { class: 'w-3 h-3', viewBox: '0 0 20 20', fill: 'currentColor' }, [
+                h('path', {
+                  'fill-rule': 'evenodd',
+                  d:
+                      'M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 ' +
+                      '4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 ' +
+                      '4.293 5.707a1 1 0 010-1.414z',
+                  'clip-rule': 'evenodd'
+                })
+              ])
+            ]
+        )
       ])
     }
   }
 })
+
 </script>
 <template>
-  <div class="bg-neutral-50 min-h-screen">
-    <div class="mx-auto px-4 py-6 h-screen flex flex-col">
+  <div class="bg-neutral-50 dark:bg-neutral-900 min-h-screen transition-colors">
+    <div class="mx-auto max-w-[1800px] px-4 py-6 h-screen flex flex-col">
       <!-- 로딩 -->
       <div v-if="isLoading" class="flex h-full items-center justify-center">
         <div class="text-center">
-          <div class="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-2 border-neutral-300 border-t-neutral-900"></div>
-          <p class="text-sm text-neutral-500">데이터를 불러오는 중…</p>
+          <div class="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-2 border-neutral-300 dark:border-neutral-600 border-t-neutral-900 dark:border-t-neutral-100"></div>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400">데이터를 불러오는 중…</p>
         </div>
       </div>
-
       <!-- 메인 -->
-      <div v-else class="grid grid-cols-12 gap-6 flex-1 min-h-0">
-        <!-- 좌측: 검색 -->
-        <section class="col-span-2 flex flex-col rounded-2xl bg-white ring-1 ring-neutral-200/70 min-h-0">
-          <header class="px-5 py-4 border-b border-neutral-100 flex-shrink-0">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1 min-h-0">
+        <!-- 좌측: 검색 (모바일에서는 토글 가능) -->
+        <section :class="[
+          'lg:col-span-3 flex flex-col rounded-2xl bg-white dark:bg-neutral-800 ring-1 ring-neutral-200/70 dark:ring-neutral-700/70 min-h-0 transition-colors'
+        ]">
+          <header class="px-5 py-4 border-b border-neutral-100 dark:border-neutral-700 flex-shrink-0">
             <div class="flex items-center justify-between">
-              <h1 class="text-base font-semibold tracking-tight text-neutral-900">선수 검색</h1>
-              <span class="text-xs text-neutral-500">{{ totalPlayers.toLocaleString() }}명</span>
+              <h1 class="text-base font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">선수 검색</h1>
+              <div class="flex items-center gap-3">
+                <span class="text-xs text-neutral-500 dark:text-neutral-400">{{ totalPlayers.toLocaleString() }}명</span>
+              </div>
             </div>
           </header>
 
-          <div class="border-b border-neutral-100 p-4 flex-shrink-0">
+          <div class="border-b border-neutral-100 dark:border-neutral-700 p-4 flex-shrink-0">
             <div class="relative">
               <input
                   v-model.trim="searchQuery.search"
                   type="text"
                   placeholder="이름, 팀, 포지션, 시너지…"
-                  class="w-full rounded-xl border border-neutral-200 bg-neutral-50/60 px-4 py-2.5 text-sm text-neutral-800 placeholder-neutral-400 outline-none focus:border-neutral-300 focus:ring-0"
+                  class="w-full rounded-xl border border-neutral-200 dark:border-neutral-600 bg-neutral-50/60 dark:bg-neutral-700/60 px-4 py-2.5 text-sm text-neutral-800 dark:text-neutral-200 placeholder-neutral-400 dark:placeholder-neutral-500 outline-none focus:border-neutral-300 dark:focus:border-neutral-500 focus:ring-0 transition-colors"
               />
-              <Search class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" />
+              <Search class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400 dark:text-neutral-500" />
             </div>
 
             <button
                 @click="advancedFilterOpen = !advancedFilterOpen"
-                class="mt-3 inline-flex w-full items-center justify-between rounded-xl border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-50"
+                class="mt-3 inline-flex w-full items-center justify-between rounded-xl border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-700 px-3 py-2 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-600 transition-colors"
             >
               <span class="inline-flex items-center gap-2">
                 <Filter class="h-4 w-4" />
                 상세 필터
               </span>
               <span class="inline-flex items-center gap-2">
-                <span class="rounded-full bg-neutral-100 px-2 py-0.5 text-[11px] text-neutral-700">
+                <span class="rounded-full bg-neutral-100 dark:bg-neutral-600 px-2 py-0.5 text-[11px] text-neutral-700 dark:text-neutral-300">
                   {{ [searchQuery.position.length, searchQuery.team.length, searchQuery.synergy.length, searchQuery.grade.length, searchQuery.rarity ? 1 : 0].reduce((a,b)=>a+b,0) }}
                 </span>
                 <ChevronRightIcon :class="advancedFilterOpen ? 'rotate-90' : ''" class="h-4 w-4 transition-transform" />
@@ -898,14 +952,14 @@ const LineupSlot = defineComponent({
             <div v-if="advancedFilterOpen" class="mt-3 space-y-4">
               <!-- 등급 필터 -->
               <div>
-                <label class="mb-2 block text-xs font-medium text-neutral-500">등급</label>
+                <label class="mb-2 block text-xs font-medium text-neutral-500 dark:text-neutral-400">등급</label>
                 <div class="flex flex-wrap gap-2">
                   <button
                       v-for="grade in searchOptions.grade"
                       :key="grade"
                       @click="searchQuery.grade.includes(grade) ? searchQuery.grade = searchQuery.grade.filter(g => g !== grade) : searchQuery.grade.push(grade)"
-                      :class="searchQuery.grade.includes(grade) ? 'bg-blue-100 text-blue-800 border-blue-300' : 'bg-white text-neutral-700 border-neutral-200'"
-                      class="px-3 py-1.5 rounded-lg border text-xs font-medium transition-colors hover:bg-blue-50"
+                      :class="searchQuery.grade.includes(grade) ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 border-blue-300 dark:border-blue-600' : 'bg-white dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 border-neutral-200 dark:border-neutral-600'"
+                      class="px-3 py-1.5 rounded-lg border text-xs font-medium transition-colors hover:bg-blue-50 dark:hover:bg-blue-800"
                   >
                     {{ grade }}
                   </button>
@@ -914,14 +968,14 @@ const LineupSlot = defineComponent({
 
               <!-- 포지션 필터 -->
               <div>
-                <label class="mb-2 block text-xs font-medium text-neutral-500">포지션</label>
-                <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
+                <label class="mb-2 block text-xs font-medium text-neutral-500 dark:text-neutral-400">포지션</label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2">
                   <button
                       v-for="pos in searchOptions.position"
                       :key="pos"
                       @click="searchQuery.position.includes(pos) ? searchQuery.position = searchQuery.position.filter(p => p !== pos) : searchQuery.position.push(pos)"
-                      :class="searchQuery.position.includes(pos) ? 'bg-green-100 text-green-800 border-green-300' : 'bg-white text-neutral-700 border-neutral-200'"
-                      class="px-2 py-1.5 rounded-lg border text-xs font-medium transition-colors hover:bg-green-50"
+                      :class="searchQuery.position.includes(pos) ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 border-green-300 dark:border-green-600' : 'bg-white dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 border-neutral-200 dark:border-neutral-600'"
+                      class="px-2 py-1.5 rounded-lg border text-xs font-medium transition-colors hover:bg-green-50 dark:hover:bg-green-800"
                   >
                     {{ pos }}
                   </button>
@@ -930,14 +984,14 @@ const LineupSlot = defineComponent({
 
               <!-- 팀 필터 -->
               <div>
-                <label class="mb-2 block text-xs font-medium text-neutral-500">팀</label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 max-h-32 overflow-y-auto">
+                <label class="mb-2 block text-xs font-medium text-neutral-500 dark:text-neutral-400">팀</label>
+                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2 max-h-32 overflow-y-auto">
                   <button
                       v-for="team in searchOptions.team"
                       :key="team"
                       @click="searchQuery.team.includes(team) ? searchQuery.team = searchQuery.team.filter(t => t !== team) : searchQuery.team.push(team)"
-                      :class="searchQuery.team.includes(team) ? 'bg-purple-100 text-purple-800 border-purple-300' : 'bg-white text-neutral-700 border-neutral-200'"
-                      class="px-2 py-1.5 rounded-lg border text-xs font-medium transition-colors hover:bg-purple-50 truncate"
+                      :class="searchQuery.team.includes(team) ? 'bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 border-purple-300 dark:border-purple-600' : 'bg-white dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 border-neutral-200 dark:border-neutral-600'"
+                      class="px-2 py-1.5 rounded-lg border text-xs font-medium transition-colors hover:bg-purple-50 dark:hover:bg-purple-800 truncate"
                   >
                     {{ findTeamName(team) }}
                   </button>
@@ -946,8 +1000,8 @@ const LineupSlot = defineComponent({
 
               <!-- 시너지 필터 -->
               <div>
-                <label class="mb-2 block text-xs font-medium text-neutral-500">시너지</label>
-                <select v-model="searchQuery.synergy" multiple class="h-24 w-full rounded-lg border border-neutral-200 bg-white px-2 py-2 text-sm focus:border-neutral-300 focus:ring-0">
+                <label class="mb-2 block text-xs font-medium text-neutral-500 dark:text-neutral-400">시너지</label>
+                <select v-model="searchQuery.synergy" multiple class="h-24 w-full rounded-lg border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 px-2 py-2 text-sm focus:border-neutral-300 dark:focus:border-neutral-500 focus:ring-0 transition-colors">
                   <option v-for="s in synergyOptions" :key="s" :value="s">{{ s }}</option>
                 </select>
               </div>
@@ -955,11 +1009,11 @@ const LineupSlot = defineComponent({
               <!-- 레어도 필터 -->
               <div class="grid grid-cols-2 items-end gap-3">
                 <div>
-                  <label class="mb-1 block text-xs font-medium text-neutral-500">레어도</label>
-                  <input v-model.number="searchQuery.rarity" type="number" min="0" max="6" class="w-full rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm focus:border-neutral-300 focus:ring-0">
+                  <label class="mb-1 block text-xs font-medium text-neutral-500 dark:text-neutral-400">레어도</label>
+                  <input v-model.number="searchQuery.rarity" type="number" min="0" max="6" class="w-full rounded-lg border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 px-3 py-2 text-sm focus:border-neutral-300 dark:focus:border-neutral-500 focus:ring-0 transition-colors">
                 </div>
                 <div class="text-right">
-                  <button @click="resetFilters" class="inline-flex items-center justify-center rounded-lg border border-neutral-200 px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-50">
+                  <button @click="resetFilters" class="inline-flex items-center justify-center rounded-lg border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 px-3 py-2 text-sm hover:bg-neutral-50 dark:hover:bg-neutral-600 transition-colors">
                     필터 초기화
                   </button>
                 </div>
@@ -967,11 +1021,11 @@ const LineupSlot = defineComponent({
             </div>
           </div>
 
-          <div class="flex items-center justify-between border-b border-neutral-100 px-4 py-3 text-xs text-neutral-500 flex-shrink-0">
+          <div class="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-700 px-4 py-3 text-xs text-neutral-500 dark:text-neutral-400 flex-shrink-0">
             <span>{{ currentPage }} / {{ totalPages }} 페이지</span>
             <div class="inline-flex gap-1">
-              <button @click="goToPage(currentPage-1)" :disabled="currentPage<=1" class="rounded-lg border border-neutral-200 px-2 py-1 disabled:opacity-40">이전</button>
-              <button @click="goToPage(currentPage+1)" :disabled="currentPage>=totalPages" class="rounded-lg border border-neutral-200 px-2 py-1 disabled:opacity-40">다음</button>
+              <button @click="goToPage(currentPage-1)" :disabled="currentPage<=1" class="rounded-lg border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 px-2 py-1 disabled:opacity-40 hover:bg-neutral-50 dark:hover:bg-neutral-600 transition-colors">이전</button>
+              <button @click="goToPage(currentPage+1)" :disabled="currentPage>=totalPages" class="rounded-lg border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 px-2 py-1 disabled:opacity-40 hover:bg-neutral-50 dark:hover:bg-neutral-600 transition-colors">다음</button>
             </div>
           </div>
 
@@ -980,139 +1034,209 @@ const LineupSlot = defineComponent({
                 v-for="(player, i) in paginatedPlayers"
                 :key="i"
                 @click="autoAssignPlayer(player)"
-                class="group cursor-pointer border-b border-neutral-100 px-4 py-4 transition-colors hover:bg-neutral-50"
+                class="group cursor-pointer border-b border-neutral-100 dark:border-neutral-700 px-4 py-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-700/50"
             >
               <div class="flex items-start gap-4">
-                <img :src="`/assets/logos/grade/${player.grade}.png`" :alt="player.grade" class="h-10 w-10 rounded-md object-contain ring-1 ring-neutral-200 flex-shrink-0" />
+                <img :src="`/assets/logos/grade/${player.grade}.png`" :alt="player.grade" class="h-10 w-10 rounded-md object-contain ring-1 ring-neutral-200 dark:ring-neutral-600 flex-shrink-0" />
                 <div class="min-w-0 flex-1">
                   <div class="mb-1 flex items-center gap-2">
-                    <h3 class="truncate text-base font-semibold text-neutral-900">{{ player.name }}</h3>
+                    <h3 class="truncate text-base font-semibold text-neutral-900 dark:text-neutral-100">{{ player.name }}</h3>
                     <div class="flex">
                       <Star v-for="k in Number(player.rarity)" :key="k" class="h-4 w-4 text-amber-400" fill="currentColor" />
                     </div>
                   </div>
-                  <div class="mb-3 flex items-center gap-2 text-sm text-neutral-500">
+                  <div class="mb-3 flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400">
                     <img :src="getTeamLogoUrl(player.team)" :alt="player.team" class="h-4 w-4 flex-shrink-0" />
                     <span class="truncate">{{ findTeamName(player.team) }}</span>
                     <span>·</span>
                     <span>{{ player.year }}</span>
                   </div>
-                  <div class="mb-3 flex flex-wrap gap-1.5">
-                    <span
-                        v-for="pos in Array.from(new Set(toArray(player.position).map(normalizePosition))).filter(Boolean)"
-                        :key="pos"
-                        class="rounded-full bg-neutral-100 px-2.5 py-1 text-xs text-neutral-700"
-                    >{{ pos }}</span>
-                  </div>
+<!--                  <div class="mb-3 flex flex-wrap gap-1.5" @click="!showModal">-->
+<!--                    asdfasfd-->
+<!--                    <SideModal-->
+<!--                        v-if="player"-->
+<!--                        :show="showModal"-->
+<!--                        :player="player"-->
+<!--                        @update:show="val => showModal = val"-->
+<!--                    >-->
+<!--                      <PlayerDetail :player="player" />-->
+<!--                    </SideModal>-->
+<!--                  </div>-->
                   <div class="flex flex-wrap gap-1.5">
                     <button
                         v-for="pos in Array.from(new Set(toArray(player.position).map(normalizePosition))).filter(Boolean)"
                         :key="pos"
                         @click.stop="assignPlayerToSlot(pos, player)"
-                        class="rounded-lg border border-neutral-200 px-3 py-1.5 text-xs text-neutral-700 hover:bg-neutral-50"
+                        class="rounded-lg border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 px-3 py-1.5 text-xs hover:bg-neutral-50 dark:hover:bg-neutral-600 transition-colors"
                     >{{ pos }}</button>
                     <button
                         v-if="!isPitcher(player)"
                         @click.stop="assignPlayerToSlot('DH', player)"
-                        class="rounded-lg border border-neutral-200 px-3 py-1.5 text-xs text-neutral-700 hover:bg-neutral-50"
+                        class="rounded-lg border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 px-3 py-1.5 text-xs hover:bg-neutral-50 dark:hover:bg-neutral-600 transition-colors"
                     >DH</button>
                     <button
                         @click.stop="assignToBench(player)"
-                        class="rounded-lg border border-neutral-200 px-3 py-1.5 text-xs text-neutral-700 hover:bg-neutral-50"
+                        class="rounded-lg border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 px-3 py-1.5 text-xs hover:bg-neutral-50 dark:hover:bg-neutral-600 transition-colors"
                     >벤치</button>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div v-if="!paginatedPlayers.length" class="flex h-40 items-center justify-center text-sm text-neutral-500">
+            <div v-if="!paginatedPlayers.length" class="flex h-40 items-center justify-center text-sm text-neutral-500 dark:text-neutral-400">
               검색 결과가 없습니다
-              <button @click="resetFilters" class="ml-2 underline underline-offset-2">필터 초기화</button>
+              <button @click="resetFilters" class="ml-2 underline underline-offset-2 hover:text-neutral-700 dark:hover:text-neutral-300 transition-colors">필터 초기화</button>
             </div>
           </div>
         </section>
 
         <!-- 중앙: 라인업 -->
-        <section class="col-span-7 flex flex-col rounded-2xl bg-white ring-1 ring-neutral-200/70 min-h-0">
-          <header class="flex items-center justify-between border-b border-neutral-100 px-5 py-4 flex-shrink-0">
-            <h2 class="text-base font-semibold tracking-tight text-neutral-900">라인업</h2>
-            <span class="text-xs text-neutral-500">{{ Object.values(lineup).filter(Boolean).length }}/28</span>
+        <section class="lg:col-span-6 flex flex-col rounded-2xl bg-white dark:bg-neutral-800 ring-1 ring-neutral-200/70 dark:ring-neutral-700/70 min-h-0 transition-colors">
+          <header class="border-b border-neutral-100 dark:border-neutral-700 px-5 py-4 flex-shrink-0">
+            <div class="flex items-center justify-between mb-3">
+              <h2 class="text-base font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">라인업</h2>
+              <span class="text-xs text-neutral-500 dark:text-neutral-400">{{ Object.values(lineup).filter(Boolean).length }}/28</span>
+            </div>
+
+            <!-- 탭 버튼 -->
+            <div class="flex rounded-lg bg-neutral-100 dark:bg-neutral-700 p-1">
+              <button
+                  @click="lineupViewMode = 'batter'"
+                  :class="lineupViewMode === 'batter' ? 'bg-white dark:bg-neutral-600 text-neutral-900 dark:text-neutral-100 shadow-sm' : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200'"
+                  class="flex-1 rounded-md px-3 py-1.5 text-xs font-medium transition-all"
+              >
+                타자
+              </button>
+              <button
+                  @click="lineupViewMode = 'pitcher'"
+                  :class="lineupViewMode === 'pitcher' ? 'bg-white dark:bg-neutral-600 text-neutral-900 dark:text-neutral-100 shadow-sm' : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200'"
+                  class="flex-1 rounded-md px-3 py-1.5 text-xs font-medium transition-all"
+              >
+                투수
+              </button>
+              <button
+                  @click="lineupViewMode = 'bench'"
+                  :class="lineupViewMode === 'bench' ? 'bg-white dark:bg-neutral-600 text-neutral-900 dark:text-neutral-100 shadow-sm' : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200'"
+                  class="flex-1 rounded-md px-3 py-1.5 text-xs font-medium transition-all"
+              >
+                벤치
+              </button>
+            </div>
           </header>
 
-          <div class="flex-1 overflow-y-auto min-h-0 p-5">
-            <div class="space-y-8">
-              <section>
-                <h3 class="mb-4 text-xs font-medium uppercase tracking-wider text-neutral-500">타자진</h3>
-                <div class="space-y-6">
-                  <div>
-                    <div class="mb-3 text-xs text-neutral-500">외야</div>
-                    <div class="grid grid-cols-3 gap-4">
-                      <LineupSlot v-for="pos in ['LF','CF','RF']" :key="pos" :pos="pos" :p="lineup[pos]" @clear="clearLineupSlot(pos)" :get-info="getPlayerSynergyInfo" />
-                    </div>
+          <div class="flex-1 overflow-y-auto min-h-0 p-3 lg:p-5">
+            <!-- 타자진 -->
+            <div v-if="lineupViewMode === 'batter'" class="space-y-12">
+
+              <h3 class="mb-4 text-xs font-medium uppercase tracking-wider text-neutral-500 dark:text-neutral-400">타자</h3>
+              <!-- 외야 -->
+              <div class="pt-3">
+                <div class="grid grid-cols-3 gap-3 lg:gap-6 mb-6 lg:mb-8">
+                  <div class="w-24 lg:w-32 mx-auto">
+                    <LineupSlot pos="LF" :p="lineup.LF" @clear="clearLineupSlot('LF')" :get-info="getPlayerSynergyInfo" />
                   </div>
-                  <div>
-                    <div class="mb-3 text-xs text-neutral-500">내야</div>
-                    <div class="grid grid-cols-5 gap-4">
-                      <LineupSlot v-for="pos in ['C','1B','2B','3B','SS']" :key="pos" :pos="pos" :p="lineup[pos]" @clear="clearLineupSlot(pos)" :get-info="getPlayerSynergyInfo" />
-                    </div>
+                  <div class="w-24 lg:w-32 mx-auto">
+                    <LineupSlot pos="CF" :p="lineup.CF" @clear="clearLineupSlot('CF')" :get-info="getPlayerSynergyInfo" />
                   </div>
-                  <div class="max-w-xs">
-                    <div class="mb-3 text-xs text-neutral-500">지명타자</div>
+                  <div class="w-24 lg:w-32 mx-auto">
+                    <LineupSlot pos="RF" :p="lineup.RF" @clear="clearLineupSlot('RF')" :get-info="getPlayerSynergyInfo" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- 내야 다이아몬드 -->
+              <div>
+                <div class="relative" style="height: 400px;">
+                  <!-- 2루수 (상단 중앙) -->
+                  <div class="absolute top-0 transform -translate-x-1/2 w-20 lg:w-32" style="right: calc(24% - 50px);">
+                    <LineupSlot pos="2B" :p="lineup['2B']" @clear="clearLineupSlot('2B')" :get-info="getPlayerSynergyInfo" />
+                  </div>
+
+                  <!-- 3루수 (왼쪽) -->
+                  <div class="absolute top-16 lg:top-24 left-2 lg:left-10 w-20 lg:w-32">
+                    <LineupSlot pos="3B" :p="lineup['3B']" @clear="clearLineupSlot('3B')" :get-info="getPlayerSynergyInfo" />
+                  </div>
+
+                  <!-- 유격수 (중앙) -->
+                  <div class="absolute top-0 transform -translate-x-1/2 w-20 lg:w-32" style="left: calc(27% + 50px);">
+                    <LineupSlot pos="SS" :p="lineup.SS" @clear="clearLineupSlot('SS')" :get-info="getPlayerSynergyInfo" />
+                  </div>
+
+                  <!-- 1루수 (오른쪽) -->
+                  <div class="absolute top-16 lg:top-24 right-2 lg:right-10 w-20 lg:w-32">
+                    <LineupSlot pos="1B" :p="lineup['1B']" @clear="clearLineupSlot('1B')" :get-info="getPlayerSynergyInfo" />
+                  </div>
+
+                  <!-- 포수 (하단 중앙) -->
+                  <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 lg:w-32" style="left: calc(50%);">
+                    <LineupSlot pos="C" :p="lineup.C" @clear="clearLineupSlot('C')" :get-info="getPlayerSynergyInfo" />
+                  </div>
+
+                  <!-- 지명타자 (포수 옆) -->
+                  <div class="absolute bottom-0 right-1/2 transform translate-x-1/2 w-20 lg:w-32" style="right: calc(25%);">
                     <LineupSlot pos="DH" :p="lineup.DH" @clear="clearLineupSlot('DH')" :get-info="getPlayerSynergyInfo" />
                   </div>
                 </div>
-              </section>
+              </div>
+            </div>
 
-              <section>
-                <h3 class="mb-4 text-xs font-medium uppercase tracking-wider text-neutral-500">투수진</h3>
-                <div class="space-y-6">
-                  <div>
-                    <div class="mb-3 text-xs text-neutral-500">선발</div>
-                    <div class="grid grid-cols-5 gap-4">
-                      <LineupSlot v-for="i in 5" :key="'SP'+i" :pos="'SP'+i" :p="lineup['SP'+i]" @clear="clearLineupSlot('SP'+i)" :get-info="getPlayerSynergyInfo" />
-                    </div>
-                  </div>
-                  <div>
-                    <div class="mb-3 text-xs text-neutral-500">중계 & 마무리</div>
-                    <div class="grid grid-cols-6 gap-4">
-                      <LineupSlot v-for="i in 6" :key="'RP'+i" :pos="'RP'+i" :p="lineup['RP'+i]" @clear="clearLineupSlot('RP'+i)" :get-info="getPlayerSynergyInfo" />
-                    </div>
+            <!-- 투수진 -->
+            <div v-else-if="lineupViewMode === 'pitcher'" class="space-y-6 lg:space-y-8">
+              <div>
+                <h3 class="mb-4 text-xs font-medium uppercase tracking-wider text-neutral-500 dark:text-neutral-400">선발 투수</h3>
+                <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 lg:gap-6">
+                  <div v-for="i in 5" :key="'SP'+i" class="w-24 lg:w-32 mx-auto">
+                    <LineupSlot :pos="'SP'+i" :p="lineup['SP'+i]" @clear="clearLineupSlot('SP'+i)" :get-info="getPlayerSynergyInfo" />
                   </div>
                 </div>
-              </section>
+              </div>
 
-              <section>
-                <h3 class="mb-4 text-xs font-medium uppercase tracking-wider text-neutral-500">벤치 (8)</h3>
-                <div class="grid grid-cols-4 gap-4">
-                  <LineupSlot v-for="i in 8" :key="'BENCH'+i" :pos="'BENCH'+i" :p="lineup['BENCH'+i]" @clear="clearLineupSlot('BENCH'+i)" :get-info="getPlayerSynergyInfo" />
+              <div>
+                <h3 class="mb-4 text-xs font-medium uppercase tracking-wider text-neutral-500 dark:text-neutral-400">중계 & 마무리</h3>
+                <div class="grid grid-cols-2 lg:grid-cols-6 gap-3 lg:gap-6">
+                  <div v-for="i in 6" :key="'RP'+i" class="w-24 lg:w-32 mx-auto">
+                    <LineupSlot :pos="'RP'+i" :p="lineup['RP'+i]" @clear="clearLineupSlot('RP'+i)" :get-info="getPlayerSynergyInfo" />
+                  </div>
                 </div>
-              </section>
+              </div>
+            </div>
+
+            <!-- 벤치 -->
+            <div v-else class="space-y-6 lg:space-y-8">
+              <div>
+                <h3 class="mb-4 text-xs font-medium uppercase tracking-wider text-neutral-500 dark:text-neutral-400">벤치 선수</h3>
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6">
+                  <div v-for="i in 8" :key="'BENCH'+i" class="w-24 lg:w-32 mx-auto">
+                    <LineupSlot :pos="'BENCH'+i" :p="lineup['BENCH'+i]" @clear="clearLineupSlot('BENCH'+i)" :get-info="getPlayerSynergyInfo" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
         <!-- 우측: 시너지 -->
-        <section class="col-span-3 flex flex-col rounded-2xl bg-white ring-1 ring-neutral-200/70 min-h-0">
-          <header class="border-b border-neutral-100 px-5 py-4 flex-shrink-0">
+        <section class="lg:col-span-3 flex flex-col rounded-2xl bg-white dark:bg-neutral-800 ring-1 ring-neutral-200/70 dark:ring-neutral-700/70 min-h-0 transition-colors">
+          <header class="border-b border-neutral-100 dark:border-neutral-700 px-5 py-4 flex-shrink-0">
             <div class="flex items-center justify-between mb-3">
-              <h2 class="text-base font-semibold tracking-tight text-neutral-900">시너지</h2>
-              <div class="text-xs text-neutral-500">
+              <h2 class="text-base font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">시너지</h2>
+              <div class="text-xs text-neutral-500 dark:text-neutral-400">
                 활성 {{ activeSynergyList.filter(s=>s.activeCondition).length }} · 대기 {{ inactiveSynergyList.length }}
               </div>
             </div>
 
             <!-- 탭 버튼 -->
-            <div class="flex rounded-lg bg-neutral-100 p-1">
+            <div class="flex rounded-lg bg-neutral-100 dark:bg-neutral-700 p-1">
               <button
                   @click="synergyViewMode = 'by-synergy'"
-                  :class="synergyViewMode === 'by-synergy' ? 'bg-white text-neutral-900 shadow-sm' : 'text-neutral-600 hover:text-neutral-900'"
+                  :class="synergyViewMode === 'by-synergy' ? 'bg-white dark:bg-neutral-600 text-neutral-900 dark:text-neutral-100 shadow-sm' : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200'"
                   class="flex-1 rounded-md px-3 py-1.5 text-xs font-medium transition-all"
               >
                 시너지별
               </button>
               <button
                   @click="synergyViewMode = 'by-player'"
-                  :class="synergyViewMode === 'by-player' ? 'bg-white text-neutral-900 shadow-sm' : 'text-neutral-600 hover:text-neutral-900'"
+                  :class="synergyViewMode === 'by-player' ? 'bg-white dark:bg-neutral-600 text-neutral-900 dark:text-neutral-100 shadow-sm' : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200'"
                   class="flex-1 rounded-md px-3 py-1.5 text-xs font-medium transition-all"
               >
                 선수별
@@ -1124,8 +1248,26 @@ const LineupSlot = defineComponent({
             <!-- 시너지별 보기 -->
             <div v-if="synergyViewMode === 'by-synergy'" class="space-y-6">
               <div>
-                <h3 class="mb-4 text-xs font-medium uppercase tracking-wider text-neutral-500">활성</h3>
-                <div v-if="!activeSynergyList.filter(s=>s.activeCondition).length" class="rounded-xl bg-neutral-50 p-6 text-center text-sm text-neutral-500">
+                <div class="flex items-center justify-between mb-4">
+                  <h3 class="text-xs font-medium uppercase tracking-wider text-neutral-500 dark:text-neutral-400">활성</h3>
+                  <div class="flex gap-1" v-if="activeSynergyList.filter(s=>s.activeCondition).length">
+                    <button
+                        @click="expandAllSynergies"
+                        class="text-xs text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-300 transition-colors"
+                    >
+                      전체 펼치기
+                    </button>
+                    <span class="text-xs text-neutral-300 dark:text-neutral-600">|</span>
+                    <button
+                        @click="collapseAllSynergies"
+                        class="text-xs text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-300 transition-colors"
+                    >
+                      전체 접기
+                    </button>
+                  </div>
+                </div>
+
+                <div v-if="!activeSynergyList.filter(s=>s.activeCondition).length" class="rounded-xl bg-neutral-50 dark:bg-neutral-700/50 p-6 text-center text-sm text-neutral-500 dark:text-neutral-400">
                   발동된 시너지가 없습니다
                 </div>
 
@@ -1133,31 +1275,49 @@ const LineupSlot = defineComponent({
                   <div
                       v-for="sy in activeSynergyList.filter(s=>s.activeCondition)"
                       :key="sy.name + '-active'"
-                      class="rounded-xl border border-neutral-200 p-4"
+                      class="rounded-xl border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-700 transition-colors"
                   >
-                    <div class="mb-3 flex items-start justify-between">
-                      <div class="min-w-0 flex-1 pr-3">
-                        <div class="text-[15px] font-semibold text-neutral-900 mb-1">{{ sy.name }}</div>
-                        <div class="text-xs text-neutral-500 leading-relaxed">{{ sy.synergy.description }}</div>
+                    <!-- 헤더 (클릭 가능한 아코디언) -->
+                    <button
+                        @click="toggleSynergy(sy.name)"
+                        class="w-full p-4 flex items-center justify-between hover:bg-neutral-50 dark:hover:bg-neutral-700/30 transition-colors rounded-xl"
+                    >
+                      <div class="flex items-center gap-3 min-w-0 flex-1">
+                        <div class="min-w-0 flex-1 text-left">
+                          <div class="text-[15px] font-semibold text-neutral-900 dark:text-neutral-100 mb-1">{{ sy.name }}</div>
+                          <div class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed truncate">{{ sy.synergy.description }}</div>
+                        </div>
+                        <div class="rounded-full bg-neutral-100 dark:bg-neutral-600 px-2 py-0.5 text-xs text-neutral-600 dark:text-neutral-300 flex-shrink-0">{{ sy.count }}명</div>
                       </div>
-                      <div class="rounded-full bg-neutral-100 px-2 py-0.5 text-xs text-neutral-600 flex-shrink-0">{{ sy.count }}명</div>
-                    </div>
+                      <ChevronDown
+                          :class="expandedSynergies.has(sy.name) ? 'rotate-180' : ''"
+                          class="w-4 h-4 text-neutral-400 dark:text-neutral-500 transition-transform flex-shrink-0 ml-2"
+                      />
+                    </button>
 
-                    <div class="mb-4 rounded-lg bg-neutral-50 px-3 py-2 text-[13px] font-semibold text-neutral-900">
-                      {{ STAT_LABELS[sy.activeCondition!.stat] || sy.activeCondition!.stat }}
-                      +{{ sy.activeCondition!.bonus.value }}{{ sy.activeCondition!.bonus.unit==='percent' ? '%' : '' }}
-                    </div>
+                    <!-- 접을 수 있는 콘텐츠 -->
+                    <div
+                        v-show="expandedSynergies.has(sy.name)"
+                        class="px-4 pb-4 border-t border-neutral-100 dark:border-neutral-700"
+                    >
+                      <div class="pt-3">
+                        <div class="mb-4 rounded-lg bg-neutral-50 dark:bg-neutral-600 px-3 py-2 text-[13px] font-semibold text-neutral-900 dark:text-neutral-100">
+                          {{ STAT_LABELS[sy.activeCondition!.stat] || sy.activeCondition!.stat }}
+                          +{{ sy.activeCondition!.bonus.value }}{{ sy.activeCondition!.bonus.unit==='percent' ? '%' : '' }}
+                        </div>
 
-                    <div class="flex flex-wrap gap-1.5 mb-3">
-                      <span v-for="nm in sy.appliedPlayers" :key="nm" class="rounded-md bg-neutral-100 px-2 py-0.5 text-[11px] text-neutral-700">{{ nm }}</span>
-                    </div>
+                        <div class="flex flex-wrap gap-1.5 mb-3">
+                          <span v-for="nm in sy.appliedPlayers" :key="nm" class="rounded-md bg-neutral-100 dark:bg-neutral-600 px-2 py-0.5 text-[11px] text-neutral-700 dark:text-neutral-300">{{ nm }}</span>
+                        </div>
 
-                    <div v-if="sy.impliedChildren?.length" class="border-t border-neutral-100 pt-3">
-                      <div class="mb-2 text-[11px] font-medium text-neutral-500">하위/상위 시너지 (표시)</div>
-                      <div class="flex flex-wrap gap-1.5">
-                        <span v-for="child in sy.impliedChildren" :key="child.name" class="rounded-full bg-white px-2 py-0.5 text-[11px] text-neutral-600 ring-1 ring-neutral-200">
-                          {{ child.name }} · {{ child.count }}명
-                        </span>
+                        <div v-if="sy.impliedChildren?.length" class="border-t border-neutral-100 dark:border-neutral-600 pt-3">
+                          <div class="mb-2 text-[11px] font-medium text-neutral-500 dark:text-neutral-400">하위 시너지 (표시)</div>
+                          <div class="flex flex-wrap gap-1.5">
+                            <span v-for="child in sy.impliedChildren" :key="child.name" class="rounded-full bg-white dark:bg-neutral-700 px-2 py-0.5 text-[11px] text-neutral-600 dark:text-neutral-300 ring-1 ring-neutral-200 dark:ring-neutral-600">
+                              {{ child.name }} · {{ child.count }}명
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1165,23 +1325,23 @@ const LineupSlot = defineComponent({
               </div>
 
               <div>
-                <h3 class="mb-4 text-xs font-medium uppercase tracking-wider text-neutral-500">조건 부족</h3>
-                <div v-if="!inactiveSynergyList.length" class="rounded-xl bg-neutral-50 p-6 text-center text-sm text-neutral-500">
+                <h3 class="mb-4 text-xs font-medium uppercase tracking-wider text-neutral-500 dark:text-neutral-400">비활성화</h3>
+                <div v-if="!inactiveSynergyList.length" class="rounded-xl bg-neutral-50 dark:bg-neutral-700/50 p-6 text-center text-sm text-neutral-500 dark:text-neutral-400">
                   조건 부족 시너지가 없습니다
                 </div>
 
                 <div class="space-y-4">
-                  <div v-for="sy in inactiveSynergyList" :key="sy.name + '-inactive'" class="rounded-xl border border-neutral-200 p-4">
+                  <div v-for="sy in inactiveSynergyList" :key="sy.name + '-inactive'" class="rounded-xl border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-700 p-4 transition-colors">
                     <div class="mb-3 flex items-center justify-between">
-                      <div class="truncate text-[15px] font-semibold text-neutral-900 flex-1 pr-3">{{ sy.name }}</div>
-                      <div class="rounded-full bg-neutral-100 px-2 py-0.5 text-xs text-neutral-600 flex-shrink-0">{{ sy.count }}명</div>
+                      <div class="truncate text-[15px] font-semibold text-neutral-900 dark:text-neutral-100 flex-1 pr-3">{{ sy.name }}</div>
+                      <div class="rounded-full bg-neutral-100 dark:bg-neutral-600 px-2 py-0.5 text-xs text-neutral-600 dark:text-neutral-300 flex-shrink-0">{{ sy.count }}명</div>
                     </div>
-                    <div class="mb-2 text-[13px] text-neutral-800 leading-relaxed">{{ sy.nextEffectDescription }}</div>
-                    <div class="mb-3 text-xs font-medium text-red-600">{{ sy.remainingCount }}명 더 필요</div>
-                    <div class="h-2 w-full overflow-hidden rounded-full bg-neutral-200 mb-2">
-                      <div class="h-2 rounded-full bg-neutral-900 transition-[width] duration-500" :style="{ width: sy.progress + '%' }"></div>
+                    <div class="mb-2 text-[13px] text-neutral-800 dark:text-neutral-200 leading-relaxed">{{ sy.nextEffectDescription }}</div>
+                    <div class="mb-3 text-xs font-medium text-red-600 dark:text-red-400">{{ sy.remainingCount }}명 더 필요</div>
+                    <div class="h-2 w-full overflow-hidden rounded-full bg-neutral-200 dark:bg-neutral-600 mb-2">
+                      <div class="h-2 rounded-full bg-neutral-900 dark:bg-neutral-300 transition-[width] duration-500" :style="{ width: sy.progress + '%' }"></div>
                     </div>
-                    <div class="text-center text-[11px] text-neutral-500">{{ sy.progress }}% 진행</div>
+                    <div class="text-center text-[11px] text-neutral-500 dark:text-neutral-400">{{ sy.progress }}% 진행</div>
                   </div>
                 </div>
               </div>
@@ -1189,30 +1349,30 @@ const LineupSlot = defineComponent({
 
             <!-- 선수별 보기 -->
             <div v-else class="space-y-4">
-              <div v-if="!playerSynergyList.length" class="rounded-xl bg-neutral-50 p-6 text-center text-sm text-neutral-500">
+              <div v-if="!playerSynergyList.length" class="rounded-xl bg-neutral-50 dark:bg-neutral-700/50 p-6 text-center text-sm text-neutral-500 dark:text-neutral-400">
                 라인업에 선수가 없습니다
               </div>
 
-              <div v-for="playerSynergy in playerSynergyList" :key="playerSynergy.playerName" class="rounded-xl border border-neutral-200 p-4">
+              <div v-for="playerSynergy in playerSynergyList" :key="playerSynergy.playerName" class="rounded-xl border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-700 p-4 transition-colors">
                 <div class="mb-3 flex items-start justify-between">
                   <div class="min-w-0 flex-1 pr-3">
-                    <div class="text-[15px] font-semibold text-neutral-900 mb-1">{{ playerSynergy.playerName }}</div>
-                    <div class="text-xs text-neutral-500">{{ playerSynergy.position }}</div>
+                    <div class="text-[15px] font-semibold text-neutral-900 dark:text-neutral-100 mb-1">{{ playerSynergy.playerName }}</div>
+                    <div class="text-xs text-neutral-500 dark:text-neutral-400">{{ playerSynergy.position }}</div>
                   </div>
-                  <div class="rounded-full bg-neutral-100 px-2 py-0.5 text-xs text-neutral-600 flex-shrink-0">
+                  <div class="rounded-full bg-neutral-100 dark:bg-neutral-600 px-2 py-0.5 text-xs text-neutral-600 dark:text-neutral-300 flex-shrink-0">
                     {{ playerSynergy.activeSynergies.length }}개 활성
                   </div>
                 </div>
 
                 <!-- 활성 시너지들 -->
                 <div v-if="playerSynergy.activeSynergies.length" class="space-y-3">
-                  <div v-for="synergy in playerSynergy.activeSynergies" :key="synergy.name" class="rounded-lg bg-green-50 border border-green-200 p-3">
+                  <div v-for="synergy in playerSynergy.activeSynergies" :key="synergy.name" class="rounded-lg bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-300 p-3">
                     <div class="flex items-center justify-between mb-2">
-                      <div class="text-sm font-medium text-green-900">{{ synergy.name }}</div>
-                      <div class="text-xs text-green-700 bg-green-100 px-2 py-0.5 rounded-full">활성</div>
+                      <div class="text-sm font-medium text-green-900 dark:text-green-200">{{ synergy.name }}</div>
+                      <div class="text-xs text-green-700 dark:text-green-300 bg-green-100 dark:bg-green-800 px-2 py-0.5 rounded-full">활성</div>
                     </div>
-                    <div class="text-xs text-green-800 mb-2">{{ synergy.description }}</div>
-                    <div class="text-sm font-semibold text-green-900 bg-green-100 px-2 py-1 rounded">
+                    <div class="text-xs text-green-800 dark:text-green-300 mb-2">{{ synergy.description }}</div>
+                    <div class="text-sm font-semibold text-green-900 dark:text-green-100  px-2 py-1 rounded">
                       {{ STAT_LABELS[synergy.activeCondition.stat] || synergy.activeCondition.stat }}
                       +{{ synergy.activeCondition.bonus.value }}{{ synergy.activeCondition.bonus.unit==='percent' ? '%' : '' }}
                     </div>
@@ -1221,18 +1381,18 @@ const LineupSlot = defineComponent({
 
                 <!-- 비활성 시너지들 -->
                 <div v-if="playerSynergy.inactiveSynergies.length" class="mt-3 space-y-2">
-                  <div class="text-xs font-medium text-neutral-500 border-t border-neutral-100 pt-3">잠재 시너지</div>
-                  <div v-for="synergy in playerSynergy.inactiveSynergies" :key="synergy.name" class="rounded-lg bg-neutral-50 border border-neutral-200 p-2">
+                  <div class="text-xs font-medium text-neutral-500 dark:text-neutral-400 border-t border-neutral-100 dark:border-neutral-600 pt-3">비활성화된 시너지</div>
+                  <div v-for="synergy in playerSynergy.inactiveSynergies" :key="synergy.name" class="rounded-lg bg-neutral-50 dark:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 p-2">
                     <div class="flex items-center justify-between mb-1">
-                      <div class="text-xs font-medium text-neutral-900">{{ synergy.name }}</div>
-                      <div class="text-xs text-neutral-600">{{ synergy.remainingCount }}명 더 필요</div>
+                      <div class="text-xs font-medium text-neutral-900 dark:text-neutral-100">{{ synergy.name }}</div>
+                      <div class="text-xs text-neutral-600 dark:text-neutral-400">{{ synergy.remainingCount }}명 더 필요</div>
                     </div>
-                    <div class="text-xs text-neutral-600">{{ synergy.nextEffectDescription }}</div>
+                    <div class="text-xs text-neutral-600 dark:text-neutral-400">{{ synergy.nextEffectDescription }}</div>
                   </div>
                 </div>
 
                 <!-- 시너지가 없는 경우 -->
-                <div v-if="!playerSynergy.activeSynergies.length && !playerSynergy.inactiveSynergies.length" class="text-xs text-neutral-500 italic">
+                <div v-if="!playerSynergy.activeSynergies.length && !playerSynergy.inactiveSynergies.length" class="text-xs text-neutral-500 dark:text-neutral-400 italic">
                   적용 가능한 시너지가 없습니다
                 </div>
               </div>
@@ -1243,12 +1403,40 @@ const LineupSlot = defineComponent({
     </div>
   </div>
 </template>
-
 <style scoped>
 button:disabled { opacity: 0.5; cursor: not-allowed; }
 * { scroll-behavior: smooth; }
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
-::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #3b82f6 0%, #8b5cf6 100%); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #2563eb 0%, #7c3aed 100%); }
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #3b82f6 0%, #8b5cf6 100%);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #2563eb 0%, #7c3aed 100%);
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #60a5fa 0%, #a78bfa 100%);
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #3b82f6 0%, #8b5cf6 100%);
+}
+
+/* 다크모드 설정 */
+.dark {
+  color-scheme: dark;
+}
+
+/* 반응형 개선 */
+@media (max-width: 1024px) {
+  .lineup-diamond {
+    height: 250px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .lineup-diamond {
+    height: 200px !important;
+  }
+}
 </style>
