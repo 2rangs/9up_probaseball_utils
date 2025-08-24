@@ -263,7 +263,7 @@ const matchAllstarTeam = (team: string) => {
 <template>
   <div
       v-if="player"
-      class="min-h-screen dark:bg-gray-900"
+      class="min-h-screen dark:bg-neutral-900"
   >
     <div class="max-w-5xl mx-auto space-y-4">
       <!-- 상단: 이미지 + 기본정보 -->
@@ -272,8 +272,8 @@ const matchAllstarTeam = (team: string) => {
         <!-- 왼쪽: 이미지 + 강화 스킬 -->
         <div class="space-y-4">
           <!-- 메인 이미지 카드 -->
-          <div class="relative rounded-2xl overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-            <div class="aspect-[3/4] w-full bg-gray-100 dark:bg-gray-700">
+          <div class="relative rounded-2xl overflow-hidden bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700">
+            <div class="aspect-[3/4] w-full bg-neutral-100 dark:bg-neutral-700">
              <!-- 아래는 임시 이미지 -->
               <img v-if="player.grade === 'ASG'"
                   :src="`/assets/playercards/commonCard_${matchAllstarTeam(player.team.toUpperCase())}_${player.team.toUpperCase()}.png`"
@@ -322,9 +322,9 @@ const matchAllstarTeam = (team: string) => {
 
           <!-- 강화 스킬 -->
           <div v-if="player.enhancedSkill"
-               class="rounded-2xl bg-white dark:bg-gray-800 p-4 border border-gray-200 dark:border-gray-700">
+               class="rounded-2xl bg-white dark:bg-neutral-800 p-4 border border-neutral-200 dark:border-neutral-700">
 
-            <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+            <h3 class="text-base font-semibold text-neutral-900 dark:text-white mb-3 flex items-center gap-2">
               <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
               강화 스킬
             </h3>
@@ -334,11 +334,11 @@ const matchAllstarTeam = (team: string) => {
                 <!-- 스킬 이미지 -->
                 <div
                     v-if="player.grade === 'GG'"
-                    :class="`bg-${matchSkillInfo(player.enhancedSkill, 'enhanced:GG', JSON.parse(player.year)?.[0])}${JSON.parse(player.year)[0]} rounded-lg object-contain bg-gray-50 dark:bg-gray-700 p-1`"
+                    :class="`bg-${matchSkillInfo(player.enhancedSkill, 'enhanced:GG', JSON.parse(player.year)?.[0])}${JSON.parse(player.year)[0]} rounded-lg object-contain bg-neutral-50 dark:bg-neutral-700 p-1`"
                 />
                 <div
                     v-else
-                    :class="`bg-${matchSkillInfo(player.enhancedSkill, 'enhanced')} w-12 h-12 rounded-lg object-contain bg-gray-50 dark:bg-gray-700 p-1`"
+                    :class="`bg-${matchSkillInfo(player.enhancedSkill, 'enhanced')} w-12 h-12 rounded-lg object-contain bg-neutral-50 dark:bg-neutral-700 p-1`"
                 />
 
                 <!-- 스킬 텍스트 -->
@@ -346,7 +346,7 @@ const matchAllstarTeam = (team: string) => {
                   <h4 class="text-sm font-bold text-blue-600 dark:text-blue-400">
                     {{ player.enhancedSkill }}<template v-if="player.grade === 'GG'"> {{ JSON.parse(player.year)?.[0] }}</template>
                   </h4>
-                  <p class="mt-1 text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+                  <p class="mt-1 text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
                     {{ matchSkillInfo(player.enhancedSkill, 'description:enhanced') }}
                   </p>
                 </div>
@@ -362,7 +362,7 @@ const matchAllstarTeam = (team: string) => {
                       class="px-1 py-1 text-xs font-medium rounded-md transition-colors text-center"
                       :class="selectedEffectIndex === i
         ? 'bg-blue-500 text-white'
-        : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'"
+        : 'bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-600'"
                   >
                     {{ i === 0 ? '기본' : `Lv.${i}` }}
                   </button>
@@ -376,7 +376,7 @@ const matchAllstarTeam = (team: string) => {
                       class=" py-1 text-xs font-medium rounded-md transition-colors text-center"
                       :class="selectedEffectIndex === j
         ? 'bg-blue-500 text-white'
-        : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'"
+        : 'bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-600'"
                   >
                     {{ j === 0 ? '기본' : `Lv.${j}` }}
                   </button>
@@ -401,7 +401,7 @@ const matchAllstarTeam = (team: string) => {
         <!-- 오른쪽: 정보 + 능력치 -->
         <div class="space-y-4">
           <!-- 기본 정보 카드 -->
-          <div class="rounded-2xl bg-white dark:bg-gray-800 p-4 border border-gray-200 dark:border-gray-700">
+          <div class="rounded-2xl bg-white dark:bg-neutral-800 p-4 border border-neutral-200 dark:border-neutral-700">
 
             <!-- 헤더 -->
             <div class="flex items-center gap-3 mb-2">
@@ -411,11 +411,11 @@ const matchAllstarTeam = (team: string) => {
                   class="w-18 h-auto object-contain"
               />
               <div>
-                <h2 class="text-xl font-bold text-gray-900 dark:text-white">
+                <h2 class="text-xl font-bold text-neutral-900 dark:text-white">
                   {{ player.name }}
                 </h2>
-                <span v-if="player.grade === 'MMVP'" class="inline-block px-2 py-0.5 text-xs font-semibold bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded uppercase">{{JSON.parse(player.year)[0]}}년 {{player.month}}월 {{ player.grade }}</span>
-                <span v-else-if="player.year" class="inline-block px-2 py-0.5 text-xs font-semibold bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded uppercase">
+                <span v-if="player.grade === 'MMVP'" class="inline-block px-2 py-0.5 text-xs font-semibold bg-neutral-100 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200 rounded uppercase">{{JSON.parse(player.year)[0]}}년 {{player.month}}월 {{ player.grade }}</span>
+                <span v-else-if="player.year" class="inline-block px-2 py-0.5 text-xs font-semibold bg-neutral-100 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200 rounded uppercase">
                   {{JSON.parse(player?.year)}}
                 </span>
               </div>
@@ -424,50 +424,50 @@ const matchAllstarTeam = (team: string) => {
             <!-- 정보 그리드 -->
             <div class="grid grid-cols-2 gap-3">
               <!-- 소속 팀 -->
-              <div class="flex items-center gap-2 p-2 bg-gray-50 dark:bg-gray-700 rounded-lg">
+              <div class="flex items-center gap-2 p-2 bg-neutral-50 dark:bg-neutral-700 rounded-lg">
                 <img :src="findTeamLogo(player.team)" alt="logo" class="w-6 h-6 object-contain" />
                 <div class="min-w-0 flex-1">
-                  <p class="text-xs text-gray-500 dark:text-gray-400">소속팀</p>
-                  <p class="text-sm font-semibold text-gray-900 dark:text-white truncate">
+                  <p class="text-xs text-neutral-500 dark:text-neutral-400">소속팀</p>
+                  <p class="text-sm font-semibold text-neutral-900 dark:text-white truncate">
                     {{ findTeamName(player.team) }}
                   </p>
                 </div>
               </div>
 
               <!-- 포지션 -->
-              <div class="flex items-center gap-2 p-2 bg-gray-50 dark:bg-gray-700 rounded-lg">
+              <div class="flex items-center gap-2 p-2 bg-neutral-50 dark:bg-neutral-700 rounded-lg">
                 <div class="w-6 h-6 bg-green-100 dark:bg-green-900 rounded flex items-center justify-center">
                   <span class="text-green-700 dark:text-green-300 text-xs font-bold">P</span>
                 </div>
                 <div class="min-w-0 flex-1">
-                  <p class="text-xs text-gray-500 dark:text-gray-400">포지션</p>
-                  <p class="text-sm font-semibold text-gray-900 dark:text-white">
+                  <p class="text-xs text-neutral-500 dark:text-neutral-400">포지션</p>
+                  <p class="text-sm font-semibold text-neutral-900 dark:text-white">
                     {{ parsePosition(player.position) }}
                   </p>
                 </div>
               </div>
 
               <!-- 투타 -->
-              <div class="flex items-center gap-2 p-2 bg-gray-50 dark:bg-gray-700 rounded-lg">
+              <div class="flex items-center gap-2 p-2 bg-neutral-50 dark:bg-neutral-700 rounded-lg">
                 <div class="w-6 h-6 bg-purple-100 dark:bg-purple-900 rounded flex items-center justify-center">
                   <span class="text-purple-700 dark:text-purple-300 text-xs font-bold">투</span>
                 </div>
                 <div class="min-w-0 flex-1">
-                  <p class="text-xs text-gray-500 dark:text-gray-400">투타</p>
-                  <p class="text-sm font-semibold text-gray-900 dark:text-white">
+                  <p class="text-xs text-neutral-500 dark:text-neutral-400">투타</p>
+                  <p class="text-sm font-semibold text-neutral-900 dark:text-white">
                     {{ translateDirection(player.throwHand) }}투{{ translateDirection(player.battingHand) }}타
                   </p>
                 </div>
               </div>
 
               <!-- 투구형태 -->
-              <div class="flex items-center gap-2 p-2 bg-gray-50 dark:bg-gray-700 rounded-lg">
+              <div class="flex items-center gap-2 p-2 bg-neutral-50 dark:bg-neutral-700 rounded-lg">
                 <div class="w-6 h-6 bg-orange-100 dark:bg-orange-900 rounded flex items-center justify-center">
                   <span class="text-orange-700 dark:text-orange-300 text-xs font-bold">형</span>
                 </div>
                 <div class="min-w-0 flex-1">
-                  <p class="text-xs text-gray-500 dark:text-gray-400">투구형태</p>
-                  <p class="text-sm font-semibold text-gray-900 dark:text-white">
+                  <p class="text-xs text-neutral-500 dark:text-neutral-400">투구형태</p>
+                  <p class="text-sm font-semibold text-neutral-900 dark:text-white">
                     {{ translatePitchingType(player.pitchingType) }}
                   </p>
                 </div>
@@ -476,10 +476,10 @@ const matchAllstarTeam = (team: string) => {
           </div>
 
           <!-- 능력치 카드 -->
-          <div class="rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+          <div class="rounded-2xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700">
 
             <div class="flex items-center justify-between px-4 mt-4">
-              <h3 class="text-base font-semibold text-gray-900 dark:text-white">종합 능력</h3>
+              <h3 class="text-base font-semibold text-neutral-900 dark:text-white">종합 능력</h3>
               <span class="text-lg font-bold text-blue-600 dark:text-blue-400">{{ totalPower }}</span>
             </div>
 
@@ -491,22 +491,22 @@ const matchAllstarTeam = (team: string) => {
             <!-- 주요 능력치 -->
             <div class="grid grid-cols-2 gap-2 mb-3 px-4">
               <div v-for="(a, i) in abilities" :key="i"
-                   class="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                <span class="text-xs font-medium text-gray-700 dark:text-gray-300">{{ a.label }}</span>
-                <span class="text-sm font-bold text-gray-900 dark:text-white">{{ a.value }}</span>
+                   class="flex items-center justify-between p-2 bg-neutral-50 dark:bg-neutral-700 rounded-lg">
+                <span class="text-xs font-medium text-neutral-700 dark:text-neutral-300">{{ a.label }}</span>
+                <span class="text-sm font-bold text-neutral-900 dark:text-white">{{ a.value }}</span>
               </div>
             </div>
 
             <!-- 기타 능력치 -->
-            <div class="dark:border-gray-700 px-3 mb-4">
+            <div class="dark:border-neutral-700 px-3 mb-4">
               <div class="grid grid-cols-3 gap-2">
                 <div
                     v-for="(a, i) in excludedAbilities"
                     :key="'ex-' + i"
-                    class="text-center p-2 bg-gray-50 dark:bg-gray-700 rounded-lg"
+                    class="text-center p-2 bg-neutral-50 dark:bg-neutral-700 rounded-lg"
                 >
-                  <div class="text-xs text-gray-500 dark:text-gray-400">{{ a.label }}</div>
-                  <div class="text-sm font-bold text-gray-900 dark:text-white">{{ a.value ?? '-' }}</div>
+                  <div class="text-xs text-neutral-500 dark:text-neutral-400">{{ a.label }}</div>
+                  <div class="text-sm font-bold text-neutral-900 dark:text-white">{{ a.value ?? '-' }}</div>
                 </div>
               </div>
             </div>
@@ -519,9 +519,9 @@ const matchAllstarTeam = (team: string) => {
 
         <!-- 보유 스킬 -->
         <div class="md:col-span-1">
-          <div class="rounded-2xl bg-white dark:bg-gray-800 p-4 border border-gray-200 dark:border-gray-700">
+          <div class="rounded-2xl bg-white dark:bg-neutral-800 p-4 border border-neutral-200 dark:border-neutral-700">
 
-            <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+            <h3 class="text-base font-semibold text-neutral-900 dark:text-white mb-3 flex items-center gap-2">
               <div class="w-2 h-2 bg-green-500 rounded-full"></div>
               보유 스킬
             </h3>
@@ -530,24 +530,24 @@ const matchAllstarTeam = (team: string) => {
               <div
                   v-for="(skill, i) in player.skill.split(',').map(s => s.trim()).filter(Boolean)"
                   :key="'skill-' + i"
-                  class="group relative flex flex-col items-center text-center p-2 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors cursor-pointer"
+                  class="group relative flex flex-col items-center text-center p-2 bg-neutral-50 dark:bg-neutral-700 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-600 transition-colors cursor-pointer"
               >
                 <!-- 툴팁 -->
                 <!-- 툴팁 - 좌우 끝에서는 방향 조정 -->
-                <div class="absolute z-50 w-72 text-xs bg-gray-900/95 backdrop-blur text-white p-3 rounded-lg shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none left-full ml-2 top-0">
+                <div class="absolute z-50 w-72 text-xs bg-neutral-900/95 backdrop-blur text-white p-3 rounded-lg shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none left-full ml-2 top-0">
 
                 <div class="font-semibold text-yellow-300 mb-1">{{ skill }}</div>
-                  <div class="text-gray-200 mb-2 whitespace-pre-line">
+                  <div class="text-neutral-200 mb-2 whitespace-pre-line">
                     {{ matchSkillInfo(skill, 'effects:normal') }}
                   </div>
-                  <div class="text-gray-400 text-xs whitespace-pre-line">
+                  <div class="text-neutral-400 text-xs whitespace-pre-line">
                     {{ matchSkillInfo(skill, 'description:normal') }}
                   </div>
                 </div>
 
-                <div :class="`bg-${matchSkillInfo(skill, 'normal')} w-12 h-12 bg-white dark:bg-gray-800 rounded-lg`">
+                <div :class="`bg-${matchSkillInfo(skill, 'normal')} w-12 h-12 bg-white dark:bg-neutral-800 rounded-lg`">
                 </div>
-                <span class="text-xs font-medium text-gray-800 dark:text-gray-200 leading-tight">{{ skill }}</span>
+                <span class="text-xs font-medium text-neutral-800 dark:text-neutral-200 leading-tight">{{ skill }}</span>
               </div>
             </div>
           </div>
@@ -555,9 +555,9 @@ const matchAllstarTeam = (team: string) => {
 
         <!-- 시너지 -->
         <div v-if="player.synergy" class="xl:col-span-1">
-          <div class="rounded-2xl bg-white dark:bg-gray-800 p-4 border border-gray-200 dark:border-gray-700">
+          <div class="rounded-2xl bg-white dark:bg-neutral-800 p-4 border border-neutral-200 dark:border-neutral-700">
 
-            <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+            <h3 class="text-base font-semibold text-neutral-900 dark:text-white mb-3 flex items-center gap-2">
               <div class="w-2 h-2 bg-purple-500 rounded-full"></div>
               시너지 효과
             </h3>
@@ -566,20 +566,20 @@ const matchAllstarTeam = (team: string) => {
               <div
                   v-for="(synergy, i) in player.synergy.split(',').map(s => s.trim()).filter(Boolean)"
                   :key="'synergy-' + i"
-                  class="rounded-lg border border-gray-200 dark:border-gray-600 overflow-hidden"
+                  class="rounded-lg border border-neutral-200 dark:border-neutral-600 overflow-hidden"
               >
                 <button
-                    class="w-full px-3 py-2 flex items-center justify-between text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                    class="w-full px-3 py-2 flex items-center justify-between text-sm font-medium hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-colors"
                     @click="toggleSynergy(synergy)"
                 >
-                  <span class="text-gray-900 dark:text-white truncate">{{ findSynergy(synergy)?.synergy }}</span>
-                  <component :is="isExpanded(synergy) ? ChevronUp : ChevronDown" class="w-4 h-4 text-gray-500" />
+                  <span class="text-neutral-900 dark:text-white truncate">{{ findSynergy(synergy)?.synergy }}</span>
+                  <component :is="isExpanded(synergy) ? ChevronUp : ChevronDown" class="w-4 h-4 text-neutral-500" />
                 </button>
-                <div v-if="isExpanded(synergy)" class="px-3 pb-3 border-t border-gray-200 dark:border-gray-600">
+                <div v-if="isExpanded(synergy)" class="px-3 pb-3 border-t border-neutral-200 dark:border-neutral-600">
                   <div class="bg-purple-50 dark:bg-purple-900/20 rounded p-2 mt-2 mb-2">
                     <pre class="text-xs text-purple-800 dark:text-purple-200 whitespace-pre-wrap leading-relaxed">{{ findSynergy(synergy)?.synergy_effect }}</pre>
                   </div>
-                  <p class="text-xs text-gray-600 dark:text-gray-400">
+                  <p class="text-xs text-neutral-600 dark:text-neutral-400">
                     {{ findSynergy(synergy)?.description }}
                   </p>
                 </div>

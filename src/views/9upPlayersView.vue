@@ -341,9 +341,9 @@ defineExpose({ totalFiltered: totalCount, totalAll })
     <div v-if="totalPages > 1" class="mt-6 flex flex-col items-center gap-3">
       <nav class="inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
         <button
-            class="px-3 py-2 text-sm border border-gray-300 dark:border-gray-700 rounded-l-md
-                 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300
-                 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 disabled:pointer-events-none
+            class="px-3 py-2 text-sm border border-neutral-300 dark:border-neutral-700 rounded-l-md
+                 bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300
+                 hover:bg-neutral-50 dark:hover:bg-neutral-800 disabled:opacity-50 disabled:pointer-events-none
                  focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
             :disabled="page === 1"
             @click="goToPage(1)"
@@ -353,9 +353,9 @@ defineExpose({ totalFiltered: totalCount, totalAll })
         </button>
 
         <button
-            class="px-3 py-2 text-sm border border-gray-300 dark:border-gray-700
-                 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300
-                 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 disabled:pointer-events-none
+            class="px-3 py-2 text-sm border border-neutral-300 dark:border-neutral-700
+                 bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300
+                 hover:bg-neutral-50 dark:hover:bg-neutral-800 disabled:opacity-50 disabled:pointer-events-none
                  focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
             :disabled="page === 1"
             @click="goToPage(page - 1)"
@@ -365,15 +365,15 @@ defineExpose({ totalFiltered: totalCount, totalAll })
         </button>
 
         <span
-            class="px-4 py-2 text-sm border border-gray-300 dark:border-gray-700
-                 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200">
+            class="px-4 py-2 text-sm border border-neutral-300 dark:border-neutral-700
+                 bg-neutral-50 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200">
           {{ page }} / {{ totalPages }}
         </span>
 
         <button
-            class="px-3 py-2 text-sm border border-gray-300 dark:border-gray-700
-                 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300
-                 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 disabled:pointer-events-none
+            class="px-3 py-2 text-sm border border-neutral-300 dark:border-neutral-700
+                 bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300
+                 hover:bg-neutral-50 dark:hover:bg-neutral-800 disabled:opacity-50 disabled:pointer-events-none
                  focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
             :disabled="page === totalPages"
             @click="goToPage(page + 1)"
@@ -383,9 +383,9 @@ defineExpose({ totalFiltered: totalCount, totalAll })
         </button>
 
         <button
-            class="px-3 py-2 text-sm border border-gray-300 dark:border-gray-700 rounded-r-md
-                 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300
-                 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 disabled:pointer-events-none
+            class="px-3 py-2 text-sm border border-neutral-300 dark:border-neutral-700 rounded-r-md
+                 bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300
+                 hover:bg-neutral-50 dark:hover:bg-neutral-800 disabled:opacity-50 disabled:pointer-events-none
                  focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
             :disabled="page === totalPages"
             @click="goToPage(totalPages)"
@@ -395,7 +395,7 @@ defineExpose({ totalFiltered: totalCount, totalAll })
         </button>
       </nav>
 
-      <div class="text-xs text-gray-500 dark:text-gray-400">
+      <div class="text-xs text-neutral-500 dark:text-neutral-400">
         {{ totalCount ? (pageStartIndex + 1) : 0 }}–{{ pageEndIndex }} / {{ totalCount }}
       </div>
     </div>

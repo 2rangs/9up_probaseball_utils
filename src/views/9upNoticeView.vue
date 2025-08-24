@@ -244,28 +244,21 @@ const onAccordionKeydown = (e: KeyboardEvent, id: number) => {
   <div class="w-full max-w-[1400px] mx-auto p-2 sm:p-4">
     <div class="hidden lg:flex gap-4">
       <section class="flex-1 min-w-0 space-y-4">
-        <header class="rounded-2xl border border-gray-200 bg-white/90 dark:bg-gray-900/90 dark:border-gray-700 shadow-sm p-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between top-0 z-10 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-gray-900/70">
+        <header class="rounded-2xl border border-gray-200 bg-white/90 dark:bg-neutral-900/90 dark:border-neutral-700 shadow-sm p-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between top-0 z-10 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-neutral-900/70">
           <div class="min-w-0">
-            <h2 class="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100 truncate">공지 사항</h2>
-            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+            <h2 class="text-lg sm:text-xl font-semibold text-gray-800 dark:text-neutral-100 truncate">공지 사항</h2>
+            <p class="text-xs sm:text-sm text-gray-500 dark:text-neutral-400 mt-0.5">
               <a :href="`https://github.com/${owner}/${repo}/releases`" target="_blank" rel="noopener" class="underline underline-offset-2 hover:text-blue-600 dark:hover:text-blue-400">{{ owner }}/{{ repo }}</a>
               <span v-if="lastUpdated" class="ml-2 hidden sm:inline">· 최신 업데이트: {{ formatDate(lastUpdated) }}</span>
             </p>
           </div>
           <div class="flex items-center gap-2">
-            <button @click="refresh" class="px-3 py-1.5 rounded-xl border bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/50 flex items-center gap-2">
+            <button @click="refresh" class="px-3 py-1.5 rounded-xl border bg-white dark:bg-neutral-800 border-gray-200 dark:border-neutral-700 text-sm hover:bg-gray-50 dark:hover:bg-neutral-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/50 flex items-center gap-2">
               <RefreshCw class="w-4 h-4" />
               새로고침
             </button>
           </div>
         </header>
-
-<!--        <div class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white/90 dark:bg-gray-900/90 shadow-sm p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center gap-3">-->
-<!--          <div class="relative flex-1">-->
-<!--            <Search class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />-->
-<!--            <input v-model="q" type="search" placeholder="태그/제목/본문 검색" class="w-full pl-9 pr-3 py-2 rounded-xl border bg-white/95 dark:bg-gray-900/80 text-sm text-gray-800 dark:text-gray-100 border-gray-200 dark:border-gray-700 outline-none focus:ring-2 focus:ring-blue-400/40" />-->
-<!--          </div>-->
-<!--        </div>-->
 
         <div v-if="error" class="rounded-2xl border bg-red-50 text-red-700 border-red-200 dark:bg-red-900/20 dark:text-red-200 dark:border-red-800/40 p-3 sm:p-4 flex items-start justify-between gap-3">
           <span class="text-sm">{{ error }}</span>
@@ -273,31 +266,31 @@ const onAccordionKeydown = (e: KeyboardEvent, id: number) => {
         </div>
 
         <div v-if="loading && releases.length === 0" class="space-y-3">
-          <div v-for="n in 3" :key="n" class="p-4 rounded-2xl border bg-white/80 dark:bg-gray-900/70 border-gray-200 dark:border-gray-700 animate-pulse">
-            <div class="h-4 w-40 bg-gray-200 dark:bg-gray-700 rounded mb-3"></div>
-            <div class="h-3 w-full bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
-            <div class="h-3 w-5/6 bg-gray-200 dark:bg-gray-700 rounded"></div>
+          <div v-for="n in 3" :key="n" class="p-4 rounded-2xl border bg-white/80 dark:bg-neutral-900/70 border-gray-200 dark:border-neutral-700 animate-pulse">
+            <div class="h-4 w-40 bg-gray-200 dark:bg-neutral-700 rounded mb-3"></div>
+            <div class="h-3 w-full bg-gray-200 dark:bg-neutral-700 rounded mb-2"></div>
+            <div class="h-3 w-5/6 bg-gray-200 dark:bg-neutral-700 rounded"></div>
           </div>
         </div>
 
-        <div v-else-if="filtered.length === 0" class="p-8 rounded-2xl border bg-white/90 dark:bg-gray-900/90 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-center">
-          <Package class="mx-auto mb-2 h-8 w-8 text-gray-300 dark:text-gray-600" />
+        <div v-else-if="filtered.length === 0" class="p-8 rounded-2xl border bg-white/90 dark:bg-neutral-900/90 border-gray-200 dark:border-neutral-700 text-gray-600 dark:text-neutral-300 text-center">
+          <Package class="mx-auto mb-2 h-8 w-8 text-gray-300 dark:text-neutral-600" />
           조건에 맞는 릴리즈가 없습니다.
         </div>
 
         <ul v-else class="space-y-3 sm:space-y-4">
-          <li v-for="rel in filtered" :key="rel.id" class="rounded-2xl border bg-white/90 dark:bg-gray-900/90 border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
-            <button type="button" class="w-full text-left px-4 sm:px-5 py-3 sm:py-4 flex flex-wrap gap-3 items-start justify-between hover:bg-gray-50/70 dark:hover:bg-gray-800/40" :aria-expanded="expandedId === rel.id" :aria-controls="`release-${rel.id}`" @click="toggleExpand(rel.id)" @keydown="onAccordionKeydown($event, rel.id)">
+          <li v-for="rel in filtered" :key="rel.id" class="rounded-2xl border bg-white/90 dark:bg-neutral-900/90 border-gray-200 dark:border-neutral-700 shadow-sm overflow-hidden">
+            <button type="button" class="w-full text-left px-4 sm:px-5 py-3 sm:py-4 flex flex-wrap gap-3 items-start justify-between hover:bg-gray-50/70 dark:hover:bg-neutral-800/40" :aria-expanded="expandedId === rel.id" :aria-controls="`release-${rel.id}`" @click="toggleExpand(rel.id)" @keydown="onAccordionKeydown($event, rel.id)">
               <div class="min-w-0">
                 <div class="flex items-center gap-2 min-w-0">
-                  <a :href="rel.html_url" target="_blank" rel="noopener" class="font-semibold text-gray-800 dark:text-gray-100 hover:underline truncate" @click.stop>{{ rel.tag_name }}</a>
-                  <span v-if="rel.name" class="text-gray-500 dark:text-gray-400 truncate">· {{ rel.name }}</span>
+                  <a :href="rel.html_url" target="_blank" rel="noopener" class="font-semibold text-gray-800 dark:text-neutral-100 hover:underline truncate" @click.stop>{{ rel.tag_name }}</a>
+                  <span v-if="rel.name" class="text-gray-500 dark:text-neutral-400 truncate">· {{ rel.name }}</span>
                 </div>
-                <div class="mt-1 text-xs text-gray-500 dark:text-gray-400">발행: {{ formatDate(rel.published_at || rel.created_at) }}</div>
+                <div class="mt-1 text-xs text-gray-500 dark:text-neutral-400">발행: {{ formatDate(rel.published_at || rel.created_at) }}</div>
               </div>
               <div class="flex items-center gap-2 shrink-0">
                 <span v-if="rel.prerelease" class="text-[11px] px-2 py-1 rounded-full bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 border border-amber-300/50">pre-release</span>
-                <span v-if="rel.draft" class="text-[11px] px-2 py-1 rounded-full bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 border border-gray-400/40">draft</span>
+                <span v-if="rel.draft" class="text-[11px] px-2 py-1 rounded-full bg-gray-200 text-gray-800 dark:bg-neutral-700 dark:text-neutral-200 border border-gray-400/40">draft</span>
                 <ChevronDown class="w-4 h-4 ml-1 transition-transform" :class="expandedId === rel.id ? 'rotate-180' : ''" />
               </div>
             </button>
@@ -306,13 +299,13 @@ const onAccordionKeydown = (e: KeyboardEvent, id: number) => {
               <div v-html="renderMarkdown(rel.body)"></div>
             </div>
 
-            <div v-if="rel.assets?.length && expandedId === rel.id" class="px-4 sm:px-5 pt-3 sm:pt-4 pb-4 border-t border-gray-100 dark:border-gray-800">
-              <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Assets</h4>
+            <div v-if="rel.assets?.length && expandedId === rel.id" class="px-4 sm:px-5 pt-3 sm:pt-4 pb-4 border-t border-gray-100 dark:border-neutral-800">
+              <h4 class="text-sm font-semibold text-gray-700 dark:text-neutral-200 mb-2">Assets</h4>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <a v-for="a in rel.assets" :key="a.id" :href="a.browser_download_url" target="_blank" rel="noopener" class="group flex items-center justify-between gap-3 px-3 py-2 rounded-xl border bg-gray-50/80 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700/60">
+                <a v-for="a in rel.assets" :key="a.id" :href="a.browser_download_url" target="_blank" rel="noopener" class="group flex items-center justify-between gap-3 px-3 py-2 rounded-xl border bg-gray-50/80 dark:bg-neutral-800/50 border-gray-200 dark:border-neutral-700 hover:bg-gray-100 dark:hover:bg-neutral-700/60">
                   <div class="min-w-0">
-                    <div class="font-medium text-sm text-gray-800 dark:text-gray-100 truncate">{{ a.name }}</div>
-                    <div class="text-xs text-gray-500 dark:text-gray-400">{{ formatBytes(a.size) }} · 다운로드 {{ a.download_count.toLocaleString() }}</div>
+                    <div class="font-medium text-sm text-gray-800 dark:text-neutral-100 truncate">{{ a.name }}</div>
+                    <div class="text-xs text-gray-500 dark:text-neutral-400">{{ formatBytes(a.size) }} · 다운로드 {{ a.download_count.toLocaleString() }}</div>
                   </div>
                   <Download class="w-5 h-5 opacity-70 group-hover:opacity-100" />
                 </a>
@@ -322,7 +315,7 @@ const onAccordionKeydown = (e: KeyboardEvent, id: number) => {
         </ul>
 
         <div v-if="nextUrl && filtered.length" class="pt-2 flex justify-center">
-          <button @click="loadMore" :disabled="loading" class="px-4 py-2 rounded-xl border bg-white/90 dark:bg-gray-900/80 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/80 disabled:opacity-60">
+          <button @click="loadMore" :disabled="loading" class="px-4 py-2 rounded-xl border bg-white/90 dark:bg-neutral-900/80 border-gray-200 dark:border-neutral-700 hover:bg-gray-50 dark:hover:bg-neutral-700/80 disabled:opacity-60">
             더 불러오기
           </button>
         </div>
@@ -330,13 +323,13 @@ const onAccordionKeydown = (e: KeyboardEvent, id: number) => {
 
       <aside v-if="showCommits" class="w-80 flex-shrink-0 transition-all duration-300" :class="{ 'w-12': commitSidebarCollapsed }">
         <div class="top-4">
-          <div class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white/90 dark:bg-gray-900/90 shadow-sm overflow-hidden">
-            <div class="p-4 border-b border-gray-100 dark:border-gray-800">
+          <div class="rounded-2xl border border-gray-200 dark:border-neutral-700 bg-white/90 dark:bg-neutral-900/90 shadow-sm overflow-hidden">
+            <div class="p-4 border-b border-gray-100 dark:border-neutral-800">
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
                   <GitCommit class="w-5 h-5 text-gray-500" />
-                  <h3 class="font-semibold text-gray-900 dark:text-gray-100">최근 커밋</h3>
-                  <span class="px-2 py-0.5 rounded-full text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400">
+                  <h3 class="font-semibold text-gray-900 dark:text-neutral-100">최근 커밋</h3>
+                  <span class="px-2 py-0.5 rounded-full text-xs bg-gray-100 dark:bg-neutral-700 text-gray-600 dark:text-neutral-400">
                     {{ filteredCommits.length }}
                   </span>
                 </div>
@@ -346,21 +339,21 @@ const onAccordionKeydown = (e: KeyboardEvent, id: number) => {
             <div v-if="!commitSidebarCollapsed" class="h-[calc(100vh-12rem)] overflow-y-auto">
               <div v-if="loadingCommits && commits.length === 0" class="p-4 space-y-3">
                 <div v-for="n in 5" :key="n" class="flex items-center gap-3 animate-pulse">
-                  <div class="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+                  <div class="w-8 h-8 bg-gray-300 dark:bg-neutral-600 rounded-full"></div>
                   <div class="flex-1 space-y-2">
-                    <div class="h-3 w-3/4 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                    <div class="h-2 w-1/2 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                    <div class="h-3 w-3/4 bg-gray-200 dark:bg-neutral-700 rounded"></div>
+                    <div class="h-2 w-1/2 bg-gray-200 dark:bg-neutral-700 rounded"></div>
                   </div>
                 </div>
               </div>
 
               <div v-else-if="filteredCommits.length === 0" class="p-8 text-center">
                 <GitCommit class="w-8 h-8 mx-auto mb-2 text-gray-400" />
-                <p class="text-sm text-gray-600 dark:text-gray-400">커밋이 없습니다</p>
+                <p class="text-sm text-gray-600 dark:text-neutral-400">커밋이 없습니다</p>
               </div>
 
-              <div v-else class="divide-y divide-gray-100 dark:divide-gray-800">
-                <div v-for="commit in filteredCommits" :key="commit.sha" class="p-4 hover:bg-gray-50 dark:hover:bg-gray-800/40 transition-colors">
+              <div v-else class="divide-y divide-gray-100 dark:divide-neutral-800">
+                <div v-for="commit in filteredCommits" :key="commit.sha" class="p-4 hover:bg-gray-50 dark:hover:bg-neutral-800/40 transition-colors">
                   <div class="flex items-start gap-3">
                     <div v-if="commit.author" class="flex-shrink-0">
                       <img :src="commit.author.avatar_url" :alt="commit.author.login" class="w-8 h-8 rounded-full" />
@@ -372,7 +365,7 @@ const onAccordionKeydown = (e: KeyboardEvent, id: number) => {
                     </div>
                     <div class="min-w-0 flex-1">
                       <div class="flex items-start justify-between gap-2">
-                        <p class="text-sm font-medium text-gray-900 dark:text-gray-100 leading-tight">
+                        <p class="text-sm font-medium text-gray-900 dark:text-neutral-100 leading-tight">
                           {{ truncateCommitMessage(commit.commit.message) }}
                         </p>
                         <a :href="commit.html_url" target="_blank" rel="noopener" class="flex-shrink-0 text-gray-400 hover:text-blue-500 transition-colors">
@@ -380,14 +373,14 @@ const onAccordionKeydown = (e: KeyboardEvent, id: number) => {
                         </a>
                       </div>
                       <div class="flex items-center gap-2 mt-1">
-                        <code class="text-xs font-mono px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded">
+                        <code class="text-xs font-mono px-1.5 py-0.5 bg-gray-100 dark:bg-neutral-700 text-gray-700 dark:text-neutral-300 rounded">
                           {{ getCommitHash(commit.sha) }}
                         </code>
-                        <span class="text-xs text-gray-500 dark:text-gray-400">
+                        <span class="text-xs text-gray-500 dark:text-neutral-400">
                           {{ formatRelativeTime(commit.commit.author.date) }}
                         </span>
                       </div>
-                      <div class="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                      <div class="text-xs text-gray-600 dark:text-neutral-400 mt-1">
                         {{ commit.commit.author.name }}
                       </div>
                     </div>
@@ -395,8 +388,8 @@ const onAccordionKeydown = (e: KeyboardEvent, id: number) => {
                 </div>
               </div>
 
-              <div v-if="nextCommitUrl" class="p-3 border-t border-gray-100 dark:border-gray-800">
-                <button @click="loadMoreCommits" :disabled="loadingCommits" class="w-full px-3 py-2 text-sm bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors disabled:opacity-50">
+              <div v-if="nextCommitUrl" class="p-3 border-t border-gray-100 dark:border-neutral-800">
+                <button @click="loadMoreCommits" :disabled="loadingCommits" class="w-full px-3 py-2 text-sm bg-gray-100 dark:bg-neutral-800 hover:bg-gray-200 dark:hover:bg-neutral-700 rounded-lg transition-colors disabled:opacity-50">
                   <span :class="{ 'animate-pulse': loadingCommits }">더 보기</span>
                 </button>
               </div>
@@ -407,60 +400,60 @@ const onAccordionKeydown = (e: KeyboardEvent, id: number) => {
     </div>
 
     <div class="lg:hidden space-y-4">
-      <header class="rounded-2xl border border-gray-200 bg-white/90 dark:bg-gray-900/90 dark:border-gray-700 shadow-sm p-4 sticky top-0 z-10 backdrop-blur">
+      <header class="rounded-2xl border border-gray-200 bg-white/90 dark:bg-neutral-900/90 dark:border-neutral-700 shadow-sm p-4 sticky top-0 z-10 backdrop-blur">
         <div class="flex flex-col gap-2">
-          <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">공지 사항</h2>
-          <p class="text-xs text-gray-500 dark:text-gray-400">
+          <h2 class="text-lg font-semibold text-gray-800 dark:text-neutral-100">공지 사항</h2>
+          <p class="text-xs text-gray-500 dark:text-neutral-400">
             <a :href="`https://github.com/${owner}/${repo}/releases`" target="_blank" class="underline">{{ owner }}/{{ repo }}</a>
           </p>
-          <button @click="refresh" class="self-start px-3 py-1.5 rounded-xl border bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-sm flex items-center gap-2">
+          <button @click="refresh" class="self-start px-3 py-1.5 rounded-xl border bg-white dark:bg-neutral-800 border-gray-200 dark:border-neutral-700 text-sm flex items-center gap-2">
             <RefreshCw class="w-4 h-4" />
             새로고침
           </button>
         </div>
       </header>
 
-      <div class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white/90 dark:bg-gray-900/90 shadow-sm p-3 space-y-3">
+      <div class="rounded-2xl border border-gray-200 dark:border-neutral-700 bg-white/90 dark:bg-neutral-900/90 shadow-sm p-3 space-y-3">
         <div class="relative">
           <Search class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-          <input v-model="q" type="search" placeholder="검색..." class="w-full pl-9 pr-3 py-2 rounded-xl border bg-white/95 dark:bg-gray-900/80 text-sm text-gray-800 dark:text-gray-100 border-gray-200 dark:border-gray-700 outline-none focus:ring-2 focus:ring-blue-400/40" />
+          <input v-model="q" type="search" placeholder="검색..." class="w-full pl-9 pr-3 py-2 rounded-xl border bg-white/95 dark:bg-neutral-900/80 text-sm text-gray-800 dark:text-neutral-100 border-gray-200 dark:border-neutral-700 outline-none focus:ring-2 focus:ring-blue-400/40" />
         </div>
         <div class="flex flex-wrap gap-2">
-          <label class="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-full border text-xs bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 cursor-pointer">
-            <input type="checkbox" v-model="showCommits" @change="refresh" class="rounded border-gray-300 dark:border-gray-600" />
+          <label class="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-full border text-xs bg-white dark:bg-neutral-800 border-gray-200 dark:border-neutral-700 cursor-pointer">
+            <input type="checkbox" v-model="showCommits" @change="refresh" class="rounded border-gray-300 dark:border-neutral-600" />
             커밋
           </label>
-          <label class="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-full border text-xs bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 cursor-pointer">
-            <input type="checkbox" v-model="includePrereleases" class="rounded border-gray-300 dark:border-gray-600" />
+          <label class="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-full border text-xs bg-white dark:bg-neutral-800 border-gray-200 dark:border-neutral-700 cursor-pointer">
+            <input type="checkbox" v-model="includePrereleases" class="rounded border-gray-300 dark:border-neutral-600" />
             프리릴리즈
           </label>
-          <label class="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-full border text-xs bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 cursor-pointer">
-            <input type="checkbox" v-model="includeDrafts" class="rounded border-gray-300 dark:border-gray-600" />
+          <label class="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-full border text-xs bg-white dark:bg-neutral-800 border-gray-200 dark:border-neutral-700 cursor-pointer">
+            <input type="checkbox" v-model="includeDrafts" class="rounded border-gray-300 dark:border-neutral-600" />
             드래프트
           </label>
         </div>
       </div>
 
       <div v-if="loading && releases.length === 0" class="space-y-3">
-        <div v-for="n in 3" :key="n" class="p-4 rounded-2xl border bg-white/80 dark:bg-gray-900/70 border-gray-200 dark:border-gray-700 animate-pulse">
-          <div class="h-4 w-32 bg-gray-200 dark:bg-gray-700 rounded mb-3"></div>
-          <div class="h-3 w-full bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
-          <div class="h-3 w-3/4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+        <div v-for="n in 3" :key="n" class="p-4 rounded-2xl border bg-white/80 dark:bg-neutral-900/70 border-gray-200 dark:border-neutral-700 animate-pulse">
+          <div class="h-4 w-32 bg-gray-200 dark:bg-neutral-700 rounded mb-3"></div>
+          <div class="h-3 w-full bg-gray-200 dark:bg-neutral-700 rounded mb-2"></div>
+          <div class="h-3 w-3/4 bg-gray-200 dark:bg-neutral-700 rounded"></div>
         </div>
       </div>
 
-      <div v-else-if="filtered.length === 0" class="p-8 rounded-2xl border bg-white/90 dark:bg-gray-900/90 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-center">
-        <Package class="mx-auto mb-2 h-8 w-8 text-gray-300 dark:text-gray-600" />
+      <div v-else-if="filtered.length === 0" class="p-8 rounded-2xl border bg-white/90 dark:bg-neutral-900/90 border-gray-200 dark:border-neutral-700 text-gray-600 dark:text-neutral-300 text-center">
+        <Package class="mx-auto mb-2 h-8 w-8 text-gray-300 dark:text-neutral-600" />
         <p class="text-sm">릴리즈가 없습니다.</p>
       </div>
 
       <div v-else class="space-y-3">
-        <div v-for="rel in filtered" :key="rel.id" class="rounded-2xl border bg-white/90 dark:bg-gray-900/90 border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
-          <button type="button" class="w-full text-left p-4 flex justify-between items-start gap-3 hover:bg-gray-50/70 dark:hover:bg-gray-800/40" @click="toggleExpand(rel.id)">
+        <div v-for="rel in filtered" :key="rel.id" class="rounded-2xl border bg-white/90 dark:bg-neutral-900/90 border-gray-200 dark:border-neutral-700 shadow-sm overflow-hidden">
+          <button type="button" class="w-full text-left p-4 flex justify-between items-start gap-3 hover:bg-gray-50/70 dark:hover:bg-neutral-800/40" @click="toggleExpand(rel.id)">
             <div class="min-w-0 flex-1">
-              <h3 class="font-semibold text-gray-800 dark:text-gray-100 truncate">{{ rel.tag_name }}</h3>
-              <p v-if="rel.name" class="text-sm text-gray-500 dark:text-gray-400 truncate mt-1">{{ rel.name }}</p>
-              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ formatDate(rel.published_at || rel.created_at) }}</p>
+              <h3 class="font-semibold text-gray-800 dark:text-neutral-100 truncate">{{ rel.tag_name }}</h3>
+              <p v-if="rel.name" class="text-sm text-gray-500 dark:text-neutral-400 truncate mt-1">{{ rel.name }}</p>
+              <p class="text-xs text-gray-500 dark:text-neutral-400 mt-1">{{ formatDate(rel.published_at || rel.created_at) }}</p>
             </div>
             <ChevronDown class="w-5 h-5 text-gray-400 transition-transform" :class="expandedId === rel.id ? 'rotate-180' : ''" />
           </button>
@@ -470,27 +463,27 @@ const onAccordionKeydown = (e: KeyboardEvent, id: number) => {
         </div>
       </div>
 
-      <div v-if="showCommits && filteredCommits.length > 0" class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white/90 dark:bg-gray-900/90 shadow-sm overflow-hidden">
-        <div class="p-4 border-b border-gray-100 dark:border-gray-800">
+      <div v-if="showCommits && filteredCommits.length > 0" class="rounded-2xl border border-gray-200 dark:border-neutral-700 bg-white/90 dark:bg-neutral-900/90 shadow-sm overflow-hidden">
+        <div class="p-4 border-b border-gray-100 dark:border-neutral-800">
           <div class="flex items-center gap-2">
             <GitCommit class="w-5 h-5 text-gray-500" />
-            <h3 class="font-semibold text-gray-900 dark:text-gray-100">최근 커밋</h3>
-            <span class="px-2 py-0.5 rounded-full text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400">
+            <h3 class="font-semibold text-gray-900 dark:text-neutral-100">최근 커밋</h3>
+            <span class="px-2 py-0.5 rounded-full text-xs bg-gray-100 dark:bg-neutral-700 text-gray-600 dark:text-neutral-400">
               {{ filteredCommits.length }}
             </span>
           </div>
         </div>
 
-        <div class="h-96 overflow-y-auto divide-y divide-gray-100 dark:divide-gray-800">
-          <div v-for="commit in filteredCommits.slice(0, 10)" :key="commit.sha" class="p-3 hover:bg-gray-50 dark:hover:bg-gray-800/30">
+        <div class="h-96 overflow-y-auto divide-y divide-gray-100 dark:divide-neutral-800">
+          <div v-for="commit in filteredCommits.slice(0, 10)" :key="commit.sha" class="p-3 hover:bg-gray-50 dark:hover:bg-neutral-800/30">
             <div class="flex items-start gap-3">
               <img v-if="commit.author" :src="commit.author.avatar_url" :alt="commit.author.login" class="w-6 h-6 rounded-full" />
               <div class="min-w-0 flex-1">
-                <p class="text-sm font-medium text-gray-900 dark:text-gray-100 leading-tight">
+                <p class="text-sm font-medium text-gray-900 dark:text-neutral-100 leading-tight">
                   {{ truncateCommitMessage(commit.commit.message, 40) }}
                 </p>
                 <div class="flex items-center gap-2 mt-1">
-                  <code class="text-xs font-mono px-1 py-0.5 bg-gray-100 dark:bg-gray-800 rounded">{{ getCommitHash(commit.sha) }}</code>
+                  <code class="text-xs font-mono px-1 py-0.5 bg-gray-100 dark:bg-neutral-800 rounded">{{ getCommitHash(commit.sha) }}</code>
                   <span class="text-xs text-gray-500">{{ formatRelativeTime(commit.commit.author.date) }}</span>
                 </div>
               </div>
@@ -501,6 +494,7 @@ const onAccordionKeydown = (e: KeyboardEvent, id: number) => {
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .prose :where(p):not(:first-child){ margin-top:.5rem }

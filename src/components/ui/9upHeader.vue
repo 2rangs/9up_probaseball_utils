@@ -81,10 +81,10 @@ const navigate = (item: { path: string; disabled?: boolean }) => {
 </script>
 
 <template>
-  <div class="relative min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white overflow-hidden">
+  <div class="relative min-h-screen bg-gray-100 dark:bg-neutral-900 text-gray-900 dark:text-neutral-100 overflow-hidden">
     <!-- 헤더 -->
-    <header class="fixed top-0 left-0 right-0 h-14 bg-white dark:bg-gray-800 shadow z-10 px-4 flex items-center justify-between">
-      <button @click="isSidebarOpen = !isSidebarOpen" class="text-gray-700 dark:text-white">
+    <header class="fixed top-0 left-0 right-0 h-14 bg-white dark:bg-neutral-800 shadow z-10 px-4 flex items-center justify-between">
+      <button @click="isSidebarOpen = !isSidebarOpen" class="text-gray-700 dark:text-neutral-100">
         <component :is="isSidebarOpen ? X : Menu" class="w-6 h-6 transition-transform duration-300 cursor-pointer" />
       </button>
       <h1 class="text-lg font-bold">{{ title }}</h1>
@@ -92,7 +92,7 @@ const navigate = (item: { path: string; disabled?: boolean }) => {
       <!-- 다크모드 토글 버튼 -->
       <button
           @click="toggleDarkMode"
-          class="p-2 rounded-lg text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+          class="p-2 rounded-lg text-gray-700 dark:text-neutral-100 hover:bg-gray-100 dark:hover:bg-neutral-700 transition-colors duration-200"
           :title="isDark ? '라이트 모드로 전환' : '다크 모드로 전환'"
       >
         <component :is="isDark ? Sun : Moon" class="w-5 h-5" />
@@ -109,15 +109,15 @@ const navigate = (item: { path: string; disabled?: boolean }) => {
       <aside
           v-if="isSidebarOpen"
           ref="sidebarRef"
-          class="fixed top-0 left-0 w-72 max-w-[90%] h-full bg-white dark:bg-gray-800 shadow-2xl z-50 p-5 flex flex-col"
+          class="fixed top-0 left-0 w-72 max-w-[90%] h-full bg-white dark:bg-neutral-800 shadow-2xl z-50 p-5 flex flex-col"
       >
         <div class="flex items-center justify-between mb-6">
           <div class="flex items-center gap-3">
             <img src="/assets/9up_app_logo.webp" alt="logo" class="w-10 h-10 rounded-md" />
-            <h2 class="text-lg font-bold text-gray-800 dark:text-white">{{title}}</h2>
+            <h2 class="text-lg font-bold text-gray-800 dark:text-neutral-100">{{title}}</h2>
           </div>
           <button @click="isSidebarOpen = false">
-            <X class="w-5 h-5 text-gray-700 dark:text-white cursor-pointer" />
+            <X class="w-5 h-5 text-gray-700 dark:text-neutral-100 cursor-pointer" />
           </button>
         </div>
 
@@ -129,10 +129,10 @@ const navigate = (item: { path: string; disabled?: boolean }) => {
               class="px-4 py-2 rounded-lg transition-all duration-200 font-medium text-left"
               :class="[
               item.disabled
-                ? 'text-gray-400 dark:text-gray-500 cursor-not-allowed opacity-60'
+                ? 'text-neutral-400 dark:text-neutral-500 cursor-not-allowed opacity-60'
                 : route.path === item.path
                   ? 'bg-blue-600 text-white shadow'
-                  : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
+                  : 'text-gray-700 dark:text-neutral-200 hover:bg-gray-100 dark:hover:bg-neutral-700'
             ]"
               :disabled="item.disabled"
           >

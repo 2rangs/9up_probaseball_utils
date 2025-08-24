@@ -312,11 +312,11 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocClick))
       <!-- === LEFT COLUMN: 스킬 + 강화 스킬 === -->
       <div class="space-y-4">
         <!-- 스킬 -->
-        <section class="rounded-lg border border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 shadow-sm">
-          <button type="button" class="w-full px-4 py-3 flex items-center justify-between"
+        <section class="rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white/95 dark:bg-neutral-900/95 shadow-sm">
+          <button type="button" class="w-full px-4 py-3 flex items-center justify-between hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-t-lg transition-colors"
                   @click="toggleCollapse('skill')" :aria-expanded="collapses.skill">
-            <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200">{{ fieldLabels?.skill || '스킬' }}</h3>
-            <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+            <h3 class="text-sm font-semibold text-neutral-700 dark:text-neutral-200">{{ fieldLabels?.skill || '스킬' }}</h3>
+            <div class="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400">
               <span>선택 {{ selectedCount('skill') }}개</span>
               <ChevronDown class="w-4 h-4 transition-transform" :class="collapses.skill ? 'rotate-180' : ''"/>
             </div>
@@ -324,33 +324,33 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocClick))
 
           <div v-if="collapses.skill" class="p-4 pt-0">
             <div v-if="hasSkills"
-                 class="overflow-y-auto overscroll-contain rounded-lg border border-gray-200 dark:border-gray-700 p-2 bg-gray-50/80 dark:bg-gray-800/80 max-h-56">
+                 class="overflow-y-auto overscroll-contain rounded-lg border border-neutral-200 dark:border-neutral-700 p-2 bg-neutral-50/80 dark:bg-neutral-800/80 max-h-56">
               <div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-1.5 sm:gap-2">
                 <button
                   v-for="skill in props.filterOptions?.skill ?? []" :key="skill" :title="skill"
                   @click="toggleFilter('skill', skill)"
                   class="group relative inline-flex flex-col items-center justify-center gap-2 rounded-xl border py-2 text-xs font-medium select-none
-                         focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 transition-[border-color,filter,box-shadow] duration-100
+                         focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 transition-all duration-200
                          w-[70px] md:w-[74px] lg:w-[78px]"
                   :class="isSelected('skill', skill)
-                    ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
-                    : 'bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600'">
+                    ? 'bg-blue-500 text-white border-blue-500 shadow-md hover:bg-blue-600 dark:bg-blue-700 dark:border-blue-700 dark:hover:bg-blue-600'
+                    : 'bg-white dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200 border-neutral-200 dark:border-neutral-600 hover:bg-blue-50 dark:hover:bg-neutral-700 hover:border-blue-300 dark:hover:border-neutral-500'">
                   <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-lg"
-                       :class="['bg-gray-50 dark:bg-gray-700', isSelected('skill', skill) ? 'ring-2 ring-blue-400 bg-white/10' : '', `bg-${matchSkillInfo(skill,'normal')}`]"/>
+                       :class="['bg-neutral-100 dark:bg-neutral-700', isSelected('skill', skill) ? 'ring-2 ring-blue-300 bg-white/20' : '', `bg-${matchSkillInfo(skill,'normal')}`]"/>
                   <span class="block w-full text-center font-semibold truncate">{{ skill }}</span>
                 </button>
               </div>
             </div>
-            <div v-else class="px-4 py-8 text-sm text-center text-gray-400 dark:text-gray-500">스킬 데이터가 없습니다.</div>
+            <div v-else class="px-4 py-8 text-sm text-center text-neutral-500 dark:text-neutral-400">스킬 데이터가 없습니다.</div>
           </div>
         </section>
 
         <!-- 강화 스킬 -->
-        <section class="rounded-lg border border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 shadow-sm">
-          <button type="button" class="w-full px-4 py-3 flex items-center justify-between"
+        <section class="rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white/95 dark:bg-neutral-900/95 shadow-sm">
+          <button type="button" class="w-full px-4 py-3 flex items-center justify-between hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-t-lg transition-colors"
                   @click="toggleCollapse('enhancedSkill')" :aria-expanded="collapses.enhancedSkill">
-            <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200">{{ fieldLabels?.enhancedSkill || '강화 스킬' }}</h3>
-            <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+            <h3 class="text-sm font-semibold text-neutral-700 dark:text-neutral-200">{{ fieldLabels?.enhancedSkill || '강화 스킬' }}</h3>
+            <div class="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400">
               <span>선택 {{ selectedCount('enhancedSkill') }}개</span>
               <ChevronDown class="w-4 h-4 transition-transform" :class="collapses.enhancedSkill ? 'rotate-180' : ''"/>
             </div>
@@ -358,24 +358,24 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocClick))
 
           <div v-if="collapses.enhancedSkill" class="p-4 pt-0">
             <div v-if="hasEnhancedSkills"
-                 class="overflow-y-auto overscroll-contain rounded-lg border border-gray-200 dark:border-gray-700 p-2 bg-gray-50/80 dark:bg-gray-800/80 max-h-56">
+                 class="overflow-y-auto overscroll-contain rounded-lg border border-neutral-200 dark:border-neutral-700 p-2 bg-neutral-50/80 dark:bg-neutral-800/80 max-h-56">
               <div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-1.5 sm:gap-2">
                 <button
                   v-for="skill in props.filterOptions?.enhancedSkill ?? []" :key="skill" :title="skill"
                   @click="toggleFilter('enhancedSkill', skill)"
                   class="group relative inline-flex flex-col items-center justify-center gap-2 rounded-xl border py-2 text-xs font-medium select-none
-                         focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 transition-[border-color,filter,box-shadow] duration-100
+                         focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 transition-all duration-200
                          w-[70px] md:w-[74px] lg:w-[78px]"
                   :class="isSelected('enhancedSkill', skill)
-                    ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
-                    : 'bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600'">
+                    ? 'bg-blue-500 text-white border-blue-500 shadow-md hover:bg-blue-600 dark:bg-blue-700 dark:border-blue-700 dark:hover:bg-blue-600'
+                    : 'bg-white dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200 border-neutral-200 dark:border-neutral-600 hover:bg-blue-50 dark:hover:bg-neutral-700 hover:border-blue-300 dark:hover:border-neutral-500'">
                   <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-lg"
-                       :class="['bg-gray-50 dark:bg-gray-700', isSelected('enhancedSkill', skill) ? 'ring-2 ring-blue-400 bg-white/10' : '', `bg-${matchSkillInfo(skill,'enhanced')}`]"/>
+                       :class="['bg-neutral-100 dark:bg-neutral-700', isSelected('enhancedSkill', skill) ? 'ring-2 ring-blue-300 bg-white/20' : '', `bg-${matchSkillInfo(skill,'enhanced')}`]"/>
                   <span class="block w-full text-center font-semibold">{{ skill }}</span>
                 </button>
               </div>
             </div>
-            <div v-else class="px-4 py-8 text-sm text-center text-gray-400 dark:text-gray-500">강화 스킬 데이터가 없습니다.</div>
+            <div v-else class="px-4 py-8 text-sm text-center text-neutral-500 dark:text-neutral-400">강화 스킬 데이터가 없습니다.</div>
           </div>
         </section>
       </div>
@@ -383,48 +383,48 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocClick))
       <!-- === RIGHT COLUMN: 포지션 + 연도 === -->
       <div class="space-y-4">
         <!-- 포지션 -->
-        <section class="rounded-lg border border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 shadow-sm">
-          <button type="button" class="w-full px-4 py-3 flex items-center justify-between"
+        <section class="rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white/95 dark:bg-neutral-900/95 shadow-sm">
+          <button type="button" class="w-full px-4 py-3 flex items-center justify-between hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-t-lg transition-colors"
                   @click="toggleCollapse('position')" :aria-expanded="collapses.position">
-            <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200">{{ fieldLabels?.position || '포지션' }}</h3>
-            <ChevronDown class="w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform" :class="collapses.position ? 'rotate-180' : ''"/>
+            <h3 class="text-sm font-semibold text-neutral-700 dark:text-neutral-200">{{ fieldLabels?.position || '포지션' }}</h3>
+            <ChevronDown class="w-4 h-4 text-neutral-500 dark:text-neutral-400 transition-transform" :class="collapses.position ? 'rotate-180' : ''"/>
           </button>
 
           <div v-if="collapses.position" class="px-4 pb-4 space-y-4 sm:space-y-5">
             <div>
-              <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2">외야수 / 지명타자</h4>
+              <h4 class="text-xs font-semibold text-neutral-600 dark:text-neutral-400 mb-2">외야수 / 지명타자</h4>
               <div class="grid grid-cols-4 gap-2 sm:gap-4">
                 <button v-for="pos in ['LF','CF','RF','DH']" :key="'of-'+pos"
                         @click="toggleFilter('position', pos)"
-                        :class="['px-2 py-1.5 rounded-md text-sm font-bold border transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60',
-                                 isSelected('position', pos) ? 'bg-blue-500 text-white border-blue-500 shadow-sm'
-                                                             : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20']">
+                        :class="['px-2 py-1.5 rounded-md text-sm font-bold border transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
+                                 isSelected('position', pos) ? 'bg-blue-500 text-white border-blue-500 shadow-md hover:bg-blue-600 dark:bg-blue-700 dark:border-blue-700 dark:hover:bg-blue-600'
+                                                             : 'bg-white dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200 border-neutral-200 dark:border-neutral-600 hover:bg-blue-50 dark:hover:bg-neutral-700 hover:border-blue-300 dark:hover:border-neutral-500']">
                   {{ pos }}
                 </button>
               </div>
             </div>
 
             <div>
-              <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2">내야</h4>
+              <h4 class="text-xs font-semibold text-neutral-600 dark:text-neutral-400 mb-2">내야</h4>
               <div class="grid grid-cols-5 gap-2 sm:gap-3">
                 <button v-for="pos in ['1B','2B','SS','3B','C']" :key="'if-'+pos"
                         @click="toggleFilter('position', pos === '1B' ? 'B1' : pos === '2B' ? 'B2' : pos === '3B' ? 'B3' : pos)"
-                        :class="['px-2 py-1.5 rounded-md text-sm font-bold border transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60',
-                                 isSelected('position', (pos === '1B' ? 'B1' : pos === '2B' ? 'B2' : pos === '3B' ? 'B3' : pos)) ? 'bg-blue-500 text-white border-blue-500 shadow-sm'
-                                                                                                                                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20']">
+                        :class="['px-2 py-1.5 rounded-md text-sm font-bold border transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
+                                 isSelected('position', (pos === '1B' ? 'B1' : pos === '2B' ? 'B2' : pos === '3B' ? 'B3' : pos)) ? 'bg-blue-500 text-white border-blue-500 shadow-md hover:bg-blue-600 dark:bg-blue-700 dark:border-blue-700 dark:hover:bg-blue-600'
+                                                                                                                                  : 'bg-white dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200 border-neutral-200 dark:border-neutral-600 hover:bg-blue-50 dark:hover:bg-neutral-700 hover:border-blue-300 dark:hover:border-neutral-500']">
                   {{ pos }}
                 </button>
               </div>
             </div>
 
             <div>
-              <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2">선발투수 / 중간계투</h4>
+              <h4 class="text-xs font-semibold text-neutral-600 dark:text-neutral-400 mb-2">선발투수 / 중간계투</h4>
               <div class="grid grid-cols-3 gap-2 sm:gap-3">
                 <button v-for="pos in ['SP','RP']" :key="'pd-'+pos"
                         @click="toggleFilter('position', pos)"
-                        :class="['px-2 py-1.5 rounded-md text-sm font-bold border transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60',
-                                 isSelected('position', pos) ? 'bg-blue-500 text-white border-blue-500 shadow-sm'
-                                                             : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20']">
+                        :class="['px-2 py-1.5 rounded-md text-sm font-bold border transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
+                                 isSelected('position', pos) ? 'bg-blue-500 text-white border-blue-500 shadow-md hover:bg-blue-600 dark:bg-blue-700 dark:border-blue-700 dark:hover:bg-blue-600'
+                                                             : 'bg-white dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200 border-neutral-200 dark:border-neutral-600 hover:bg-blue-50 dark:hover:bg-neutral-700 hover:border-blue-300 dark:hover:border-neutral-500']">
                   {{ pos }}
                 </button>
               </div>
@@ -433,23 +433,23 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocClick))
         </section>
 
         <!-- 연도 -->
-        <section class="rounded-lg border border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 shadow-sm">
-          <button type="button" class="w-full px-4 py-3 flex items-center justify-between"
+        <section class="rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white/95 dark:bg-neutral-900/95 shadow-sm">
+          <button type="button" class="w-full px-4 py-3 flex items-center justify-between hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-t-lg transition-colors"
                   @click="toggleCollapse('year')" :aria-expanded="collapses.year">
-            <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200">{{ fieldLabels?.year || '연도' }}</h3>
-            <ChevronDown class="w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform" :class="collapses.year ? 'rotate-180' : ''"/>
+            <h3 class="text-sm font-semibold text-neutral-700 dark:text-neutral-200">{{ fieldLabels?.year || '연도' }}</h3>
+            <ChevronDown class="w-4 h-4 text-neutral-500 dark:text-neutral-400 transition-transform" :class="collapses.year ? 'rotate-180' : ''"/>
           </button>
 
-          <div v-if="collapses.year" class="flex-1 overflow-y-auto m-4 mt-2 rounded-lg border border-gray-200 dark:border-gray-700 p-2 bg-gray-50/80 dark:bg-gray-800/80">
+          <div v-if="collapses.year" class="flex-1 overflow-y-auto m-4 mt-2 rounded-lg border border-neutral-200 dark:border-neutral-700 p-2 bg-neutral-50/80 dark:bg-neutral-800/80">
             <div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-2">
               <button
                 v-for="year in yearOptions" :key="year"
                 @click="toggleFilter('year', year)"
                 :class="[
-                  'inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-xs font-medium text-center border transition-colors duration-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60',
+                  'inline-flex items-center justify-center px-2.5 py-1.5 rounded-md text-xs font-medium text-center border transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
                   isSelected('year', year)
-                    ? 'bg-blue-500 text-white border-blue-500 shadow'
-                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-600 hover:bg-blue-50 dark:hover:bg-blue-900/20'
+                    ? 'bg-blue-500 text-white border-blue-500 shadow-md hover:bg-blue-600 dark:bg-blue-700 dark:border-blue-700 dark:hover:bg-blue-600'
+                    : 'bg-white dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200 border-neutral-200 dark:border-neutral-600 hover:bg-blue-50 dark:hover:bg-neutral-700 hover:border-blue-300 dark:hover:border-neutral-500'
                 ]"
               >
                 {{ year }}
@@ -458,229 +458,238 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocClick))
           </div>
         </section>
       </div>
-        <!-- === FULL-WIDTH: 레어도 · 등급 · 팀 (3행, 반응형) === -->
-<section class="col-span-full md:col-span-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 shadow-sm">
-  <button
-    type="button"
-    class="w-full px-3 md:px-4 py-3 flex items-center justify-between"
-    @click="toggleCollapse('rgt')"
-    :aria-expanded="collapses.rgt"
-  >
-    <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200">
-      {{ (fieldLabels?.rarity || '레어도') }} · {{ (fieldLabels?.grade || '등급') }} · {{ (fieldLabels?.team || '팀') }}
-    </h3>
-    <ChevronDown
-      class="w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform"
-      :class="collapses.rgt ? 'rotate-180' : ''"
-    />
-  </button>
 
-  <div v-if="collapses.rgt" class="p-2 sm:p-3 md:p-4 pt-0">
-    <section class="rounded-lg bg-white/95 dark:bg-gray-900/95">
-      <div class="divide-y divide-gray-200 dark:divide-gray-800">
+<!-- === FULL-WIDTH: 레어도 · 등급 · 팀 (3행, 반응형) === -->
+      <section class="col-span-full md:col-span-2 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white/95 dark:bg-neutral-900/95 shadow-sm">
+        <button
+          type="button"
+          class="w-full px-3 md:px-4 py-3 flex items-center justify-between hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-t-lg transition-colors"
+          @click="toggleCollapse('rgt')"
+          :aria-expanded="collapses.rgt"
+        >
+          <h3 class="text-sm font-semibold text-neutral-700 dark:text-neutral-200">
+            {{ (fieldLabels?.rarity || '레어도') }} · {{ (fieldLabels?.grade || '등급') }} · {{ (fieldLabels?.team || '팀') }}
+          </h3>
+          <ChevronDown
+            class="w-4 h-4 text-neutral-500 dark:text-neutral-400 transition-transform"
+            :class="collapses.rgt ? 'rotate-180' : ''"
+          />
+        </button>
 
-        <!-- Row 1: 레어도 (아이콘만 클릭) -->
-        <div class="grid grid-cols-1 sm:grid-cols-[auto_1fr_auto] md:grid-cols-[auto_1fr_auto] items-center gap-2 sm:gap-2.5 md:gap-3 px-3 sm:px-3.5 md:px-4 py-3 sm:py-2.5 md:py-3">
-          <span class="text-xs sm:text-[11px] md:text-xs font-semibold text-gray-600 dark:text-gray-300/90 sm:w-12 md:w-14 leading-tight">
-            {{ fieldLabels?.rarity || '레어도' }}
-          </span>
+        <div v-if="collapses.rgt" class="p-2 sm:p-3 md:p-4 pt-0">
+          <section class="rounded-lg bg-white/95 dark:bg-neutral-900/95">
+            <div class="divide-y divide-neutral-200 dark:divide-neutral-700">
 
-          <!-- 모바일: 가로 스와이프, 스냅, 페이드 -->
-          <div class="min-w-0 overflow-x-auto whitespace-nowrap no-scrollbar scroll-fade-x snap-x snap-mandatory touch-pan-x overscroll-x-contain -mx-1.5 sm:-mx-1 px-1.5 sm:px-1">
-            <div class="inline-flex items-center gap-2 sm:gap-1.5 md:gap-2">
-              <!-- wrapper는 클릭 막음, Star만 클릭 허용 -->
-              <div
-                v-for="i in 6" :key="'star-'+i"
-                class="p-1 rounded-lg sm:rounded-md snap-start select-none pointer-events-none"
-                :title="`${i} Star`"
-              >
-                <Star
-                  class="w-5 h-5 sm:w-4 sm:h-4 md:w-5 md:h-5 cursor-pointer pointer-events-auto focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400/60"
-                  :class="i <= (props.filters?.[props.rarityField!] ?? 0) ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600'"
-                  fill="currentColor"
-                  role="button"
-                  tabindex="0"
-                  :aria-pressed="i <= (props.filters?.[props.rarityField!] ?? 0)"
-                  @click="update(props.rarityField!, i === (props.filters?.[props.rarityField!] ?? 0) ? '' : i)"
-                  @keydown.enter.space="update(props.rarityField!, i === (props.filters?.[props.rarityField!] ?? 0) ? '' : i)"
-                />
+              <!-- Row 1: 레어도 (아이콘만 클릭) -->
+              <div class="grid grid-cols-1 sm:grid-cols-[auto_1fr_auto] md:grid-cols-[auto_1fr_auto] items-center gap-2 sm:gap-2.5 md:gap-3 px-3 sm:px-3.5 md:px-4 py-3 sm:py-2.5 md:py-3">
+                <span class="text-xs sm:text-[11px] md:text-xs font-semibold text-neutral-600 dark:text-neutral-300 sm:w-12 md:w-14 leading-tight">
+                  {{ fieldLabels?.rarity || '레어도' }}
+                </span>
+
+                <!-- 모바일: 가로 스와이프, 스냅, 페이드 -->
+                <div class="min-w-0 overflow-x-auto whitespace-nowrap no-scrollbar scroll-fade-x snap-x snap-mandatory touch-pan-x overscroll-x-contain -mx-1.5 sm:-mx-1 px-1.5 sm:px-1">
+                  <div class="inline-flex items-center gap-2 sm:gap-1.5 md:gap-2">
+                    <!-- wrapper는 클릭 막음, Star만 클릭 허용 -->
+                    <div
+                      v-for="i in 6" :key="'star-'+i"
+                      class="p-1 rounded-lg sm:rounded-md snap-start select-none pointer-events-none"
+                      :title="`${i} Star`"
+                    >
+                      <Star
+                        class="w-5 h-5 sm:w-4 sm:h-4 md:w-5 md:h-5 cursor-pointer pointer-events-auto focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 transition-colors duration-200"
+                        :class="i <= (props.filters?.[props.rarityField!] ?? 0) ? 'text-yellow-400 hover:text-yellow-500' : 'text-neutral-300 dark:text-neutral-600 hover:text-yellow-300'"
+                        fill="currentColor"
+                        role="button"
+                        tabindex="0"
+                        :aria-pressed="i <= (props.filters?.[props.rarityField!] ?? 0)"
+                        @click="update(props.rarityField!, i === (props.filters?.[props.rarityField!] ?? 0) ? '' : i)"
+                        @keydown.enter.space="update(props.rarityField!, i === (props.filters?.[props.rarityField!] ?? 0) ? '' : i)"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  v-if="props.filters?.[props.rarityField!]"
+                  @click="update(props.rarityField!, '')"
+                  class="order-3 sm:order-none justify-self-end mt-2 sm:mt-1 md:mt-0 ml-0 md:ml-1 px-3 sm:px-2 py-1.5 sm:py-1 text-xs rounded-lg sm:rounded-md border border-neutral-200 dark:border-neutral-600 text-neutral-700 dark:text-neutral-200 bg-white dark:bg-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-700 hover:border-neutral-300 dark:hover:border-neutral-500 transition-all duration-200 touch-manipulation"
+                >
+                  초기화
+                </button>
               </div>
-            </div>
-          </div>
 
-          <button
-            v-if="props.filters?.[props.rarityField!]"
-            @click="update(props.rarityField!, '')"
-            class="order-3 sm:order-none justify-self-end mt-2 sm:mt-1 md:mt-0 ml-0 md:ml-1 px-3 sm:px-2 py-1.5 sm:py-1 text-xs rounded-lg sm:rounded-md border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 touch-manipulation"
-          >
-            초기화
-          </button>
-        </div>
+              <!-- Row 2: 등급 (모바일=수직/그리드, 데스크탑=가로 스크롤) 이미지만 클릭 -->
+              <div class="px-3 sm:px-3.5 md:px-4 py-3 sm:py-2.5 md:py-3">
+                <!-- 모바일/태블릿 -->
+                <div class="md:hidden space-y-3">
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-semibold text-neutral-600 dark:text-neutral-300">
+                      {{ fieldLabels?.grade || '등급' }}
+                    </span>
+                    <button
+                      @click="toggleAllGrades"
+                      class="px-3 py-1.5 text-xs rounded-lg border transition-all duration-200 touch-manipulation"
+                      :class="areAllGradesSelected
+                        ? 'border-blue-300 text-blue-700 bg-blue-50 hover:bg-blue-100 dark:border-blue-600 dark:text-blue-300 dark:bg-blue-900/30 hover:dark:bg-blue-900/50'
+                        : 'border-neutral-200 text-neutral-700 bg-white hover:bg-neutral-50 dark:border-neutral-600 dark:text-neutral-200 dark:bg-neutral-800 hover:dark:bg-neutral-700'">
+                      {{ areAllGradesSelected ? '해제' : '전체' }}
+                    </button>
+                  </div>
+                  <div class="grid grid-cols-8 gap-2">
+                    <div
+                      v-for="grade in visibleGrades" :key="grade"
+                      class="aspect-square p-1 rounded-lg border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-800 transition-all duration-200 select-none hover:bg-neutral-50 dark:hover:bg-neutral-700">
+                      <img
+                        :src="`/assets/logos/grade/${grade}.png`"
+                        :alt="grade"
+                        class="w-full h-full object-contain drop-shadow-sm cursor-pointer hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 transition-all duration-300"
+                        :class="isSelected('grade', grade) 
+                          ? 'grayscale-0 brightness-100' 
+                          : 'grayscale brightness-75 hover:grayscale-0 hover:brightness-100'"
+                        role="button"
+                        tabindex="0"
+                        :aria-pressed="isSelected('grade', grade)"
+                        @click="toggleFilter('grade', grade)"
+                        @keydown.enter.space="toggleFilter('grade', grade)"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                </div>
 
-        <!-- Row 2: 등급 (모바일=수직/그리드, 데스크탑=가로 스크롤) 이미지만 클릭 -->
-        <div class="px-3 sm:px-3.5 md:px-4 py-3 sm:py-2.5 md:py-3">
-          <!-- 모바일/태블릿 -->
-          <div class="md:hidden space-y-3">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-semibold text-gray-600 dark:text-gray-300/90">
-                {{ fieldLabels?.grade || '등급' }}
-              </span>
-              <button
-                @click="toggleAllGrades"
-                class="px-3 py-1.5 text-xs rounded-lg border transition-colors touch-manipulation"
-                :class="areAllGradesSelected
-                  ? 'border-red-300 text-red-700 bg-red-50 hover:bg-red-100 dark:border-red-600 dark:text-red-400 dark:bg-red-900/20'
-                  : 'border-blue-300 text-blue-700 bg-blue-50 hover:bg-blue-100 dark:border-blue-600 dark:text-blue-400 dark:bg-blue-900/20'">
-                {{ areAllGradesSelected ? '해제' : '전체' }}
-              </button>
-            </div>
-            <div class="grid grid-cols-8 gap-2">
-              <div
-                v-for="grade in visibleGrades" :key="grade"
-                class="aspect-square p-1 rounded-lg border bg-white/95 dark:bg-gray-900/90 transition-[border-color,box-shadow] select-none"
-                :class="isSelected('grade', grade) ? 'border-blue-500 ring-1 ring-blue-300 shadow-sm' : 'border-gray-200 dark:border-gray-700'">
-                <img
-                  :src="`/assets/logos/grade/${grade}.png`"
-                  :alt="grade"
-                  class="w-full h-full object-contain drop-shadow-sm cursor-pointer hover:brightness-95 hover:grayscale-0 active:scale-[.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60"
-                  role="button"
-                  tabindex="0"
-                  :aria-pressed="isSelected('grade', grade)"
-                  @click="toggleFilter('grade', grade)"
-                  @keydown.enter.space="toggleFilter('grade', grade)"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          </div>
+                <!-- 데스크톱 -->
+                <div class="hidden md:grid md:grid-cols-[auto_1fr_auto] items-center gap-3">
+                  <span class="text-xs font-semibold text-neutral-600 dark:text-neutral-300 w-14">
+                    {{ fieldLabels?.grade || '등급' }}
+                  </span>
 
-          <!-- 데스크톱 -->
-          <div class="hidden md:grid md:grid-cols-[auto_1fr_auto] items-center gap-3">
-            <span class="text-xs font-semibold text-gray-600 dark:text-gray-300/90 w-14">
-              {{ fieldLabels?.grade || '등급' }}
-            </span>
+                  <div class="min-w-0 overflow-x-auto whitespace-nowrap no-scrollbar scroll-fade-x snap-x snap-mandatory touch-pan-x overscroll-x-contain -mx-1 px-1">
+                    <div class="inline-flex items-center gap-2">
+                      <div
+                        v-for="grade in visibleGrades" :key="grade"
+                        class="inline-flex p-1 rounded-md items-center justify-center border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-800 transition-all duration-200 select-none snap-start hover:bg-neutral-50 dark:hover:bg-neutral-700">
+                        <img
+                          :src="`/assets/logos/grade/${grade}.png`"
+                          :alt="grade"
+                          class="w-16 h-16 object-contain drop-shadow-sm cursor-pointer hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 transition-all duration-300"
+                          :class="isSelected('grade', grade) 
+                            ? 'grayscale-0 brightness-100' 
+                            : 'grayscale brightness-75 hover:grayscale-0 hover:brightness-100'"
+                          role="button"
+                          tabindex="0"
+                          :aria-pressed="isSelected('grade', grade)"
+                          @click="toggleFilter('grade', grade)"
+                          @keydown.enter.space="toggleFilter('grade', grade)"
+                          loading="lazy"
+                        />
+                      </div>
+                    </div>
+                  </div>
 
-            <div class="min-w-0 overflow-x-auto whitespace-nowrap no-scrollbar scroll-fade-x snap-x snap-mandatory touch-pan-x overscroll-x-contain -mx-1 px-1">
-              <div class="inline-flex items-center gap-2">
-                <div
-                  v-for="grade in visibleGrades" :key="grade"
-                  class="inline-flex p-1 rounded-md items-center justify-center border bg-white/95 dark:bg-gray-900/90 transition-[border-color,box-shadow] select-none snap-start"
-                  :class="isSelected('grade', grade) ? 'border-blue-500 ring-1 ring-blue-300 shadow-sm' : 'border-gray-200 dark:border-gray-700'">
-                  <img
-                    :src="`/assets/logos/grade/${grade}.png`"
-                    :alt="grade"
-                    class="w-16 h-16 object-contain drop-shadow-sm cursor-pointer hover:brightness-95 hover:grayscale-0 active:scale-[.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60"
-                    role="button"
-                    tabindex="0"
-                    :aria-pressed="isSelected('grade', grade)"
-                    @click="toggleFilter('grade', grade)"
-                    @keydown.enter.space="toggleFilter('grade', grade)"
-                    loading="lazy"
-                  />
+                  <button
+                    @click="toggleAllGrades"
+                    class="px-2 py-1 text-xs rounded-md border transition-all duration-200"
+                    :class="areAllGradesSelected
+                      ? 'border-blue-300 text-blue-700 bg-blue-50 hover:bg-blue-100 dark:border-blue-600 dark:text-blue-300 dark:bg-blue-900/30 hover:dark:bg-blue-900/50'
+                      : 'border-neutral-200 text-neutral-700 bg-white hover:bg-neutral-50 dark:border-neutral-600 dark:text-neutral-200 dark:bg-neutral-800 hover:dark:bg-neutral-700'">
+                    {{ areAllGradesSelected ? '해제' : '전체' }}
+                  </button>
                 </div>
               </div>
-            </div>
 
-            <button
-              @click="toggleAllGrades"
-              class="px-2 py-1 text-xs rounded-md border transition-colors"
-              :class="areAllGradesSelected
-                ? 'border-red-300 text-red-700 bg-red-50 hover:bg-red-100 dark:border-red-600 dark:text-red-400 dark:bg-red-900/20'
-                : 'border-blue-300 text-blue-700 bg-blue-50 hover:bg-blue-100 dark:border-blue-600 dark:text-blue-400 dark:bg-blue-900/20'">
-              {{ areAllGradesSelected ? '해제' : '전체' }}
-            </button>
-          </div>
-        </div>
+              <!-- Row 3: 팀 (모바일=수직/그리드, 데스크탑=가로 스크롤) 이미지만 클릭 -->
+              <div class="px-3 sm:px-3.5 md:px-4 py-3 sm:py-2.5 md:py-3">
+                <!-- 모바일/태블릿 -->
+                <div class="md:hidden space-y-3">
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-semibold text-neutral-600 dark:text-neutral-300">
+                      {{ fieldLabels?.team || '팀' }}
+                    </span>
+                    <button
+                      @click="toggleAllTeams"
+                      class="px-3 py-1.5 text-xs rounded-lg border transition-all duration-200 touch-manipulation"
+                      :class="allTeamsSelected
+                        ? 'border-blue-300 text-blue-700 bg-blue-50 hover:bg-blue-100 dark:border-blue-600 dark:text-blue-300 dark:bg-blue-900/30 hover:dark:bg-blue-900/50'
+                        : 'border-neutral-200 text-neutral-700 bg-white hover:bg-neutral-50 dark:border-neutral-600 dark:text-neutral-200 dark:bg-neutral-800 hover:dark:bg-neutral-700'">
+                      {{ allTeamsSelected ? '해제' : '전체' }}
+                    </button>
+                  </div>
 
-        <!-- Row 3: 팀 (모바일=수직/그리드, 데스크탑=가로 스크롤) 이미지만 클릭 -->
-        <div class="px-3 sm:px-3.5 md:px-4 py-3 sm:py-2.5 md:py-3">
-          <!-- 모바일/태블릿 -->
-          <div class="md:hidden space-y-3">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-semibold text-gray-600 dark:text-gray-300/90">
-                {{ fieldLabels?.team || '팀' }}
-              </span>
-              <button
-                @click="toggleAllTeams"
-                class="px-3 py-1.5 text-xs rounded-lg border transition-colors touch-manipulation"
-                :class="allTeamsSelected
-                  ? 'border-red-300 text-red-700 bg-red-50 hover:bg-red-100 dark:border-red-600 dark:text-red-400 dark:bg-red-900/20'
-                  : 'border-blue-300 text-blue-700 bg-blue-50 hover:bg-blue-100 dark:border-blue-600 dark:text-blue-400 dark:bg-blue-900/20'">
-                {{ allTeamsSelected ? '해제' : '전체' }}
-              </button>
-            </div>
+                  <div class="grid grid-cols-8 gap-2">
+                    <div
+                      v-for="team in props.filterOptions?.team ?? []"
+                      :key="team"
+                      class="aspect-square p-1.5 rounded-lg border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-800 transition-all duration-200 select-none hover:bg-neutral-50 dark:hover:bg-neutral-700">
+                      <img
+                        :src="teamLogos[team]" :alt="team"
+                        class="w-full h-full object-contain drop-shadow-sm cursor-pointer hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 transition-all duration-300"
+                        :class="isSelected('team', team) 
+                          ? 'grayscale-0 brightness-100' 
+                          : 'grayscale brightness-75 hover:grayscale-0 hover:brightness-100'"
+                        role="button"
+                        tabindex="0"
+                        :aria-pressed="isSelected('team', team)"
+                        @click="toggleFilter('team', team)"
+                        @keydown.enter.space="toggleFilter('team', team)"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                </div>
 
-            <div class="grid grid-cols-8 gap-2">
-              <div
-                v-for="team in props.filterOptions?.team ?? []"
-                :key="team"
-                class="aspect-square p-1.5 rounded-lg border bg-white/95 dark:bg-gray-900/90 transition-[border-color,box-shadow] select-none"
-                :class="isSelected('team', team) ? 'border-blue-500 ring-1 ring-blue-300 shadow-sm' : 'border-gray-200 dark:border-gray-700'">
-                <img
-                  :src="teamLogos[team]" :alt="team"
-                  class="w-full h-full object-contain drop-shadow-sm cursor-pointer hover:brightness-95 hover:grayscale-0 active:scale-[.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60"
-                  role="button"
-                  tabindex="0"
-                  :aria-pressed="isSelected('team', team)"
-                  @click="toggleFilter('team', team)"
-                  @keydown.enter.space="toggleFilter('team', team)"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          </div>
+                <!-- 데스크톱 -->
+                <div class="hidden md:grid md:grid-cols-[auto_1fr_auto] items-center gap-3">
+                  <span class="text-xs font-semibold text-neutral-600 dark:text-neutral-300 w-14">
+                    {{ fieldLabels?.team || '팀' }}
+                  </span>
 
-          <!-- 데스크톱 -->
-          <div class="hidden md:grid md:grid-cols-[auto_1fr_auto] items-center gap-3">
-            <span class="text-xs font-semibold text-gray-600 dark:text-gray-300/90 w-14">
-              {{ fieldLabels?.team || '팀' }}
-            </span>
+                  <div class="min-w-0 overflow-x-auto whitespace-nowrap no-scrollbar scroll-fade-x snap-x snap-mandatory touch-pan-x overscroll-x-contain -mx-1 px-1">
+                    <div class="inline-flex items-center gap-2">
+                      <div
+                        v-for="team in props.filterOptions?.team ?? []"
+                        :key="team"
+                        class="inline-flex p-1 rounded-md items-center justify-center border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-800 transition-all duration-200 select-none snap-start hover:bg-neutral-50 dark:hover:bg-neutral-700">
+                        <img
+                          :src="teamLogos[team]" :alt="team"
+                          class="w-8 h-8 object-contain drop-shadow-sm cursor-pointer hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 transition-all duration-300"
+                          :class="isSelected('team', team) 
+                            ? 'grayscale-0 brightness-100' 
+                            : 'grayscale brightness-75 hover:grayscale-0 hover:brightness-100'"
+                          role="button"
+                          tabindex="0"
+                          :aria-pressed="isSelected('team', team)"
+                          @click="toggleFilter('team', team)"
+                          @keydown.enter.space="toggleFilter('team', team)"
+                          loading="lazy"
+                        />
+                      </div>
+                    </div>
+                  </div>
 
-            <div class="min-w-0 overflow-x-auto whitespace-nowrap no-scrollbar scroll-fade-x snap-x snap-mandatory touch-pan-x overscroll-x-contain -mx-1 px-1">
-              <div class="inline-flex items-center gap-2">
-                <div
-                  v-for="team in props.filterOptions?.team ?? []"
-                  :key="team"
-                  class="inline-flex p-1 rounded-md items-center justify-center border bg-white/95 dark:bg-gray-900/90 transition-[border-color,box-shadow] select-none snap-start"
-                  :class="isSelected('team', team) ? 'border-blue-500 ring-1 ring-blue-300 shadow-sm' : 'border-gray-200 dark:border-gray-700'">
-                  <img
-                    :src="teamLogos[team]" :alt="team"
-                    class="w-8 h-8 object-contain drop-shadow-sm cursor-pointer hover:brightness-95 hover:grayscale-0 active:scale-[.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60"
-                    role="button"
-                    tabindex="0"
-                    :aria-pressed="isSelected('team', team)"
-                    @click="toggleFilter('team', team)"
-                    @keydown.enter.space="toggleFilter('team', team)"
-                    loading="lazy"
-                  />
+                  <button
+                    @click="toggleAllTeams"
+                    class="px-2 py-1 text-xs rounded-md border transition-all duration-200"
+                    :class="allTeamsSelected
+                      ? 'border-blue-300 text-blue-700 bg-blue-50 hover:bg-blue-100 dark:border-blue-600 dark:text-blue-300 dark:bg-blue-900/30 hover:dark:bg-blue-900/50'
+                      : 'border-neutral-200 text-neutral-700 bg-white hover:bg-neutral-50 dark:border-neutral-600 dark:text-neutral-200 dark:bg-neutral-800 hover:dark:bg-neutral-700'">
+                    {{ allTeamsSelected ? '해제' : '전체' }}
+                  </button>
                 </div>
               </div>
+
             </div>
-
-            <button
-              @click="toggleAllTeams"
-              class="px-2 py-1 text-xs rounded-md border transition-colors"
-              :class="allTeamsSelected
-                ? 'border-red-300 text-red-700 bg-red-50 hover:bg-red-100 dark:border-red-600 dark:text-red-400 dark:bg-red-900/20'
-                : 'border-blue-300 text-blue-700 bg-blue-50 hover:bg-blue-100 dark:border-blue-600 dark:text-blue-400 dark:bg-blue-900/20'">
-              {{ allTeamsSelected ? '해제' : '전체' }}
-            </button>
-          </div>
+          </section>
         </div>
-
-      </div>
-    </section>
-  </div>
-</section>
-
+      </section>
 
     </div> <!-- /grid -->
+
     <!-- ===== Toolbar: 이름 · 시너지 ===== -->
-    <section class="rounded-lg border border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 shadow-sm p-4">
+    <section class="rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white/95 dark:bg-neutral-900/95 shadow-sm p-4">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- 이름 -->
         <div>
-          <label class="block text-xs font-semibold text-gray-600 dark:text-gray-300/90 mb-1">
+          <label class="block text-xs font-semibold text-neutral-600 dark:text-neutral-300 mb-1">
             {{ fieldLabels?.name || '이름' }} (부분 일치)
           </label>
           <div ref="nameWrapperRef" class="relative">
@@ -692,14 +701,14 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocClick))
               @keydown.enter.prevent="onNameEnter"
               @keydown.esc="showNameSuggestions = false"
               placeholder="선수명을 입력해 주세요."
-              class="w-full bg-white/90 dark:bg-gray-900/90 border border-gray-200 dark:border-gray-700 rounded-md px-3 py-2 pr-10 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 shadow-sm focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500"
+              class="w-full bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-600 rounded-md px-3 py-2 pr-10 text-sm text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
               role="combobox" aria-expanded="showNameSuggestions" aria-controls="name-suggest"
             />
-            <Search class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500 pointer-events-none" />
+            <Search class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400 dark:text-neutral-500 pointer-events-none" />
             <ul
               v-if="showNameSuggestions && filteredNameSuggestions.length"
               id="name-suggest"
-              class="absolute z-10 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg max-h-56 md:max-h-64 overflow-y-auto"
+              class="absolute z-10 w-full mt-1 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-600 rounded-md shadow-lg max-h-56 md:max-h-64 overflow-y-auto"
               role="listbox"
             >
               <li
@@ -707,8 +716,8 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocClick))
                 :key="suggestion"
                 @mousedown.prevent="pickName(suggestion)"
                 @mouseenter="nameActiveIndex = idx"
-                class="px-3 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
-                :class="idx === nameActiveIndex ? 'bg-gray-100 dark:bg-gray-700' : ''"
+                class="px-3 py-2 text-sm cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+                :class="idx === nameActiveIndex ? 'bg-blue-50 dark:bg-blue-900/20' : ''"
                 role="option"
                 :aria-selected="idx === nameActiveIndex"
               >
@@ -720,7 +729,7 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocClick))
 
         <!-- 시너지 -->
         <div>
-          <label class="block text-xs font-semibold text-gray-600 dark:text-gray-300/90 mb-1">
+          <label class="block text-xs font-semibold text-neutral-600 dark:text-neutral-300 mb-1">
             {{ fieldLabels?.synergy || '시너지' }} (정확 일치 AND)
           </label>
           <div ref="wrapperRef" class="relative">
@@ -736,15 +745,15 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocClick))
               @compositionstart="onCompositionStart"
               @compositionend="onCompositionEnd"
               placeholder="시너지를 입력해 주세요."
-              class="w-full bg-white/90 dark:bg-gray-900/90 border border-gray-200 dark:border-gray-700 rounded-md px-3 py-2 pr-10 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 shadow-sm focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500"
+              class="w-full bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-600 rounded-md px-3 py-2 pr-10 text-sm text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-500 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
               role="combobox" aria-expanded="showSuggestions" aria-controls="syn-suggest"
             />
-            <Search class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500 pointer-events-none" />
+            <Search class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400 dark:text-neutral-500 pointer-events-none" />
 
             <ul
               v-if="showSuggestions && filteredSuggestions.length"
               id="syn-suggest"
-              class="absolute z-10 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg max-h-56 md:max-h-64 overflow-y-auto"
+              class="absolute z-10 w-full mt-1 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-600 rounded-md shadow-lg max-h-56 md:max-h-64 overflow-y-auto"
               role="listbox"
             >
               <li
@@ -752,8 +761,8 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocClick))
                 :key="suggestion"
                 @mousedown.prevent="addTag(suggestion)"
                 @mouseenter="synergyActiveIndex = idx"
-                class="px-3 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
-                :class="idx === synergyActiveIndex ? 'bg-gray-100 dark:bg-gray-700' : ''"
+                class="px-3 py-2 text-sm cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+                :class="idx === synergyActiveIndex ? 'bg-blue-50 dark:bg-blue-900/20' : ''"
                 role="option"
                 :aria-selected="idx === synergyActiveIndex"
               >
@@ -766,10 +775,10 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocClick))
           <div class="flex flex-wrap gap-2 mt-2">
             <span
               v-for="tag in selectedTags" :key="tag"
-              class="flex items-center gap-1 px-2 py-1 text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100 rounded-full"
+              class="flex items-center gap-1 px-2 py-1 text-xs bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-200 rounded-full transition-colors"
             >
               {{ tag }}
-              <button @click="removeTag(tag)" class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300" aria-label="태그 제거">&times;</button>
+              <button @click="removeTag(tag)" class="text-blue-600 hover:text-blue-800 dark:text-blue-300 dark:hover:text-blue-100 transition-colors" aria-label="태그 제거">&times;</button>
             </span>
           </div>
         </div>
@@ -778,8 +787,6 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocClick))
 
   </div>
 </template>
-
-
 
 
 

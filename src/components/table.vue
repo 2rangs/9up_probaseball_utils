@@ -116,12 +116,12 @@ function toggleExpanded(index: number) {
       <article
           v-for="(item, index) in items"
           :key="'card-' + index"
-          class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm hover:shadow-md transition-shadow"
+          class="rounded-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 shadow-sm hover:shadow-md transition-shadow"
       >
         <div class="p-4 flex items-start gap-4">
           <!-- 등급 배지 -->
           <!-- 모바일 카드: 등급 배지 -->
-          <div class="shrink-0 w-16 h-16 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center">
+          <div class="shrink-0 w-16 h-16 rounded-xl bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 flex items-center justify-center">
             <img
                 :src="`/assets/logos/grade/${item.grade}.png`"
                 :alt="item.grade"
@@ -129,11 +129,10 @@ function toggleExpanded(index: number) {
             />
           </div>
 
-
           <div class="flex-1 min-w-0">
             <!-- 상단: 이름 + 희귀도 -->
             <div class="flex items-start justify-between gap-3">
-              <h3 class="text-base font-bold text-gray-900 dark:text-gray-100 truncate">
+              <h3 class="text-base font-bold text-neutral-900 dark:text-neutral-100 truncate">
                 {{ item.name }}
               </h3>
               <div class="flex gap-0.5 shrink-0">
@@ -147,7 +146,7 @@ function toggleExpanded(index: number) {
             </div>
 
             <!-- 팀 + 연도 -->
-            <div class="mt-1 flex items-center gap-3 text-sm text-gray-600 dark:text-gray-300">
+            <div class="mt-1 flex items-center gap-3 text-sm text-neutral-600 dark:text-neutral-300">
               <div class="flex items-center gap-2">
                 <img
                     :src="findTeamLogoByKey(item.team)"
@@ -156,7 +155,7 @@ function toggleExpanded(index: number) {
                 />
                 <span class="truncate">{{ findTeamLogoByName(item.team) }}</span>
               </div>
-              <span class="text-gray-300">•</span>
+              <span class="text-neutral-300 dark:text-neutral-500">•</span>
               <span>{{ item.year || '해당 없음' }}</span>
             </div>
 
@@ -175,10 +174,10 @@ function toggleExpanded(index: number) {
 
             <!-- 시너지 -->
             <div
-                class="mt-3 w-full rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-3 py-2"
+                class="mt-3 w-full rounded-lg bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 px-3 py-2"
             >
               <p
-                  class="text-sm text-gray-800 dark:text-gray-100 leading-snug whitespace-pre-line break-words"
+                  class="text-sm text-neutral-800 dark:text-neutral-100 leading-snug whitespace-pre-line break-words"
                   :style="expandedRowIndex === index
                   ? {}
                   : { display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }"
@@ -189,7 +188,7 @@ function toggleExpanded(index: number) {
                   v-if="(item.synergy || '').length > 40"
                   @click="toggleExpanded(index)"
                   :aria-expanded="expandedRowIndex === index"
-                  class="mt-2 inline-flex items-center gap-1 text-xs text-gray-600 dark:text-gray-300 hover:text-blue-600 transition"
+                  class="mt-2 inline-flex items-center gap-1 text-xs text-neutral-600 dark:text-neutral-300 hover:text-blue-600 transition"
               >
                 <component :is="expandedRowIndex === index ? ChevronUp : ChevronDown" class="w-3.5 h-3.5" />
                 <span>{{ expandedRowIndex === index ? '접기' : '더보기' }}</span>
@@ -213,14 +212,14 @@ function toggleExpanded(index: number) {
 
     <!-- 데스크탑: 테이블 -->
     <div class="overflow-x-auto hidden md:block">
-      <table class="min-w-full text-sm table-fixed rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700">
-        <thead class="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 font-semibold text-xs uppercase tracking-wide">
+      <table class="min-w-full text-sm table-fixed rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-700">
+        <thead class="bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200 font-semibold text-xs uppercase tracking-wide">
         <tr>
           <th
               v-for="col in columns"
               :key="'th-' + col"
               :class="[
-                'border-b border-gray-300 dark:border-gray-700 whitespace-nowrap text-center h-[48px] px-3',
+                'border-b border-neutral-300 dark:border-neutral-700 whitespace-nowrap text-center h-[48px] px-3',
                 col === 'grade' ? 'w-[80px]' :
                 col === 'rarity' ? 'w-[100px]' :
                 col === 'team' ? 'w-[180px]' :
@@ -241,14 +240,14 @@ function toggleExpanded(index: number) {
         <tr
             v-for="(item, index) in items"
             :key="'row-' + index"
-            :class="index % 2 === 0 ? 'bg-white dark:bg-gray-900' : 'bg-gray-50 dark:bg-gray-800/60'"
-            class="hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+            :class="index % 2 === 0 ? 'bg-white dark:bg-neutral-900' : 'bg-neutral-50 dark:bg-neutral-800/60'"
+            class="hover:bg-neutral-100 dark:hover:bg-neutral-800 transition"
         >
           <td
               v-for="col in columns"
               :key="'td-' + col + '-' + index"
               :class="[
-                'border-b border-gray-200 dark:border-gray-700 whitespace-nowrap align-middle text-sm text-gray-800 dark:text-gray-100 h-[56px] px-3',
+                'border-b border-neutral-200 dark:border-neutral-700 whitespace-nowrap align-middle text-sm text-neutral-800 dark:text-neutral-100 h-[56px] px-3',
                 col === 'synergy' ? 'text-left' : 'text-center'
               ]"
           >
@@ -260,7 +259,6 @@ function toggleExpanded(index: number) {
                   class="w-[90px] mx-auto"
               />
             </template>
-
 
             <template v-else-if="col === 'rarity'">
               <div class="flex justify-center gap-0.5">
@@ -306,10 +304,10 @@ function toggleExpanded(index: number) {
 
             <template v-else-if="col === 'synergy'">
               <div
-                  class="w-full text-left flex items-start justify-between gap-3 rounded-md bg-gray-50 dark:bg-gray-800 px-3 py-2 border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800/80 transition-all duration-300"
+                  class="w-full text-left flex items-start justify-between gap-3 rounded-md bg-neutral-50 dark:bg-neutral-800 px-3 py-2 border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800/80 transition-all duration-300"
               >
                 <p
-                    class="flex-1 text-sm text-gray-800 dark:text-gray-100 select-text whitespace-pre-line break-words leading-snug transition-all duration-300"
+                    class="flex-1 text-sm text-neutral-800 dark:text-neutral-100 select-text whitespace-pre-line break-words leading-snug transition-all duration-300"
                     :style="expandedRowIndex === index
                       ? {}
                       : { display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }"
@@ -321,7 +319,7 @@ function toggleExpanded(index: number) {
                     v-if="(item[col] || '').length > 25"
                     @click="toggleExpanded(index)"
                     :aria-expanded="expandedRowIndex === index"
-                    class="text-gray-500 hover:text-blue-600 transition-colors duration-150 mt-0.5 shrink-0 cursor-pointer focus:outline-none"
+                    class="text-neutral-500 hover:text-blue-600 transition-colors duration-150 mt-0.5 shrink-0 cursor-pointer focus:outline-none"
                     :title="expandedRowIndex === index ? '시너지 접기' : '시너지 전체 보기'"
                 >
                   <component :is="expandedRowIndex === index ? ChevronUp : ChevronDown" class="w-4 h-4" />
