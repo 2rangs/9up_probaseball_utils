@@ -258,31 +258,31 @@ function goToPage(p: number) {
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
     <!-- Header -->
     <div class="mb-6 lg:mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-      <h1 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
+      <h1 class="text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
         스킬 목록
       </h1>
 
       <div class="w-full lg:w-auto flex flex-col sm:flex-row gap-3 sm:items-center">
         <!-- Tabs -->
         <div role="tablist"
-             class="inline-flex w-full sm:w-auto rounded-md border border-gray-300 dark:border-gray-600 overflow-hidden shadow-sm">
+             class="inline-flex w-full sm:w-auto rounded-md border border-neutral-300 dark:border-neutral-600 overflow-hidden shadow-sm">
           <button
             role="tab"
             :aria-selected="type==='normal'"
             class="flex-1 sm:flex-none px-4 py-2 text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
             :class="type==='normal'
-              ? 'bg-gray-200 dark:bg-gray-700 font-semibold text-gray-900 dark:text-gray-100'
-              : 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'"
+              ? 'bg-neutral-200 dark:bg-neutral-700 font-semibold text-neutral-900 dark:text-neutral-100'
+              : 'bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800'"
             @click="type='normal'">
             일반
           </button>
           <button
             role="tab"
             :aria-selected="type==='enhanced'"
-            class="flex-1 sm:flex-none px-4 py-2 text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 border-l border-gray-300 dark:border-gray-600"
+            class="flex-1 sm:flex-none px-4 py-2 text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 border-l border-neutral-300 dark:border-neutral-600"
             :class="type==='enhanced'
-              ? 'bg-gray-200 dark:bg-gray-700 font-semibold text-gray-900 dark:text-gray-100'
-              : 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'"
+              ? 'bg-neutral-200 dark:bg-neutral-700 font-semibold text-neutral-900 dark:text-neutral-100'
+              : 'bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800'"
             @click="type='enhanced'">
             강화
           </button>
@@ -294,14 +294,14 @@ function goToPage(p: number) {
             v-model="q"
             type="text"
             placeholder="스킬명 검색..."
-            class="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 pr-10 text-sm text-gray-900 dark:text-gray-100
-                   placeholder-gray-400 dark:placeholder-gray-500 shadow-sm focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+            class="w-full rounded-md border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 px-3 py-2 pr-10 text-sm text-neutral-900 dark:text-neutral-100
+                   placeholder-neutral-400 dark:placeholder-neutral-500 shadow-sm focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
             aria-label="스킬 검색"
           />
           <button
             v-if="q"
             @click="q=''"
-            class="absolute inset-y-0 right-0 px-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none"
+            class="absolute inset-y-0 right-0 px-3 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 focus:outline-none"
             aria-label="검색어 지우기">
             ✕
           </button>
@@ -311,17 +311,17 @@ function goToPage(p: number) {
 
     <!-- Top toolbar: result summary + page size -->
     <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-      <div class="text-sm text-gray-600 dark:text-gray-300">
+      <div class="text-sm text-neutral-600 dark:text-neutral-300">
         총 <span class="font-semibold">{{ totalCount }}</span>개
         <template v-if="totalCount">
           · <span class="font-semibold">{{ pageStartIndex + 1 }}</span>–<span class="font-semibold">{{ pageEndIndex }}</span> 표시
         </template>
       </div>
       <div class="flex items-center gap-2">
-        <label class="text-sm text-gray-600 dark:text-gray-300">페이지당</label>
+        <label class="text-sm text-neutral-600 dark:text-neutral-300">페이지당</label>
         <select
           v-model.number="pageSize"
-          class="rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-2 py-1 text-sm text-gray-900 dark:text-gray-100
+          class="rounded-md border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 px-2 py-1 text-sm text-neutral-900 dark:text-neutral-100
                  focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10">
           <option v-for="n in pageSizeOptions" :key="n" :value="n">{{ n }}</option>
         </select>
@@ -331,7 +331,7 @@ function goToPage(p: number) {
     <!-- Enhanced-only Options (level slider) -->
     <div v-if="type === 'enhanced'" class="mb-6 flex flex-wrap items-center gap-4">
       <div class="flex items-center gap-3">
-        <span class="text-sm text-gray-700 dark:text-gray-300">레벨</span>
+        <span class="text-sm text-neutral-700 dark:text-neutral-300">레벨</span>
         <!-- 존재감은 16레벨까지 커버. 다른 스킬은 클램프됨 -->
         <input type="range" min="1" max="16" v-model.number="level" class="slider w-36 accent-blue-600" />
         <span class="inline-flex items-center rounded-full border border-blue-200 dark:border-blue-800 px-2 py-0.5 text-xs font-semibold
@@ -343,12 +343,12 @@ function goToPage(p: number) {
 
     <!-- Loading -->
     <div v-if="loading" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-      <div v-for="i in 6" :key="i" class="rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 animate-pulse">
-        <div class="h-6 w-40 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
+      <div v-for="i in 6" :key="i" class="rounded-md border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 p-4 animate-pulse">
+        <div class="h-6 w-40 bg-neutral-200 dark:bg-neutral-700 rounded mb-4"></div>
         <div class="space-y-2">
-          <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded"></div>
-          <div class="h-3 w-11/12 bg-gray-200 dark:bg-gray-700 rounded"></div>
-          <div class="h-3 w-9/12 bg-gray-200 dark:bg-gray-700 rounded"></div>
+          <div class="h-3 bg-neutral-200 dark:bg-neutral-700 rounded"></div>
+          <div class="h-3 w-11/12 bg-neutral-200 dark:bg-neutral-700 rounded"></div>
+          <div class="h-3 w-9/12 bg-neutral-200 dark:bg-neutral-700 rounded"></div>
         </div>
       </div>
     </div>
@@ -367,22 +367,22 @@ function goToPage(p: number) {
         <div
           v-for="card in pagedList"
           :key="card.kind + ':' + card.name"
-          class="group rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4 shadow-sm hover:shadow-md transition-shadow"
+          class="group rounded-md border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 p-4 shadow-sm hover:shadow-md transition-shadow"
         >
           <!-- Header -->
           <div class="flex items-start justify-between mb-3">
             <div class="flex items-center gap-3">
               <div :class="spriteBgClass(card)"
-                   class="h-10 w-10 rounded-md ring-1 ring-gray-200 dark:ring-gray-700 shrink-0"></div>
-              <h3 class="font-semibold text-gray-900 dark:text-gray-100 leading-tight">
+                   class="h-10 w-10 rounded-md ring-1 ring-neutral-200 dark:ring-neutral-700 shrink-0"></div>
+              <h3 class="font-semibold text-neutral-900 dark:text-neutral-100 leading-tight">
                 {{ card.name }}
               </h3>
             </div>
           </div>
 
           <!-- Effects -->
-          <div v-if="card.kind === 'normal'" class="text-sm text-gray-800 dark:text-gray-200">
-            <pre class="whitespace-pre-wrap leading-relaxed font-mono text-[13px] bg-gray-50 dark:bg-gray-800/60 rounded p-3 border border-gray-100 dark:border-gray-800">
+          <div v-if="card.kind === 'normal'" class="text-sm text-neutral-800 dark:text-neutral-200">
+            <pre class="whitespace-pre-wrap leading-relaxed font-mono text-[13px] bg-neutral-50 dark:bg-neutral-800/60 rounded p-3 border border-neutral-100 dark:border-neutral-800">
 {{ card.effectsNormal }}
             </pre>
           </div>
@@ -393,18 +393,18 @@ function goToPage(p: number) {
               v-if="card.name === '존재감' && yearOptionsFor(card.name).length"
               class="flex items-center gap-3 mb-1"
             >
-              <span class="text-xs text-gray-600 dark:text-gray-300">년도</span>
+              <span class="text-xs text-neutral-600 dark:text-neutral-300">년도</span>
               <select
                 v-model="selectedYearByName[card.name]"
-                class="rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-2 py-1 text-xs
-                       text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                class="rounded-md border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 px-2 py-1 text-xs
+                       text-neutral-900 dark:text-neutral-100 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
               >
                 <option v-for="y in yearOptionsFor(card.name)" :key="y" :value="y">{{ y }}</option>
               </select>
             </div>
 
             <!-- 레벨 효과 -->
-            <ul v-if="levelEffects(card, level)?.length" class="list-disc pl-5 text-sm text-gray-800 dark:text-gray-200">
+            <ul v-if="levelEffects(card, level)?.length" class="list-disc pl-5 text-sm text-neutral-800 dark:text-neutral-200">
               <li v-for="(e, i) in levelEffects(card, level)" :key="'l'+i">
                 {{ renderEffectItem(e) }}
               </li>
@@ -413,7 +413,7 @@ function goToPage(p: number) {
             <!-- (필요 시) 연도 고정 효과 -->
             <ul
               v-if="yearEffects(card, selectedYearByName[card.name])?.length"
-              class="list-disc pl-5 text-sm text-gray-800 dark:text-gray-200"
+              class="list-disc pl-5 text-sm text-neutral-800 dark:text-neutral-200"
             >
               <li v-for="(e, i) in yearEffects(card, selectedYearByName[card.name])" :key="'y'+i">
                 {{ renderEffectItem(e) }}
@@ -422,7 +422,7 @@ function goToPage(p: number) {
           </div>
 
           <!-- Description -->
-          <p v-if="card.description" class="mt-3 text-xs leading-relaxed text-gray-600 dark:text-gray-400">
+          <p v-if="card.description" class="mt-3 text-xs leading-relaxed text-neutral-600 dark:text-neutral-400">
             {{ card.description }}
           </p>
         </div>
@@ -432,35 +432,35 @@ function goToPage(p: number) {
       <div v-if="totalPages > 1" class="mt-6 flex flex-col items-center gap-3">
         <nav class="inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
           <button
-            class="px-3 py-2 text-sm border border-gray-300 dark:border-gray-700 rounded-l-md
-                   bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50"
+            class="px-3 py-2 text-sm border border-neutral-300 dark:border-neutral-700 rounded-l-md
+                   bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 disabled:opacity-50"
             :disabled="page === 1"
             @click="goToPage(1)"
             aria-label="첫 페이지">
             <ChevronsLeft class="w-4 h-4" />
           </button>
           <button
-            class="px-3 py-2 text-sm border border-gray-300 dark:border-gray-700
-                   bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50"
+            class="px-3 py-2 text-sm border border-neutral-300 dark:border-neutral-700
+                   bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 disabled:opacity-50"
             :disabled="page === 1"
             @click="goToPage(page - 1)"
             aria-label="이전">
             <ChevronLeft class="w-4 h-4" />
           </button>
-          <span class="px-4 py-2 text-sm border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200">
+          <span class="px-4 py-2 text-sm border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200">
             {{ page }} / {{ totalPages }}
           </span>
           <button
-            class="px-3 py-2 text-sm border border-gray-300 dark:border-gray-700
-                   bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50"
+            class="px-3 py-2 text-sm border border-neutral-300 dark:border-neutral-700
+                   bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 disabled:opacity-50"
             :disabled="page === totalPages"
             @click="goToPage(page + 1)"
             aria-label="다음">
             <ChevronRight class="w-4 h-4" />
           </button>
           <button
-            class="px-3 py-2 text-sm border border-gray-300 dark:border-gray-700 rounded-r-md
-                   bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50"
+            class="px-3 py-2 text-sm border border-neutral-300 dark:border-neutral-700 rounded-r-md
+                   bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 disabled:opacity-50"
             :disabled="page === totalPages"
             @click="goToPage(totalPages)"
             aria-label="마지막 페이지">
@@ -468,7 +468,7 @@ function goToPage(p: number) {
           </button>
         </nav>
 
-        <div class="text-xs text-gray-500 dark:text-gray-400">
+        <div class="text-xs text-neutral-500 dark:text-neutral-400">
           {{ pageStartIndex + 1 }}–{{ pageEndIndex }} / {{ totalCount }}
         </div>
       </div>
@@ -476,8 +476,8 @@ function goToPage(p: number) {
 
     <!-- Empty -->
     <div v-if="!loading && !error && !totalCount" class="text-center py-12">
-      <div class="inline-flex items-center rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-3">
-        <span class="text-sm text-gray-500 dark:text-gray-400">조건에 맞는 스킬이 없습니다</span>
+      <div class="inline-flex items-center rounded-md border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-4 py-3">
+        <span class="text-sm text-neutral-500 dark:text-neutral-400">조건에 맞는 스킬이 없습니다</span>
       </div>
     </div>
   </div>

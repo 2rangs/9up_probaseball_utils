@@ -4,6 +4,38 @@ import { Star, Search, ChevronDown } from 'lucide-vue-next'
 import type { PropType } from 'vue'
 
 /* =========================
+   HTML 디코딩 유틸리티 함수
+========================= */
+const decodeHtmlEntities = (text: string): string => {
+  if (!text) return text;
+  
+  return text
+    .replace(/&#x27;/g, "'")
+    .replace(/&#39;/g, "'")
+    .replace(/&apos;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&'); // 마지막에 처리
+}
+
+// JSON 데이터의 텍스트 필드를 재귀적으로 디코딩
+const decodeJsonData = (data: any): any => {
+  if (typeof data === 'string') {
+    return decodeHtmlEntities(data);
+  } else if (Array.isArray(data)) {
+    return data.map(decodeJsonData);
+  } else if (data && typeof data === 'object') {
+    const decoded: any = {};
+    for (const [key, value] of Object.entries(data)) {
+      decoded[key] = decodeJsonData(value);
+    }
+    return decoded;
+  }
+  return data;
+}
+
+/* =========================
    Props / Emits
 ========================= */
 const props = defineProps({
@@ -62,7 +94,7 @@ const areAllGradesSelected = computed(
   () => visibleGrades.value.length > 0 && visibleGrades.value.every((g) => isSelected('grade', g))
 )
 
-/** ✅ 팀: ‘모두 선택된 경우’에만 true (선택 비었으면 false) */
+/** ✅ 팀: '모두 선택된 경우'에만 true (선택 비었으면 false) */
 const allTeamsSelected = computed(() => {
   const teams = props.filterOptions?.team ?? []
   if (!teams.length) return false
@@ -89,7 +121,7 @@ const toggleAllTeams = () => {
   })
 }
 
-/** ✅ 팀 옵션 진입 시: 선택이 비어 있으면 “전체 선택”으로 초기화 */
+/** ✅ 팀 옵션 진입 시: 선택이 비어 있으면 "전체 선택"으로 초기화 */
 watch(
   () => props.filterOptions?.team,
   (teams) => {
@@ -176,19 +208,42 @@ const teamLogos: Record<string, string> = {
 
 const normalSkillData = ref<any[]>([])
 const enhancedSkillData = ref<any[]>([])
+
+// ✅ JSON 로드 시 HTML 엔티티 디코딩 적용
 onMounted(async () => {
-  const [n, e] = await Promise.all([
-    fetch('/DB/normal_skill.json'),
-    fetch('/DB/enhanced_skill.json')
-  ])
-  normalSkillData.value = await n.json()
-  enhancedSkillData.value = await e.json()
+  try {
+    const [n, e] = await Promise.all([
+      fetch('/DB/normal_skill.json'),
+      fetch('/DB/enhanced_skill.json')
+    ])
+    
+    const normalData = await n.json()
+    const enhancedData = await e.json()
+    
+    // HTML 엔티티 디코딩 적용
+    normalSkillData.value = decodeJsonData(normalData)
+    enhancedSkillData.value = enhancedData
+  
+  } catch (error) {
+    console.error('Failed to load skill data:', error)
+  }
 })
 
 const matchSkillInfo = (skill: string, type: string) => {
   if (type === 'normal') return normalSkillData.value.find((s) => s.skill === skill)?.image || ''
   if (type === 'enhanced' || type === 'enhanced:GG') return enhancedSkillData.value.find((s) => s.enhanced_skill === skill)?.image || ''
   return ''
+}
+
+// ✅ 스킬 텍스트를 안전하게 반환하는 함수 추가
+const getSkillText = (skill: string, type: 'normal' | 'enhanced' = 'enhanced'): string => {
+  if (type === 'normal') {
+    const found = normalSkillData.value.find((s) => s.skill === skill)
+    return found ? decodeHtmlEntities(found.skill || skill) : skill
+  }
+  
+  const found = enhancedSkillData.value.find((s) => s.enhanced_skill === skill)
+  return found ? decodeHtmlEntities(found.enhanced_skill || skill) : skill
 }
 
 /* =========================
@@ -301,6 +356,12 @@ const onDocClick = (ev: MouseEvent) => {
 }
 onMounted(() => document.addEventListener('click', onDocClick))
 onBeforeUnmount(() => document.removeEventListener('click', onDocClick))
+
+// ✅ 유틸리티 함수들을 외부에서 사용할 수 있도록 export
+defineExpose({
+  decodeHtmlEntities,
+  getSkillText
+})
 </script>
 
 <template>
@@ -787,21 +848,6 @@ onBeforeUnmount(() => document.removeEventListener('click', onDocClick))
 
   </div>
 </template>
-
-
-
-<style scoped>
-/* 아코디언 트랜지션 */
-.acc-enter-active, .acc-leave-active {
-  transition: transform .15s ease, opacity .15s ease;
-  transform-origin: top;
-}
-.acc-enter-from, .acc-leave-to {
-  opacity: 0;
-  transform: scaleY(.98);
-}
-</style>
-
 
 <style scoped>
 .acc-enter-active, .acc-leave-active {

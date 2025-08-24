@@ -77,7 +77,6 @@ const lc = (s: unknown) => String(s ?? '').toLowerCase().trim()
 const normText = (s: unknown) =>
     String(s ?? '')
         .normalize('NFKC')
-        .replace(/\u200B|\u200C|\u200D|\u2060/g, '')
         .replace(/\s+/g, ' ')
         .trim()
         .toLowerCase()
@@ -93,7 +92,7 @@ const toArray = (v: unknown, { allowComma = true }: { allowComma?: boolean } = {
       } catch { /* ignore */ }
     }
     const splitter = allowComma ? CSV_SPLIT : /[\u3001;、;]+/
-    return t.split(splitter).map(s => s.replace(/^["']|["']$/g, '').trim()).filter(Boolean)
+    return t.split(splitter).map(s => s.trim()).filter(Boolean)
   }
   return [String(v ?? '').trim()].filter(Boolean)
 }
@@ -163,7 +162,6 @@ const filterOptions = computed(() => {
     toArray(p.skill).forEach(v => searchSet.add(v))
   }
   options['searchSuggestions'] = searchSet
-
   return Object.fromEntries(
       Object.entries(options).map(([k, set]) => [k, [...set].sort((a, b) => a.localeCompare(b))])
   )
@@ -285,7 +283,7 @@ watch(() => ({ ...filters.value }), () => { currentPage.value = 1 }, { deep: tru
 onMounted(loadCsv)
 
 async function loadCsv() {
-  const path = '/DB/sample_sorted.csv'
+  const path = '/DB/player_sorted.csv'
   const res = await fetch(path)
   const text = await res.text()
 

@@ -158,7 +158,7 @@ const synergyViewMode = ref('by-synergy')
    로딩
 ========================= */
 const loadPlayerData = async () => {
-  const response = await fetch('/DB/sample_sorted.csv', { cache: 'no-store' })
+  const response = await fetch('/DB/player_sorted.csv', { cache: 'no-store' })
   const csvText = await response.text()
   const result: Raw[] = []
   Papa.parse(csvText, {
@@ -171,7 +171,7 @@ const loadPlayerData = async () => {
 }
 
 const loadSynergyData = async () => {
-  const response = await fetch('/DB/test.json', { cache: 'no-store' })
+  const response = await fetch('/DB/synergys.json', { cache: 'no-store' })
   if (!response.ok) throw new Error(`Synergy load failed: ${response.status}`)
   const json = await response.json()
   synergys.value = (Array.isArray(json) ? json : [])

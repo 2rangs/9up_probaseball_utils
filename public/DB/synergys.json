@@ -77,7 +77,13 @@
           "value": 50.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "k_season",
+      "tier": 150,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 5,
@@ -97,7 +103,13 @@
           "value": 50.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "wins_season",
+      "tier": 15,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 6,
@@ -117,7 +129,13 @@
           "value": 50.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "hits_season",
+      "tier": 170,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 7,
@@ -137,7 +155,13 @@
           "value": 25.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "hits_season",
+      "tier": 180,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 8,
@@ -157,7 +181,13 @@
           "value": 50.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "ip_season",
+      "tier": 180,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 9,
@@ -177,7 +207,13 @@
           "value": 25.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "k_season",
+      "tier": 180,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 10,
@@ -197,7 +233,13 @@
           "value": 25.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "hits_season",
+      "tier": 190,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 11,
@@ -237,7 +279,13 @@
           "value": 25.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "ip_season",
+      "tier": 200,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 13,
@@ -257,7 +305,13 @@
           "value": 50.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "saves_season",
+      "tier": 20,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 14,
@@ -277,7 +331,13 @@
           "value": 25.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "wins_season",
+      "tier": 20,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 15,
@@ -297,7 +357,13 @@
           "value": 50.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "holds_season",
+      "tier": 20,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 16,
@@ -357,7 +423,13 @@
           "value": 75.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "steals_season",
+      "tier": 30,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 19,
@@ -377,7 +449,13 @@
           "value": 25.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "saves_season",
+      "tier": 30,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 20,
@@ -397,7 +475,13 @@
           "value": 25.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "holds_season",
+      "tier": 30,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 21,
@@ -417,7 +501,13 @@
           "value": 50.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "hr_season",
+      "tier": 30,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 22,
@@ -437,7 +527,13 @@
           "value": 25.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "steals_season",
+      "tier": 40,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 23,
@@ -457,7 +553,13 @@
           "value": 25.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "hr_season",
+      "tier": 40,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 24,
@@ -497,7 +599,13 @@
           "value": 75.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "reliever_innings",
+      "tier": 70,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative_dedup"
+    }
   },
   {
     "id": 26,
@@ -517,7 +625,13 @@
           "value": 25.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "reliever_innings",
+      "tier": 80,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative_dedup"
+    }
   },
   {
     "id": 27,
@@ -697,7 +811,13 @@
           "value": 25.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "defense_innings",
+      "tier": 1200,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 36,
@@ -717,7 +837,13 @@
           "value": 50.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "defense_innings",
+      "tier": 1100,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 37,
@@ -977,7 +1103,13 @@
           "value": 20.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "games_career",
+      "tier": 1500,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 50,
@@ -997,7 +1129,13 @@
           "value": 20.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "hits_career",
+      "tier": 1500,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 51,
@@ -1037,7 +1175,13 @@
           "value": 10.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "games_career",
+      "tier": 2000,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 53,
@@ -1057,7 +1201,13 @@
           "value": 10.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "hits_career",
+      "tier": 2000,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 54,
@@ -1077,7 +1227,13 @@
           "value": 20.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "sb_career",
+      "tier": 200,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 55,
@@ -1097,7 +1253,13 @@
           "value": 20.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "hr_career",
+      "tier": 200,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 56,
@@ -1137,7 +1299,13 @@
           "value": 10.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "sb_career",
+      "tier": 300,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 58,
@@ -1157,7 +1325,13 @@
           "value": 10.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "hr_career",
+      "tier": 300,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 59,
@@ -1177,7 +1351,13 @@
           "value": 30.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "pitcher_games_career",
+      "tier": 500,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 60,
@@ -1197,7 +1377,13 @@
           "value": 10.0
         }
       }
-    ]
+    ],
+    "group": {
+      "family": "pitcher_games_career",
+      "tier": 700,
+      "inherit_lower_tiers": true,
+      "stack_mode": "cumulative"
+    }
   },
   {
     "id": 61,
